@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 import tcg_auto.model.Course;
 
-public class CourseManager {
+public abstract class CourseManager {
 	
 	// STATIC FIELDS
 	private static List<Course> courseListInstance;

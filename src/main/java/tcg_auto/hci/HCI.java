@@ -15,11 +15,10 @@ import javax.swing.JFrame;
 import tcg_auto.lang.Lang;
 import tcg_auto.lang.Messages;
 import tcg_auto.manager.ActionManager;
-import tcg_auto.manager.CipherManager;
+import tcg_auto.manager.ConfigManager;
 import tcg_auto.manager.FileManager;
 import tcg_auto.manager.LogManager;
-import tcg_auto.manager.SubscriptionManager;
-import tcg_auto.model.Subscription;
+import tcg_auto.manager.LoginPasswordManager;
 import tcg_auto.selenium.TCG;
 import tcg_auto.utils.HCIUtils;
 import tcg_auto.utils.MiscUtils;
@@ -67,16 +66,12 @@ public class HCI extends JFrame implements ActionListener {
 			LogManager.logInfo(Messages.getString(Lang.LOG_MESSAGE_INFO_INITIALIZATION_LOOKING_FOR_LOGIN_PASSWORD));
 		}
 		try {
-			String rawLoginAndPassword = FileManager.getLoginPasswordBufferedReaderInstance().readLine();
-			String decryptedLoginAndPassword = CipherManager.decrypt(rawLoginAndPassword);
-			Map<String, String> loginAndPassword = MiscUtils.getMapFromString(decryptedLoginAndPassword);
-			TCG.setLogin(loginAndPassword.get(HCIUtils.FIELD_LOGIN));
-			TCG.setPassword(loginAndPassword.get(HCIUtils.FIELD_PASSWORD));
+			LoginPasswordManager.getAndInitializeLoginAndPassword();
 			TCG.setBaseUrl(TCGUtils.URL_HOME);
 			LogManager.logInfo(Messages.getString(Lang.LOG_MESSAGE_INFO_INITIALIZATION_LOGIN_PASSWORD_SUCCESS));
 		} catch (IOException | NullPointerException e) {
 			LogManager.logWarn(String.format(Messages.getString(Lang.LOG_MESSAGE_WARN_INITIALIZATION_NO_LOGIN_PASSWORD_FOUND), e.getMessage()));
-			boolean savedSuccess = HCIUtils.getAndSaveLoginAndPassword();
+			boolean savedSuccess = LoginPasswordManager.getAndSaveLoginAndPassword();
 			if(!savedSuccess){
 				ActionManager.exit(false);
 			}else{
@@ -85,14 +80,16 @@ public class HCI extends JFrame implements ActionListener {
 		}
 	}
 	
-	@SuppressWarnings("unchecked")
 	public void initializeConfig(){
 		LogManager.logInfo(Messages.getString(Lang.LOG_MESSAGE_INFO_INITIALIZATION_LOOKING_FOR_CONFIG));
-		Map<String, Object> config = FileManager.getConfig();
-		seeLogs = (boolean) config.get(FileManager.CONFIG_SEE_LOGS);
-		List<Subscription> subscriptionList = (List<Subscription>) config.get(FileManager.CONFIG_SUBSCRIPTION_LIST);
+		Map<String, Object> config;
 		try {
-			SubscriptionManager.initializeSubscriptionList(subscriptionList);
+			config = ConfigManager.getConfig();
+			seeLogs = (boolean) config.get(ConfigManager.CONFIG_SEE_LOGS);
+		} catch (Exception e) {
+			HCIUtils.showException(e, true);
+		}
+		try {
 		} catch (Exception e) {
 			HCIUtils.showException(e, false);
 		}
@@ -100,9 +97,14 @@ public class HCI extends JFrame implements ActionListener {
 	}
 	
 	public void initializeLogs(){
-		List<String> oldLogs = FileManager.getLogs();
-		for(String oldLog : oldLogs){
-			LogPanel.appendlnAppLog(oldLog);
+		List<String> oldLogs;
+		try {
+			oldLogs = FileManager.readLogs();
+			for(String oldLog : oldLogs){
+				LogPanel.appendlnAppLog(oldLog);
+			}
+		} catch (NullPointerException | IOException e) {
+			HCIUtils.showException(e, false);
 		}
 	}
 

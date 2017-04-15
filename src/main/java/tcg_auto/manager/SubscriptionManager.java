@@ -13,7 +13,7 @@ import tcg_auto.lang.Messages;
 import tcg_auto.model.Subscription;
 import tcg_auto.utils.TCGUtils;
 
-public class SubscriptionManager {
+public abstract class SubscriptionManager {
 	
 	// STATIC FIELDS
 	private static Timer timerInstance = null;

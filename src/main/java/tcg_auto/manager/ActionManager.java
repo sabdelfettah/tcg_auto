@@ -44,7 +44,7 @@ public abstract class ActionManager {
 			exit(true);
 			break;
 		case ACTION_SET_LOGIN_PASSWORD:
-			HCIUtils.getAndSaveLoginAndPassword();
+			LoginPasswordManager.getAndSaveLoginAndPassword();
 			break;
 		case ACTION_UPDATE_COURSES:
 			updateCourseList();
@@ -54,7 +54,8 @@ public abstract class ActionManager {
 			break;
 		case ACTION_SEE_LOG:
 			LogPanel.setPanelVisible(getSeeLogButtonInstance().isSelected());
-			FileManager.writeConfig(SubscriptionManager.getSubscriptionList(), getSeeLogButtonInstance().isSelected());
+			// TODO : set see log to is selected
+			ConfigManager.saveConfig();
 			break;
 		case ACTION_OPEN_APPLICATION:
 			HCIUtils.showApplication();
@@ -64,7 +65,7 @@ public abstract class ActionManager {
 			break;
 		case ACTION_VALIDATE_SUBSCRIPTION:
 			SubsciptionDialog.validateSubscrition();
-			FileManager.writeConfig(SubscriptionManager.getSubscriptionList(), getSeeLogButtonInstance().isSelected());
+			ConfigManager.saveConfig();
 			break;
 		case ACTION_CONFIRM_BOOKING_COURSE:
 			CourseBookingDialog.confirmBooking();

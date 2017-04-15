@@ -5,11 +5,12 @@ import java.util.Date;
 
 import tcg_auto.hci.LogPanel;
 
-public class LogManager {
+public abstract class LogManager {
 	
 	// STATIC FIELDS
 	private static final SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	
+	// STATIC METHODS
 	public static void logInfo(String message) {
 		logMessage(message, LOG_TYPE.INFO);
 	}

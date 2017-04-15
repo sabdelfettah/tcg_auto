@@ -10,23 +10,17 @@ import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import tcg_auto.lang.Lang;
 import tcg_auto.lang.Messages;
-import tcg_auto.model.Subscription;
 import tcg_auto.utils.HCIUtils;
-import tcg_auto.utils.MiscUtils;
 
 public abstract class FileManager {
 	// STATIC FINAL FIELDS
 	private static final String PATH_LOGIN_PASSWORD = "tcg.auth";
 	private static final String PATH_LOGS = "tcg.log";
 	private static final String PATH_CONFIG = "tcg.cfg";
-	public static final String CONFIG_SEE_LOGS = "see_logs";
-	public static final String CONFIG_SUBSCRIPTION_LIST = "subscription_list";
 	
 	// STATIC FIELDS
 	private static BufferedWriter loginPasswordBufferedWriterInstance = null;
@@ -41,7 +35,7 @@ public abstract class FileManager {
 		return FileSystems.getDefault().getPath(path);
 	}
 	
-	private static BufferedWriter getBufferedWriterInstance(BufferedWriter writer, String path, StandardOpenOption writeOption) throws IOException{
+	protected static BufferedWriter getBufferedWriterInstance(BufferedWriter writer, String path, StandardOpenOption writeOption) throws IOException{
 		if(writer == null){
 			try {
 				writer = Files.newBufferedWriter(getPathInstanceFromString(path), StandardCharsets.UTF_8, StandardOpenOption.CREATE, writeOption);
@@ -52,7 +46,7 @@ public abstract class FileManager {
 		return writer;
 	}
 	
-	private static BufferedReader getBufferedReaderInstance(BufferedReader reader, String path) throws IOException{
+	protected static BufferedReader getBufferedReaderInstance(BufferedReader reader, String path) throws IOException{
 		if(reader == null){
 			try {
 				reader = Files.newBufferedReader(getPathInstanceFromString(path), StandardCharsets.UTF_8);
@@ -68,46 +62,36 @@ public abstract class FileManager {
 	}
 	
 	
-	public static BufferedWriter getLoginPasswordBufferedWriterInstance() throws IOException{
+	protected static BufferedWriter getLoginPasswordBufferedWriterInstance() throws IOException{
 		return getBufferedWriterInstance(loginPasswordBufferedWriterInstance, PATH_LOGIN_PASSWORD, StandardOpenOption.TRUNCATE_EXISTING);
 	}
 	
-	public static BufferedReader getLoginPasswordBufferedReaderInstance() throws IOException{
+	protected static BufferedReader getLoginPasswordBufferedReaderInstance() throws IOException{
 		return getBufferedReaderInstance(loginPasswordBufferedReaderInstance, PATH_LOGIN_PASSWORD);
 	}
 	
-	private static BufferedWriter getConfigBufferedWriterInstance() throws IOException{
+	protected static BufferedWriter getConfigBufferedWriterInstance() throws IOException{
 		return getBufferedWriterInstance(configBufferedWriterInstance, PATH_CONFIG, StandardOpenOption.TRUNCATE_EXISTING);
 	}
 	
-	private static BufferedReader getConfigBufferedReaderInstance() throws IOException{
+	protected static BufferedReader getConfigBufferedReaderInstance() throws IOException{
 		BufferedReader result = getBufferedReaderInstance(configBufferedReaderInstance, PATH_CONFIG);
 		if(result == null){
-			writeConfig(null, false);
+			ConfigManager.saveConfig();
 			result = getConfigBufferedReaderInstance();
 		}
 		return result;
 	}
 	
-	private static BufferedWriter getLogBufferedWriterInstance() throws IOException{
+	protected static BufferedWriter getLogBufferedWriterInstance() throws IOException{
 		return getBufferedWriterInstance(logBufferedWriterInstance, PATH_LOGS, StandardOpenOption.APPEND);
 	}
 	
-	private static BufferedReader getLogBufferedReaderInstance() throws IOException{
+	protected static BufferedReader getLogBufferedReaderInstance() throws IOException{
 		return getBufferedReaderInstance(logBufferedReaderInstance, PATH_LOGS);
 	}
 	
-	public static void saveLoginAndPassword(Map<String, String> loginAndPassword){
-		String loginAndPasswordString = MiscUtils.getStringFromMap(loginAndPassword);
-		String cipherLoginAndPassword = CipherManager.encrypt(loginAndPasswordString);
-		try (BufferedWriter writer = FileManager.getLoginPasswordBufferedWriterInstance()) {
-			writer.write(cipherLoginAndPassword);
-		} catch (IOException e) {
-			HCIUtils.showException(e, true, true, Messages.getString(Lang.LOG_MESSAGE_ERROR_FILE_WRITE_LOGIN_PASSWORD), null);
-		}
-	}
-	
-	public static void writeLog(String logToWrite){
+	protected static void writeLog(String logToWrite){
 		try (BufferedWriter writer = getLogBufferedWriterInstance()){
 			writer.append(logToWrite);
 		} catch (IOException e) {
@@ -117,34 +101,25 @@ public abstract class FileManager {
 		}
 	}
 	
-	public static void writelnLog(String logToWrite){
+	protected static void writelnLog(String logToWrite){
 		writeLog(logToWrite + "\n");
 	}
 	
-	public static List<String> getLogs(){
+	public static List<String> readLogs() throws IOException, NullPointerException{
 		List<String> result = new ArrayList<String>();
-		String line = null;
 		try(BufferedReader reader = getLogBufferedReaderInstance()){
 			if(reader == null){
 				writeLog("");
-				return getLogs();
+				return readLogs();
 			}
-			while((line = reader.readLine()) != null){
-				result.add(line);
-			}
-		} catch (IOException e) {
-			HCIUtils.showException(e, false);
+			readFileAndReturnListOfString(reader);
+		} catch (IOException | NullPointerException e) {
+			throw e;
 		}
 		return result;
 	}
 	
-	public static void writeConfig(List<Subscription> subscritpionList, boolean seeLogs){
-		Map<String, String> configToWrite = new HashMap<String, String>();
-		configToWrite.put(CONFIG_SEE_LOGS, String.valueOf(seeLogs));
-		if(subscritpionList != null){
-			configToWrite.put(CONFIG_SUBSCRIPTION_LIST, MiscUtils.getStringFromSubscirptionList(subscritpionList));
-		}
-		String configFormattedToWrite = MiscUtils.getStringFromMap(configToWrite);
+	protected static void writeConfig(String configFormattedToWrite){
 		try (BufferedWriter writer = getConfigBufferedWriterInstance()){
 			writer.append(configFormattedToWrite);
 		} catch (IOException e) {
@@ -154,25 +129,48 @@ public abstract class FileManager {
 		}
 	}
 	
-	public static Map<String, Object> getConfig(){
-		Map<String, Object> result = new HashMap<String, Object>();
-		String configContent = "";
-		String line = null;
+	public static String readConfig() throws IOException, NullPointerException{
+		String result = "";
 		try(BufferedReader reader = getConfigBufferedReaderInstance()){
-			while((line = reader.readLine()) != null){
-				configContent += line + "\n";
-			}
-		} catch (IOException e) {
-			HCIUtils.showException(e, false);
+			result = readFileAndReturnString(reader);
+		} catch (IOException | NullPointerException e) {
+			throw e;
 		}
-		if(!configContent.isEmpty()){
-			Map<String, String> tempResult = MiscUtils.getMapFromString(configContent);
-			String configSeeLogs = tempResult.get(CONFIG_SEE_LOGS);
-			result.put(CONFIG_SEE_LOGS, configSeeLogs == null ? false : Boolean.valueOf(configSeeLogs).booleanValue());
-			result.put(CONFIG_SUBSCRIPTION_LIST, MiscUtils.getSubscriptionListFromString(tempResult.get(CONFIG_SUBSCRIPTION_LIST)));
-		}else{
-			result.put(CONFIG_SEE_LOGS, false);
-			result.put(CONFIG_SUBSCRIPTION_LIST, new ArrayList<Subscription>());
+		return result;
+	}
+	
+	protected static void writeLoginPassword(String cipherLoginAndPassword){
+		try (BufferedWriter writer = getLoginPasswordBufferedWriterInstance()) {
+			writer.write(cipherLoginAndPassword);
+		} catch (IOException e) {
+			HCIUtils.showException(e, true, true, Messages.getString(Lang.LOG_MESSAGE_ERROR_FILE_WRITE_LOGIN_PASSWORD), null);
+		}
+	}
+	
+	public static String readLoginPassword() throws IOException, NullPointerException{
+		String result = "";
+		try(BufferedReader reader = getLoginPasswordBufferedReaderInstance()){
+			result = readFileAndReturnString(reader);
+		} catch (IOException | NullPointerException e) {
+			throw e;
+		}
+		return result;
+	}
+	
+	private static String readFileAndReturnString(BufferedReader reader) throws IOException, NullPointerException{
+		String result = "";
+		String line = null;
+		while((line = reader.readLine()) != null){
+			result += line + "\n";
+		}
+		return result;
+	}
+	
+	private static List<String> readFileAndReturnListOfString(BufferedReader reader) throws IOException, NullPointerException{
+		List<String> result = new ArrayList<String>();
+		String line = null;
+		while((line = reader.readLine()) != null){
+			result.add(line);
 		}
 		return result;
 	}
