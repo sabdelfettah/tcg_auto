@@ -74,7 +74,7 @@ public class HCI extends JFrame implements ActionListener {
 			TCG.setPassword(loginAndPassword.get(HCIUtils.FIELD_PASSWORD));
 			TCG.setBaseUrl(TCGUtils.URL_HOME);
 			LogManager.logInfo(Messages.getString(Lang.LOG_MESSAGE_INFO_INITIALIZATION_LOGIN_PASSWORD_SUCCESS));
-		} catch (IOException e) {
+		} catch (IOException | NullPointerException e) {
 			LogManager.logWarn(String.format(Messages.getString(Lang.LOG_MESSAGE_WARN_INITIALIZATION_NO_LOGIN_PASSWORD_FOUND), e.getMessage()));
 			boolean savedSuccess = HCIUtils.getAndSaveLoginAndPassword();
 			if(!savedSuccess){
