@@ -31,6 +31,16 @@ public class ConfigManager {
 		FileManager.writeConfig(configFormattedToWrite);
 	}
 	
+	public static void setSeeLogs(boolean isSeeLogsSelected){
+		seeLogs = isSeeLogsSelected;
+		saveConfig();
+	}
+	
+	public static void setWebDriver(String newWebDriverPath){
+		webDriverPath = newWebDriverPath;
+		saveConfig();
+	}
+	
 	public static Map<String, Object> getConfig() throws Exception{
 		Map<String, Object> result = new HashMap<String, Object>();
 		String configContent = FileManager.readConfig();

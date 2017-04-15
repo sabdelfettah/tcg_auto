@@ -50,11 +50,15 @@ public abstract class SubscriptionManager {
 	
 	public static boolean addSubscriptionToSubscriptionList(Subscription subscriptionToAdd){
 		subscriptionToAdd.programSigningCourse();
-		return getSubscriptionList().add(subscriptionToAdd);
+		boolean result = getSubscriptionList().add(subscriptionToAdd);
+		ConfigManager.saveConfig();
+		return result;
 	}
 	
 	public static boolean removeSubscriptionFromSubscriptionList(Subscription subscriptionToRemove){
-		return getSubscriptionList().remove(subscriptionToRemove);
+		boolean result = getSubscriptionList().remove(subscriptionToRemove);
+		ConfigManager.saveConfig();
+		return result;
 	}
 	
 	public static void scheduleSigningCourse(Subscription subscriptionToSchedule){

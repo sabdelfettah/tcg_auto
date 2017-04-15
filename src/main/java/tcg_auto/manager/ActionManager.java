@@ -53,9 +53,9 @@ public abstract class ActionManager {
 			CourseBookingDialog.showDialog();
 			break;
 		case ACTION_SEE_LOG:
-			LogPanel.setPanelVisible(getSeeLogButtonInstance().isSelected());
-			// TODO : set see log to is selected
-			ConfigManager.saveConfig();
+			boolean isSeeLogsSelected = getSeeLogButtonInstance().isSelected();
+			LogPanel.setPanelVisible(isSeeLogsSelected);
+			ConfigManager.setSeeLogs(isSeeLogsSelected);
 			break;
 		case ACTION_OPEN_APPLICATION:
 			HCIUtils.showApplication();
