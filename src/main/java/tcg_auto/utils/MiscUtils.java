@@ -20,12 +20,13 @@ import org.openqa.selenium.Point;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import hci.WaitingDialog;
-import model.Subscription;
-import utils.TCGUtils.WebAction;
+import tcg_auto.hci.WaitingDialog;
+import tcg_auto.model.Subscription;
+import tcg_auto.utils.TCGUtils.WebAction;
 
 public abstract class MiscUtils {
 	

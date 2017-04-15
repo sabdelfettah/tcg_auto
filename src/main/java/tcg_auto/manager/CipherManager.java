@@ -14,10 +14,10 @@ import org.apache.commons.codec.binary.Base64;
 
 import com.google.common.base.Charsets;
 
-import lang.Lang;
-import lang.Messages;
-import utils.HCIUtils;
-import utils.MiscUtils;
+import tcg_auto.lang.Lang;
+import tcg_auto.lang.Messages;
+import tcg_auto.utils.HCIUtils;
+import tcg_auto.utils.MiscUtils;
 
 public abstract class CipherManager {
 	

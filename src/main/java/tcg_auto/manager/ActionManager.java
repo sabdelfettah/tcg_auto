@@ -7,23 +7,23 @@ import java.util.Map;
 
 import javax.swing.JCheckBox;
 
-import hci.CourseBookingDialog;
-import hci.CourseListPanel;
-import hci.HCI;
-import hci.LogPanel;
-import hci.MainMenuBar;
-import hci.SubsciptionDialog;
-import hci.SubscriptionListPanel;
-import lang.Lang;
-import lang.Messages;
-import model.Course;
-import model.PersistentWebElement;
-import selenium.TCG;
-import utils.HCIUtils;
-import utils.HCIUtils.Action;
-import utils.MiscUtils;
-import utils.TCGUtils;
-import utils.TCGUtils.WebAction;
+import tcg_auto.hci.CourseBookingDialog;
+import tcg_auto.hci.CourseListPanel;
+import tcg_auto.hci.HCI;
+import tcg_auto.hci.LogPanel;
+import tcg_auto.hci.MainMenuBar;
+import tcg_auto.hci.SubsciptionDialog;
+import tcg_auto.hci.SubscriptionListPanel;
+import tcg_auto.lang.Lang;
+import tcg_auto.lang.Messages;
+import tcg_auto.model.Course;
+import tcg_auto.model.PersistentWebElement;
+import tcg_auto.selenium.TCG;
+import tcg_auto.utils.HCIUtils;
+import tcg_auto.utils.HCIUtils.Action;
+import tcg_auto.utils.MiscUtils;
+import tcg_auto.utils.TCGUtils;
+import tcg_auto.utils.TCGUtils.WebAction;
 
 public abstract class ActionManager {
 	

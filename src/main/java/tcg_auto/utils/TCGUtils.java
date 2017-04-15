@@ -13,13 +13,13 @@ import javax.swing.JOptionPane;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
-import lang.Lang;
-import lang.Messages;
-import model.Course;
-import model.Course.Day;
-import model.Course.Room;
-import model.PersistentWebElement;
-import selenium.TCG;
+import tcg_auto.lang.Lang;
+import tcg_auto.lang.Messages;
+import tcg_auto.model.Course;
+import tcg_auto.model.Course.Day;
+import tcg_auto.model.Course.Room;
+import tcg_auto.model.PersistentWebElement;
+import tcg_auto.selenium.TCG;
 
 public abstract class TCGUtils {
 

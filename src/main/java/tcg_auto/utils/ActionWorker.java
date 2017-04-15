@@ -7,9 +7,9 @@ import javax.swing.SwingWorker;
 
 import org.openqa.selenium.WebElement;
 
-import hci.WaitingDialog;
-import selenium.TCG;
-import utils.TCGUtils.WebAction;
+import tcg_auto.hci.WaitingDialog;
+import tcg_auto.selenium.TCG;
+import tcg_auto.utils.TCGUtils.WebAction;
 
 @SuppressWarnings("rawtypes")
 public class ActionWorker extends SwingWorker<Map<String, List>, List<WebElement>> {

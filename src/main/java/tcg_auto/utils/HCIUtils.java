@@ -12,15 +12,15 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import hci.HCI;
-import lang.Lang;
-import lang.Messages;
-import manager.ActionManager;
-import manager.FileManager;
-import manager.LogManager;
-import model.Course;
-import selenium.TCG;
-import utils.TCGUtils.WebAction;
+import tcg_auto.hci.HCI;
+import tcg_auto.lang.Lang;
+import tcg_auto.lang.Messages;
+import tcg_auto.manager.ActionManager;
+import tcg_auto.manager.FileManager;
+import tcg_auto.manager.LogManager;
+import tcg_auto.model.Course;
+import tcg_auto.selenium.TCG;
+import tcg_auto.utils.TCGUtils.WebAction;
 
 public abstract class HCIUtils {
 

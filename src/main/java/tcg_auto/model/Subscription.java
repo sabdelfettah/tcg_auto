@@ -3,8 +3,8 @@ package tcg_auto.model;
 import java.util.Calendar;
 import java.util.Date;
 
-import manager.SubscriptionManager;
-import utils.MiscUtils;
+import tcg_auto.manager.SubscriptionManager;
+import tcg_auto.utils.MiscUtils;
 
 public class Subscription {
 	

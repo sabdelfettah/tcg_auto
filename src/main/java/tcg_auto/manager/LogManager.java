@@ -3,7 +3,7 @@ package tcg_auto.manager;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import hci.LogPanel;
+import tcg_auto.hci.LogPanel;
 
 public class LogManager {
 	

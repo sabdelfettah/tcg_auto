@@ -14,13 +14,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 
-import hci.WaitingDialog;
-import model.Course;
-import model.PersistentWebElement;
-import utils.HCIUtils;
-import utils.MiscUtils;
-import utils.TCGUtils;
-import utils.TCGUtils.WebAction;
+import tcg_auto.hci.WaitingDialog;
+import tcg_auto.model.Course;
+import tcg_auto.model.PersistentWebElement;
+import tcg_auto.utils.HCIUtils;
+import tcg_auto.utils.MiscUtils;
+import tcg_auto.utils.TCGUtils;
+import tcg_auto.utils.TCGUtils.WebAction;
 
 public class TCG {
 	

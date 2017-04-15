@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import hci.SubscriptionListPanel;
-import hci.TrayButton;
-import lang.Lang;
-import lang.Messages;
-import model.Subscription;
-import utils.TCGUtils;
+import tcg_auto.hci.SubscriptionListPanel;
+import tcg_auto.hci.TrayButton;
+import tcg_auto.lang.Lang;
+import tcg_auto.lang.Messages;
+import tcg_auto.model.Subscription;
+import tcg_auto.utils.TCGUtils;
 
 public class SubscriptionManager {
 	

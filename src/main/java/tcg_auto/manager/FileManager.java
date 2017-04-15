@@ -14,11 +14,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import lang.Lang;
-import lang.Messages;
-import model.Subscription;
-import utils.HCIUtils;
-import utils.MiscUtils;
+import tcg_auto.lang.Lang;
+import tcg_auto.lang.Messages;
+import tcg_auto.model.Subscription;
+import tcg_auto.utils.HCIUtils;
+import tcg_auto.utils.MiscUtils;
 
 public abstract class FileManager {
 	// STATIC FINAL FIELDS
