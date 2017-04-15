@@ -92,6 +92,8 @@ public abstract class Lang {
 	public static final String LOG_MESSAGE_INFO_INITIALIZATION_LOGIN_PASSWORD_SUCCESS = "logs.info_initialization_login_password_success";
 	public static final String LOG_MESSAGE_INFO_INITIALIZATION_LOOKING_FOR_CONFIG = "logs.info_initialization_looking_for_config";
 	public static final String LOG_MESSAGE_INFO_INITIALIZATION_CONFIG_SUCCESS = "logs.info_initialization_config_success";
+	public static final String LOG_MESSAGE_INFO_INITIALIZATION_LOOKING_FOR_WEB_DRIVER_PATH = "logs.info_initialization_looking_for_web_driver_path";
+	public static final String LOG_MESSAGE_INFO_INITIALIZATION_WEB_DRIVER_PATH_SUCCESS = "logs.info_initialization_web_driver_path_success";
 	public static final String LOG_MESSAGE_INFO_UPDATING_COURSE_LIST = "logs.info_updating_course_list";
 	public static final String LOG_MESSAGE_INFO_UPDATE_COURSE_LIST_SUCCESS = "logs.info_update_course_list_success";
 	public static final String LOG_MESSAGE_INFO_EXIT_APP = "logs.info_exit_application";

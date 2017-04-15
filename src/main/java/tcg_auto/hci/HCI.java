@@ -37,7 +37,6 @@ public class HCI extends JFrame implements ActionListener {
 	// STATIC FIELDS
 	private static HCI instance = null;
 	private static boolean initialized= false;
-	private static boolean seeLogs = false;
 	
 	// CONSTRUCTORS
 	public HCI() {
@@ -46,6 +45,7 @@ public class HCI extends JFrame implements ActionListener {
 		LogManager.logInfo(Messages.getString(Lang.LOG_MESSAGE_INFO_INITIALIZATION_STARTING_APP));
 		this.initializeLoginAndPassword(true);
 		this.initializeConfig();
+		this.initializeWebDriverPath(true);
 	}
 
 	private void initializeFrame(){
@@ -82,18 +82,24 @@ public class HCI extends JFrame implements ActionListener {
 	
 	public void initializeConfig(){
 		LogManager.logInfo(Messages.getString(Lang.LOG_MESSAGE_INFO_INITIALIZATION_LOOKING_FOR_CONFIG));
-		Map<String, Object> config;
 		try {
-			config = ConfigManager.getConfig();
-			seeLogs = (boolean) config.get(ConfigManager.CONFIG_SEE_LOGS);
+			ConfigManager.getConfig();
 		} catch (Exception e) {
 			HCIUtils.showException(e, true);
 		}
-		try {
-		} catch (Exception e) {
-			HCIUtils.showException(e, false);
-		}
 		LogManager.logInfo(Messages.getString(Lang.LOG_MESSAGE_INFO_INITIALIZATION_CONFIG_SUCCESS));
+	}
+	
+	public void initializeWebDriverPath(boolean logLooking){
+		if(logLooking){
+			LogManager.logInfo(Messages.getString(Lang.LOG_MESSAGE_INFO_INITIALIZATION_LOOKING_FOR_WEB_DRIVER_PATH));
+		}
+		if(MiscUtils.isNullOrEmpty(ConfigManager.getWebDriverPath())){
+			ConfigManager.getAndSaveWebDrive();
+			initializeWebDriverPath(false);
+		}else{
+			LogManager.logInfo(Messages.getString(Lang.LOG_MESSAGE_INFO_INITIALIZATION_WEB_DRIVER_PATH_SUCCESS));
+		}
 	}
 	
 	public void initializeLogs(){
@@ -111,8 +117,8 @@ public class HCI extends JFrame implements ActionListener {
 	public void initializeFrameComponents() {
 		this.setJMenuBar(MainMenuBar.getInstance());
 		this.setContentPane(Panel.getInstance());
-		LogPanel.setPanelVisible(seeLogs);
-		((JCheckBox) MainMenuBar.getMenuBarComponent(Messages.getString(Lang.MENU_ITEM_HELP_SEE_LOG))).setSelected(seeLogs);
+		LogPanel.setPanelVisible(ConfigManager.getSeeLogs());
+		((JCheckBox) MainMenuBar.getMenuBarComponent(Messages.getString(Lang.MENU_ITEM_HELP_SEE_LOG))).setSelected(ConfigManager.getSeeLogs());
 	}
 	
 	// GETTERS

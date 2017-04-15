@@ -15,6 +15,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 
 import tcg_auto.hci.WaitingDialog;
+import tcg_auto.manager.ConfigManager;
 import tcg_auto.model.Course;
 import tcg_auto.model.PersistentWebElement;
 import tcg_auto.utils.HCIUtils;
@@ -133,7 +134,7 @@ public class TCG {
 		if(driverInstance == null){
 			try {
 				String current = new java.io.File( "." ).getCanonicalPath();
-				System.setProperty(ChromeDriverService.CHROME_DRIVER_EXE_PROPERTY, current + "/chromedriver.exe");
+				System.setProperty(ChromeDriverService.CHROME_DRIVER_EXE_PROPERTY, ConfigManager.getWebDriverPath());
 				System.setProperty(ChromeDriverService.CHROME_DRIVER_LOG_PROPERTY, current + "/chromedriver.log");
 				//System.setProperty(ChromeDriverService.CHROME_DRIVER_VERBOSE_LOG_PROPERTY, "true");
 				//System.setProperty(ChromeDriverService.CHROME_DRIVER_SILENT_OUTPUT_PROPERTY, "true");

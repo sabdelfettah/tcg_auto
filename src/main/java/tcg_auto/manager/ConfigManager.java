@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import tcg_auto.model.Subscription;
+import tcg_auto.utils.HCIUtils;
 import tcg_auto.utils.MiscUtils;
 
 public class ConfigManager {
@@ -39,6 +40,21 @@ public class ConfigManager {
 	public static void setWebDriver(String newWebDriverPath){
 		webDriverPath = newWebDriverPath;
 		saveConfig();
+	}
+	
+	public static void getAndSaveWebDrive(){
+		String path = HCIUtils.getWebDriverPath();
+		if(path != null){
+			setWebDriver(path);
+		}
+	}
+	
+	public static boolean getSeeLogs(){
+		return seeLogs;
+	}
+	
+	public static String getWebDriverPath(){
+		return webDriverPath;
 	}
 	
 	public static Map<String, Object> getConfig() throws Exception{

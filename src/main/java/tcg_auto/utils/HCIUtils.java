@@ -1,14 +1,18 @@
 package tcg_auto.utils;
 
+import java.io.File;
 import java.net.URL;
 import java.util.List;
+
 import javax.swing.DefaultListModel;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.filechooser.FileFilter;
 
 import tcg_auto.hci.HCI;
 import tcg_auto.lang.Lang;
@@ -56,6 +60,31 @@ public abstract class HCIUtils {
 				JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 		if (selectedOption == 0) {
 			result = txt.getText();
+		}
+		return result;
+	}
+	
+	private static JFileChooser getWebDriverForWindowsOS(){
+		JFileChooser result = new JFileChooser();
+		result.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		FileFilter windowsWebDriverFilterer = new WindowsFileFilter();
+		result.setFileFilter(windowsWebDriverFilterer);
+		return result;
+	}
+	
+	public static String getWebDriverPath(){
+		String result = null;
+		JFileChooser fileChooser = getWebDriverForWindowsOS();
+		int attempsLeft = 3;
+		int choice = JFileChooser.CANCEL_OPTION;
+		while(attempsLeft > 0 && choice != JFileChooser.APPROVE_OPTION){
+			choice = fileChooser.showOpenDialog(null);
+			attempsLeft--;
+		}
+		if(choice == JFileChooser.APPROVE_OPTION){
+			result = fileChooser.getSelectedFile().getPath();
+		}else{
+			ActionManager.exit(false);
 		}
 		return result;
 	}
@@ -140,6 +169,21 @@ public abstract class HCIUtils {
 		ACTION_OPEN_APPLICATION,
 		ACTION_VALIDATE_SUBSCRIPTION,
 		ACTION_CONFIRM_BOOKING_COURSE;
+	}
+	
+	// PRIVATE CLASSES
+	private static class WindowsFileFilter extends javax.swing.filechooser.FileFilter{
+
+		@Override
+		public boolean accept(File f) {
+			return f.getName().toLowerCase().equals("chromedriver.exe");
+		}
+
+		@Override
+		public String getDescription() {
+			return "Windows webdriver filterer";
+		}
+		
 	}
 	
 }
