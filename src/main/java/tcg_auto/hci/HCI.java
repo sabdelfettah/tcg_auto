@@ -117,9 +117,10 @@ public class HCI extends JFrame implements ActionListener {
 	public Image getImageFromPath(String path){
 		Image result = images.get(path);
 		if(result == null){
+			System.out.println("getting image "+ path);
 			getClass();
 			try {
-				result = ImageIO.read(getClass().getResource(path));
+				result = ImageIO.read(HCIUtils.getUrlFromPath(path));
 				images.put(path, result);
 			} catch (IOException | IllegalArgumentException e) {
 				HCIUtils.showException(e, false);

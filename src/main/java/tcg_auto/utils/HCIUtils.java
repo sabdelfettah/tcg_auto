@@ -1,5 +1,6 @@
 package tcg_auto.utils;
 
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,13 +27,17 @@ public abstract class HCIUtils {
 
 	// STATIC FINAL FIELDS
 	// IMAGES
-	public static final String PATH_APPLICATION_ICON = "/images/app.png";
-	public static final String PATH_LOADING_IMAGE = "/images/loading.gif";
+	public static final String PATH_APPLICATION_ICON = "tcg_auto/images/app.png";
+	public static final String PATH_LOADING_IMAGE = "tcg_auto/images/loading.gif";
 	// FIELDS
 	public static final String FIELD_LOGIN = "login";
 	public static final String FIELD_PASSWORD = "password";
 	
 	// STATIC METHODS
+	public static URL getUrlFromPath(String path){
+		return Thread.currentThread().getContextClassLoader().getResource(path);
+	}
+	
 	public static Map<String, String> getInputLoginAndPassword() {
 		Map<String, String> result = new HashMap<String, String>();
 		String login = getValueFromInputDialog(Messages.getString(Lang.TITLE_SET_LOGIN), Messages.getString(Lang.LABELS_SET_LOGIN_PASSWORD_LABEL_LOGIN), 20, false);
