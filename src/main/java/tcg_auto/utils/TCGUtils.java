@@ -1,4 +1,4 @@
-package utils;
+package tcg_auto.utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;

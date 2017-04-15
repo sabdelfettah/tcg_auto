@@ -1,4 +1,4 @@
-package hci;
+package tcg_auto.hci;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -14,16 +14,16 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import lang.Lang;
-import lang.Messages;
-import manager.SubscriptionManager;
-import manager.CourseManager;
-import model.Course;
-import model.Course.Day;
-import model.Subscription;
-import utils.HCIUtils;
-import utils.HCIUtils.Action;
-import utils.MiscUtils;
+import tcg_auto.lang.Lang;
+import tcg_auto.lang.Messages;
+import tcg_auto.manager.CourseManager;
+import tcg_auto.manager.SubscriptionManager;
+import tcg_auto.model.Course;
+import tcg_auto.model.Course.Day;
+import tcg_auto.model.Subscription;
+import tcg_auto.utils.HCIUtils;
+import tcg_auto.utils.HCIUtils.Action;
+import tcg_auto.utils.MiscUtils;
 
 public class SubsciptionDialog extends JDialog{
 

@@ -1,4 +1,4 @@
-package lang;
+package tcg_auto.lang;
 
 public abstract class Lang {
 	

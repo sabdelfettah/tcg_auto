@@ -1,4 +1,4 @@
-package manager;
+package tcg_auto.manager;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

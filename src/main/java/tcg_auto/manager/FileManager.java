@@ -1,4 +1,4 @@
-package manager;
+package tcg_auto.manager;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

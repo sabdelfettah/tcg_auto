@@ -1,13 +1,13 @@
-package hci;
+package tcg_auto.hci;
 
 import java.awt.AWTException;
 import java.awt.Image;
 import java.awt.SystemTray;
 import java.awt.TrayIcon;
 
-import lang.Lang;
-import lang.Messages;
-import utils.HCIUtils;
+import tcg_auto.lang.Lang;
+import tcg_auto.lang.Messages;
+import tcg_auto.utils.HCIUtils;
 
 public class TrayButton extends TrayIcon {
 	

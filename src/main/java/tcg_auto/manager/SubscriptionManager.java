@@ -1,4 +1,4 @@
-package manager;
+package tcg_auto.manager;
 
 import java.util.ArrayList;
 import java.util.Date;

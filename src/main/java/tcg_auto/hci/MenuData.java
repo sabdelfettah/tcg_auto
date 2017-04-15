@@ -1,4 +1,4 @@
-package hci;
+package tcg_auto.hci;
 
 import java.awt.Menu;
 import java.awt.MenuItem;
@@ -13,8 +13,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 import javax.swing.KeyStroke;
 
-import utils.HCIUtils;
-import utils.HCIUtils.Action;
+import tcg_auto.utils.HCIUtils;
+import tcg_auto.utils.HCIUtils.Action;
 
 public class MenuData {
 

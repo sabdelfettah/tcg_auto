@@ -1,4 +1,4 @@
-package hci;
+package tcg_auto.hci;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -10,10 +10,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
-import lang.Lang;
-import lang.Messages;
-import utils.HCIUtils;
-import utils.TCGUtils.WebAction;
+import tcg_auto.lang.Lang;
+import tcg_auto.lang.Messages;
+import tcg_auto.utils.HCIUtils;
+import tcg_auto.utils.TCGUtils.WebAction;
 
 public class WaitingDialog extends JDialog{
 

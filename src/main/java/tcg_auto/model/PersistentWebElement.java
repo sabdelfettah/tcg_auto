@@ -1,4 +1,4 @@
-package model;
+package tcg_auto.model;
 
 import java.util.Map;
 

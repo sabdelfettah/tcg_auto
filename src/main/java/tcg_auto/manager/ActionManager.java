@@ -1,4 +1,4 @@
-package manager;
+package tcg_auto.manager;
 
 import java.io.IOException;
 import java.util.Arrays;

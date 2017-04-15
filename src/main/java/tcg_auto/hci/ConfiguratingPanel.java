@@ -1,4 +1,4 @@
-package hci;
+package tcg_auto.hci;
 
 import java.awt.BorderLayout;
 

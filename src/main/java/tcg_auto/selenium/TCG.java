@@ -1,4 +1,4 @@
-package selenium;
+package tcg_auto.selenium;
 
 import java.io.IOException;
 import java.util.Arrays;

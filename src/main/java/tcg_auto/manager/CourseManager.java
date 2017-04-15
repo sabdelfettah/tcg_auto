@@ -1,11 +1,11 @@
-package manager;
+package tcg_auto.manager;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import model.Course;
+import tcg_auto.model.Course;
 
 public class CourseManager {
 	

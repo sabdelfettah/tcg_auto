@@ -1,4 +1,4 @@
-package hci;
+package tcg_auto.hci;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -10,8 +10,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 
-import lang.Lang;
-import lang.Messages;
+import tcg_auto.lang.Lang;
+import tcg_auto.lang.Messages;
 
 public class LogPanel extends JPanel {
 

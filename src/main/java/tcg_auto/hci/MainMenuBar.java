@@ -1,4 +1,4 @@
-package hci;
+package tcg_auto.hci;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,11 +10,11 @@ import javax.swing.JComponent;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 
-import hci.MenuData.COMPOENENT_TYPE;
-import lang.Lang;
-import lang.Messages;
-import utils.HCIUtils.Action;
-import utils.MiscUtils;
+import tcg_auto.hci.MenuData.COMPOENENT_TYPE;
+import tcg_auto.lang.Lang;
+import tcg_auto.lang.Messages;
+import tcg_auto.utils.HCIUtils.Action;
+import tcg_auto.utils.MiscUtils;
 
 public class MainMenuBar extends JMenuBar {
 

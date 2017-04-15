@@ -1,4 +1,4 @@
-package hci;
+package tcg_auto.hci;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -7,8 +7,8 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import lang.Lang;
-import lang.Messages;
+import tcg_auto.lang.Lang;
+import tcg_auto.lang.Messages;
 
 public class ShowingPanel extends JPanel {
 

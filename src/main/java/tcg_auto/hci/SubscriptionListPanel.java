@@ -1,4 +1,4 @@
-package hci;
+package tcg_auto.hci;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -6,9 +6,9 @@ import java.awt.Color;
 import javax.swing.JList;
 import javax.swing.JPanel;
 
-import manager.SubscriptionManager;
-import model.Subscription;
-import utils.HCIUtils;
+import tcg_auto.manager.SubscriptionManager;
+import tcg_auto.model.Subscription;
+import tcg_auto.utils.HCIUtils;
 
 public class SubscriptionListPanel extends JPanel {
 

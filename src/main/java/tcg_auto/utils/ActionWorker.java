@@ -1,4 +1,4 @@
-package utils;
+package tcg_auto.utils;
 
 import java.util.List;
 import java.util.Map;

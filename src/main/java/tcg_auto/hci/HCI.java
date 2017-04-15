@@ -1,4 +1,4 @@
-package hci;
+package tcg_auto.hci;
 
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -12,18 +12,18 @@ import javax.imageio.ImageIO;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 
-import lang.Lang;
-import lang.Messages;
-import manager.ActionManager;
-import manager.CipherManager;
-import manager.FileManager;
-import manager.LogManager;
-import manager.SubscriptionManager;
-import model.Subscription;
-import selenium.TCG;
-import utils.HCIUtils;
-import utils.MiscUtils;
-import utils.TCGUtils;
+import tcg_auto.lang.Lang;
+import tcg_auto.lang.Messages;
+import tcg_auto.manager.ActionManager;
+import tcg_auto.manager.CipherManager;
+import tcg_auto.manager.FileManager;
+import tcg_auto.manager.LogManager;
+import tcg_auto.manager.SubscriptionManager;
+import tcg_auto.model.Subscription;
+import tcg_auto.selenium.TCG;
+import tcg_auto.utils.HCIUtils;
+import tcg_auto.utils.MiscUtils;
+import tcg_auto.utils.TCGUtils;
 
 public class HCI extends JFrame implements ActionListener {
 

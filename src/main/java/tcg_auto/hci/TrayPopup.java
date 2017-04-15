@@ -1,4 +1,4 @@
-package hci;
+package tcg_auto.hci;
 
 import java.awt.Menu;
 import java.awt.MenuItem;
@@ -8,11 +8,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import hci.MenuData.COMPOENENT_TYPE;
-import lang.Lang;
-import lang.Messages;
-import utils.HCIUtils.Action;
-import utils.MiscUtils;
+import tcg_auto.hci.MenuData.COMPOENENT_TYPE;
+import tcg_auto.lang.Lang;
+import tcg_auto.lang.Messages;
+import tcg_auto.utils.HCIUtils.Action;
+import tcg_auto.utils.MiscUtils;
 
 public class TrayPopup extends PopupMenu {
 	

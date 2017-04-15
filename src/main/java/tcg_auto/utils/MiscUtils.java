@@ -1,4 +1,4 @@
-package utils;
+package tcg_auto.utils;
 
 import java.awt.event.InputEvent;
 import java.awt.image.BufferedImage;

@@ -1,4 +1,4 @@
-package hci;
+package tcg_auto.hci;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -11,14 +11,15 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import lang.Lang;
-import lang.Messages;
-import manager.CourseManager;
-import model.Course;
-import utils.HCIUtils.Action;
-import utils.HCIUtils;
-import utils.MiscUtils;
-import utils.TCGUtils;
+
+import tcg_auto.lang.Lang;
+import tcg_auto.lang.Messages;
+import tcg_auto.manager.CourseManager;
+import tcg_auto.model.Course;
+import tcg_auto.utils.HCIUtils;
+import tcg_auto.utils.HCIUtils.Action;
+import tcg_auto.utils.MiscUtils;
+import tcg_auto.utils.TCGUtils;
 
 public class CourseBookingDialog extends JDialog{
 
