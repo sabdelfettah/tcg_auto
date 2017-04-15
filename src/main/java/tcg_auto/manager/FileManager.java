@@ -125,6 +125,10 @@ public abstract class FileManager {
 		List<String> result = new ArrayList<String>();
 		String line = null;
 		try(BufferedReader reader = getLogBufferedReaderInstance()){
+			if(reader == null){
+				writeLog("");
+				return getLogs();
+			}
 			while((line = reader.readLine()) != null){
 				result.add(line);
 			}
