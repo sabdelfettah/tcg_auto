@@ -112,7 +112,7 @@ public abstract class FileManager {
 				writeLog("");
 				return readLogs();
 			}
-			readFileAndReturnListOfString(reader);
+			result = readFileAndReturnListOfString(reader);
 		} catch (IOException | NullPointerException e) {
 			throw e;
 		}
