@@ -194,7 +194,7 @@ public class TCG {
 			return (lastActionElemets = MiscUtils.getFalseAsList());
 		}
 		List<WebElement> lastActionElemetsAsWebElementList = lastActionElemets;
-		WebElement elementToClick = TCGUtils.getWebElementFilteredByTextContent(lastActionElemetsAsWebElementList, course.getName());
+		WebElement elementToClick = TCGUtils.getWebElementFilteredByCourse(lastActionElemetsAsWebElementList, course);
 		if(elementToClick == null){
 			return (lastActionElemets = MiscUtils.getFalseAsList());
 		}
@@ -204,7 +204,7 @@ public class TCG {
 			findButtonAndClick(TCGUtils.XPATH_BUTTON_GO_TO_NEXT_WEEK);
 			lastActionElemets = getElements(TCGUtils.XPATH_DIVS_COURSES);
 			lastActionElemetsAsWebElementList = lastActionElemets;
-			elementToClick = TCGUtils.getWebElementFilteredByTextContent(lastActionElemetsAsWebElementList, course.getName());
+			elementToClick = TCGUtils.getWebElementFilteredByCourse(lastActionElemetsAsWebElementList, course);
 		}
 		if(elementToClick == null){
 			return (lastActionElemets = MiscUtils.getFalseAsList());

@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import javax.swing.JOptionPane;
 
@@ -211,11 +212,29 @@ public abstract class TCGUtils {
 		if(MiscUtils.isNullOrEmpty(webElements) || MiscUtils.isNullOrEmpty(textContent)){
 			return null;
 		}
-		WebElement result = webElements
-										.parallelStream()
+		WebElement result = webElements	.parallelStream()
 										.filter(webElement -> webElement.getText().contains(textContent))
 										.findFirst()
 										.orElse(null);
+		return result;
+	}
+	
+	public static WebElement getWebElementFilteredByCourse(List<WebElement> webElements, Course course){
+		if(MiscUtils.isNullOrEmpty(webElements) || course == null){
+			return null;
+		}
+		List<WebElement> resultsByTextContentFilter = webElements	.parallelStream()
+																	.filter(webElement -> webElement.getText().contains(course.getName()))
+																	.collect(Collectors.toList());
+		WebElement result = null;
+		if(resultsByTextContentFilter.size() == 1){
+			result = resultsByTextContentFilter.iterator().next();
+		}else{
+			result = resultsByTextContentFilter	.parallelStream()
+												.filter(resultByTextContentFilter -> course.getDay().equals(Day.getDayFromCalendarDay(getCalendarFromElement(resultByTextContentFilter).get(Calendar.DAY_OF_WEEK))))
+												.findFirst()
+												.orElse(null);
+		}
 		return result;
 	}
 	
