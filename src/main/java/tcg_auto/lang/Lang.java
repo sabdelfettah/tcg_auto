@@ -105,6 +105,7 @@ public abstract class Lang {
 	public static final String LOG_MESSAGE_INFO_ACTION_GET_SAVE_LOGIN_PASSWORD = "logs.info_action_get_save_login_password";
 	public static final String LOG_MESSAGE_INFO_ACTION_GET_SAVE_WEB_DRIVER_PATH = "logs.info_action_get_save_web_driver_path";
 	public static final String LOG_MESSAGE_INFO_CREATE_TASK_SUCCESS = "logs.info_create_task_success";
+	public static final String LOG_MESSAGE_INFO_CREATE_TASKS_INITIALIZER_SUCCESS = "logs.info_create_tasks_initializer_success";
 	
 	// TIPS
 	public static final String TIPS_TITLE_PANEL_APPLICATION_SESSION_LOGS = "tips.log_panel_application_session_logs";

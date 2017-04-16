@@ -5,8 +5,10 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +33,10 @@ import tcg_auto.selenium.TCG.WebAction;
 
 public abstract class MiscUtils {
 	
-	private static Gson gsonInstance = new Gson();
+	// STATIC FINAL FIELDS
+	private static final Gson gsonInstance = new Gson();
+	private static final SimpleDateFormat yyyyMMdd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	private static final SimpleDateFormat ddMMyyyy = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 	
 	// STATIC METHODS
 	public static List<BufferedImage> getImageOfElements(WebDriver driver, List<WebElement> webElements) {
@@ -180,6 +185,14 @@ public abstract class MiscUtils {
 			}
 		}
 		return result;
+	}
+	
+	public static String formatDateBeginWithYear(Date date){
+		return date == null ? null : yyyyMMdd.format(date);
+	}
+	
+	public static String formatDateBeginWithDay(Date date){
+		return date == null ? null : ddMMyyyy.format(date);
 	}
 
 }

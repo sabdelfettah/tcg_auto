@@ -2,7 +2,6 @@ package tcg_auto.manager;
 
 import java.io.IOException;
 import java.util.List;
-
 import tcg_auto.hci.LogPanel;
 import tcg_auto.lang.Lang;
 import tcg_auto.lang.Messages;
@@ -19,6 +18,7 @@ public abstract class Initializator {
 		initializeLoginAndPassword(true);
 		initializeConfig();
 		initializeWebDriverPath(true);
+		SubscriptionManager.scheduleTasksReInitializer();
 	}
 	
 	private static void initializeLogs(){
@@ -73,5 +73,5 @@ public abstract class Initializator {
 			LogManager.logInfoFinished(Messages.getString(Lang.LOG_MESSAGE_INFO_INITIALIZATION_WEB_DRIVER_PATH_SUCCESS));
 		}
 	}
-
+	
 }

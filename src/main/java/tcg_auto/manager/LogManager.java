@@ -1,6 +1,5 @@
 package tcg_auto.manager;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.regex.Pattern;
 
@@ -9,8 +8,9 @@ import tcg_auto.utils.MiscUtils;
 
 public abstract class LogManager {
 	
-	// STATIC FIELDS
-	private static final SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	// STATIC FINAL FIELDS
+	private static final int MAX_CLASS_NAME_LENGTH = 15;
+	private static final int MAX_LINE_NUMBER_LENGTH = 3;
 	
 	// STATIC METHODS
 	public static void logInfo(String message) {
@@ -44,12 +44,11 @@ public abstract class LogManager {
 	private static void logMessage(String message, LOG_TYPE logType, LOG_STATUS status){
 		StackTraceElement[] stacktrace = Thread.currentThread().getStackTrace();
 		StackTraceElement e = stacktrace[3];
-		Date now = new Date();
-		String nowFormatted = dateFormatter.format(now);
+		String nowFormatted = MiscUtils.formatDateBeginWithYear(new Date());
 		String[] callerClassPath = e.getClassName().split(Pattern.quote("."));
 		String callerClass = callerClassPath.length > 0 ? callerClassPath[callerClassPath.length - 1] : "";
-		callerClass = MiscUtils.getStringWithSpeceficLength(callerClass, 12);
-		String lineNumber = MiscUtils.getStringWithSpeceficLength(String.valueOf(e.getLineNumber()), 3);
+		callerClass = MiscUtils.getStringWithSpeceficLength(callerClass, MAX_CLASS_NAME_LENGTH);
+		String lineNumber = MiscUtils.getStringWithSpeceficLength(String.valueOf(e.getLineNumber()), MAX_LINE_NUMBER_LENGTH);
 		String logToWrite = String.format("%s | %s | %s | %s | %s | %s", nowFormatted, logType, status, callerClass, lineNumber, message);
 		System.out.println(logToWrite);
 		FileManager.writelnLog(logToWrite);

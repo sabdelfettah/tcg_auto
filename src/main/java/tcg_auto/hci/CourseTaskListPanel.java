@@ -2,8 +2,8 @@ package tcg_auto.hci;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -42,12 +42,10 @@ public class CourseTaskListPanel extends JPanel {
 	}
 	
 	public static void updateCourseTaskList(){
-		List<CourseTask> listToUpdate = new ArrayList<CourseTask>();
-		SubscriptionManager.getSubscriptionList()	.parallelStream()
-													.filter(subscription -> subscription != null && subscription.getCourseTask() != null)
-													.forEach(subscription -> {
-														listToUpdate.add(subscription.getCourseTask());
-													});
+		List<CourseTask> listToUpdate = SubscriptionManager.getSubscriptionList()	.parallelStream()
+																					.filter(subscription -> subscription != null && subscription.getCourseTask() != null)
+																					.map(subscription -> subscription.getCourseTask())
+																					.collect(Collectors.toList());
 		HCIUtils.UpdateJList(getInstance().list, listToUpdate);
 	}
 
