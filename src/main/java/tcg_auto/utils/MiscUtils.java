@@ -25,6 +25,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import tcg_auto.hci.WaitingDialog;
+import tcg_auto.model.ActionWorker;
 import tcg_auto.model.Subscription;
 import tcg_auto.selenium.TCG.WebAction;
 

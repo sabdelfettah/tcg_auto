@@ -1,4 +1,4 @@
-package tcg_auto.hci;
+package tcg_auto.model;
 
 import java.awt.Menu;
 import java.awt.MenuItem;
@@ -13,6 +13,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 import javax.swing.KeyStroke;
 
+import tcg_auto.hci.HCI;
 import tcg_auto.utils.HCIUtils;
 import tcg_auto.utils.HCIUtils.Action;
 
@@ -21,42 +22,42 @@ public class MenuData {
 	// NOT STATIC FIELDS
 	private Integer index;
 	private String title;
-	private COMPOENENT_TYPE componentType;
+	private COMPONENT_TYPE componentType;
 	private Action action;
 	private KeyStroke accelerator;
 	private JComponent swingResult;
 	private MenuItem awtResult;
 	
 	// CONSTRUCTORS
-	public MenuData(COMPOENENT_TYPE componentType) throws Exception{
-		if(componentType == COMPOENENT_TYPE.SEPARATOR || componentType == COMPOENENT_TYPE.JSEPARATOR){
+	public MenuData(COMPONENT_TYPE componentType) throws Exception{
+		if(componentType == COMPONENT_TYPE.SEPARATOR || componentType == COMPONENT_TYPE.JSEPARATOR){
 			this.componentType = componentType;
 		}else{
 			throw new Exception("Bad use of the constructor");
 		}
 	}
 	
-	private MenuData(String title, COMPOENENT_TYPE componentType){
+	private MenuData(String title, COMPONENT_TYPE componentType){
 		this.title = title;
 		this.componentType = componentType;
 	}
 	
-	public MenuData(String title, COMPOENENT_TYPE componentType, Action action) {
+	public MenuData(String title, COMPONENT_TYPE componentType, Action action) {
 		this(title, componentType);
 		this.action = action;
 	}
 
-	public MenuData(String title, COMPOENENT_TYPE componentType, Action action, KeyStroke accelerator) {
+	public MenuData(String title, COMPONENT_TYPE componentType, Action action, KeyStroke accelerator) {
 		this(title, componentType, action);
 		this.accelerator = accelerator;
 	}
 
-	public MenuData(Integer index, String title, COMPOENENT_TYPE componentType) {
+	public MenuData(Integer index, String title, COMPONENT_TYPE componentType) {
 		this(title, componentType);
 		this.index = index;
 	}
 	
-	public MenuData(Integer index, String title, COMPOENENT_TYPE componentType, Action action) {
+	public MenuData(Integer index, String title, COMPONENT_TYPE componentType, Action action) {
 		this(index, title, componentType);
 		this.action = action;
 	}
@@ -178,7 +179,7 @@ public class MenuData {
 		}
 	}
 	
-	public enum COMPOENENT_TYPE {
+	public enum COMPONENT_TYPE {
 		MENU,
 		JMENU,
 		MENUITEM,

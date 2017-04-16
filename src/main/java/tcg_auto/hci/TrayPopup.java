@@ -8,9 +8,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import tcg_auto.hci.MenuData.COMPOENENT_TYPE;
 import tcg_auto.lang.Lang;
 import tcg_auto.lang.Messages;
+import tcg_auto.model.MenuData;
+import tcg_auto.model.MenuData.COMPONENT_TYPE;
 import tcg_auto.utils.HCIUtils.Action;
 import tcg_auto.utils.MiscUtils;
 
@@ -36,8 +37,8 @@ public class TrayPopup extends PopupMenu {
 	// NOT STATIC METHODS
 	private void initializeMenusData(){
 		myConfig = new HashMap<MenuData, List<MenuData>>();
-		myConfig.put(new MenuData(0, Messages.getString(Lang.MENU_OPEN_APPLICATION), COMPOENENT_TYPE.MENUITEM, Action.ACTION_OPEN_APPLICATION), null);
-		myConfig.put(new MenuData(1, Messages.getString(Lang.MENU_ITEM_FILE_EXIT), COMPOENENT_TYPE.MENUITEM, Action.ACTION_EXIT_APPLICATION), null);
+		myConfig.put(new MenuData(0, Messages.getString(Lang.MENU_OPEN_APPLICATION), COMPONENT_TYPE.MENUITEM, Action.ACTION_OPEN_APPLICATION), null);
+		myConfig.put(new MenuData(1, Messages.getString(Lang.MENU_ITEM_FILE_EXIT), COMPONENT_TYPE.MENUITEM, Action.ACTION_EXIT_APPLICATION), null);
 	}
 	
 	private void initializeMenus(){
