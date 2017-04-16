@@ -168,5 +168,17 @@ public abstract class MiscUtils {
 	public static String getTimeAsString(short timeValue){
 		return timeValue > 9 ? ""+timeValue : "0"+timeValue;
 	}
+	
+	public static String getStringWithSpeceficLength(String rawString, int specificLength){
+		String result = new String(rawString);
+		if(result.length() > specificLength){
+			result = result.substring(0, specificLength);
+		}else{
+			while(result.length() < specificLength){
+				result += " ";
+			}
+		}
+		return result;
+	}
 
 }

@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import tcg_auto.lang.Lang;
+import tcg_auto.lang.Messages;
 import tcg_auto.model.Subscription;
 import tcg_auto.utils.HCIUtils;
 import tcg_auto.utils.MiscUtils;
@@ -40,6 +42,7 @@ public class ConfigManager {
 	public static void setWebDriver(String newWebDriverPath){
 		webDriverPath = newWebDriverPath;
 		saveConfig();
+		LogManager.logInfo(String.format(Messages.getString(Lang.LOG_MESSAGE_INFO_ACTION_GET_SAVE_WEB_DRIVER_PATH), newWebDriverPath));
 	}
 	
 	public static void getAndSaveWebDrive(){

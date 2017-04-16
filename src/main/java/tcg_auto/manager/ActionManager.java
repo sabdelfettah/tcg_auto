@@ -74,10 +74,10 @@ public abstract class ActionManager {
 
 	@SuppressWarnings({ "rawtypes" })
 	public static void updateCourseList() {
-		LogManager.logInfo(Messages.getString(Lang.LOG_MESSAGE_INFO_ACTION_UPDATING_COURSE_LIST));
+		LogManager.logInfoRunning(Messages.getString(Lang.LOG_MESSAGE_INFO_ACTION_UPDATING_COURSE_LIST));
 		Map<String, List> executionResults = MiscUtils.getListElementMap(TCGUtils.ACTION_GET_FULL_COURSE_LIST);
 		int numberOfCourses = updateCourseList(executionResults);
-		LogManager.logInfo(String.format(Messages.getString(Lang.LOG_MESSAGE_INFO_ACTION_UPDATE_COURSE_LIST_SUCCESS), numberOfCourses));
+		LogManager.logInfoFinished(String.format(Messages.getString(Lang.LOG_MESSAGE_INFO_ACTION_UPDATE_COURSE_LIST_SUCCESS), numberOfCourses));
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })

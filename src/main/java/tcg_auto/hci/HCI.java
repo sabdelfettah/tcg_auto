@@ -42,7 +42,7 @@ public class HCI extends JFrame implements ActionListener {
 	public HCI() {
 		this.initializeFrame();
 		this.initializeLogs();
-		LogManager.logInfo(Messages.getString(Lang.LOG_MESSAGE_INFO_INITIALIZATION_STARTING_APP));
+		LogManager.logInfoRunning(Messages.getString(Lang.LOG_MESSAGE_INFO_INITIALIZATION_STARTING_APP));
 		this.initializeLoginAndPassword(true);
 		this.initializeConfig();
 		this.initializeWebDriverPath(true);
@@ -63,12 +63,12 @@ public class HCI extends JFrame implements ActionListener {
 	
 	private void initializeLoginAndPassword(boolean log){
 		if(log){
-			LogManager.logInfo(Messages.getString(Lang.LOG_MESSAGE_INFO_INITIALIZATION_LOOKING_FOR_LOGIN_PASSWORD));
+			LogManager.logInfoRunning(Messages.getString(Lang.LOG_MESSAGE_INFO_INITIALIZATION_LOOKING_FOR_LOGIN_PASSWORD));
 		}
 		try {
 			LoginPasswordManager.getAndInitializeLoginAndPassword();
 			TCG.setBaseUrl(TCGUtils.URL_HOME);
-			LogManager.logInfo(Messages.getString(Lang.LOG_MESSAGE_INFO_INITIALIZATION_LOGIN_PASSWORD_SUCCESS));
+			LogManager.logInfoFinished(Messages.getString(Lang.LOG_MESSAGE_INFO_INITIALIZATION_LOGIN_PASSWORD_SUCCESS));
 		} catch (IOException | NullPointerException e) {
 			LogManager.logWarn(String.format(Messages.getString(Lang.LOG_MESSAGE_WARN_INITIALIZATION_NO_LOGIN_PASSWORD_FOUND), e.getMessage()));
 			boolean savedSuccess = LoginPasswordManager.getAndSaveLoginAndPassword();
@@ -81,24 +81,24 @@ public class HCI extends JFrame implements ActionListener {
 	}
 	
 	public void initializeConfig(){
-		LogManager.logInfo(Messages.getString(Lang.LOG_MESSAGE_INFO_INITIALIZATION_LOOKING_FOR_CONFIG));
+		LogManager.logInfoRunning(Messages.getString(Lang.LOG_MESSAGE_INFO_INITIALIZATION_LOOKING_FOR_CONFIG));
 		try {
 			ConfigManager.getConfig();
 		} catch (Exception e) {
 			HCIUtils.showException(e, true);
 		}
-		LogManager.logInfo(Messages.getString(Lang.LOG_MESSAGE_INFO_INITIALIZATION_CONFIG_SUCCESS));
+		LogManager.logInfoFinished(Messages.getString(Lang.LOG_MESSAGE_INFO_INITIALIZATION_CONFIG_SUCCESS));
 	}
 	
 	public void initializeWebDriverPath(boolean logLooking){
 		if(logLooking){
-			LogManager.logInfo(Messages.getString(Lang.LOG_MESSAGE_INFO_INITIALIZATION_LOOKING_FOR_WEB_DRIVER_PATH));
+			LogManager.logInfoRunning(Messages.getString(Lang.LOG_MESSAGE_INFO_INITIALIZATION_LOOKING_FOR_WEB_DRIVER_PATH));
 		}
 		if(MiscUtils.isNullOrEmpty(ConfigManager.getWebDriverPath())){
 			ConfigManager.getAndSaveWebDrive();
 			initializeWebDriverPath(false);
 		}else{
-			LogManager.logInfo(Messages.getString(Lang.LOG_MESSAGE_INFO_INITIALIZATION_WEB_DRIVER_PATH_SUCCESS));
+			LogManager.logInfoFinished(Messages.getString(Lang.LOG_MESSAGE_INFO_INITIALIZATION_WEB_DRIVER_PATH_SUCCESS));
 		}
 	}
 	
@@ -178,7 +178,7 @@ public class HCI extends JFrame implements ActionListener {
 		ActionManager.initiliazeLists();
 		TrayButton.getSystemTrayInstance();
 		TrayButton.displayInfo(Messages.getString(Lang.APPLICATION_NAME), Messages.getString(Lang.MESSAGE_TRAY_APP_STARTED));
-		LogManager.logInfo(Messages.getString(Lang.LOG_MESSAGE_INFO_INITIALIZATION_APP_STARTED));
+		LogManager.logInfoFinished(Messages.getString(Lang.LOG_MESSAGE_INFO_INITIALIZATION_APP_STARTED));
 	}
 	
 }
