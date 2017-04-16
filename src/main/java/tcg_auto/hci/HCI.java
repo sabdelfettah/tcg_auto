@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
@@ -16,13 +15,10 @@ import tcg_auto.lang.Lang;
 import tcg_auto.lang.Messages;
 import tcg_auto.manager.ActionManager;
 import tcg_auto.manager.ConfigManager;
-import tcg_auto.manager.FileManager;
+import tcg_auto.manager.Initializator;
 import tcg_auto.manager.LogManager;
-import tcg_auto.manager.LoginPasswordManager;
-import tcg_auto.selenium.TCG;
 import tcg_auto.utils.HCIUtils;
 import tcg_auto.utils.MiscUtils;
-import tcg_auto.utils.TCGUtils;
 
 public class HCI extends JFrame implements ActionListener {
 
@@ -41,11 +37,7 @@ public class HCI extends JFrame implements ActionListener {
 	// CONSTRUCTORS
 	public HCI() {
 		this.initializeFrame();
-		this.initializeLogs();
-		LogManager.logInfoRunning(Messages.getString(Lang.LOG_MESSAGE_INFO_INITIALIZATION_STARTING_APP));
-		this.initializeLoginAndPassword(true);
-		this.initializeConfig();
-		this.initializeWebDriverPath(true);
+		Initializator.initializeData();
 	}
 
 	private void initializeFrame(){
@@ -61,59 +53,6 @@ public class HCI extends JFrame implements ActionListener {
 		this.setLocationRelativeTo(null);
 	}
 	
-	private void initializeLoginAndPassword(boolean log){
-		if(log){
-			LogManager.logInfoRunning(Messages.getString(Lang.LOG_MESSAGE_INFO_INITIALIZATION_LOOKING_FOR_LOGIN_PASSWORD));
-		}
-		try {
-			LoginPasswordManager.getAndInitializeLoginAndPassword();
-			TCG.setBaseUrl(TCGUtils.URL_HOME);
-			LogManager.logInfoFinished(Messages.getString(Lang.LOG_MESSAGE_INFO_INITIALIZATION_LOGIN_PASSWORD_SUCCESS));
-		} catch (IOException | NullPointerException e) {
-			LogManager.logWarn(String.format(Messages.getString(Lang.LOG_MESSAGE_WARN_INITIALIZATION_NO_LOGIN_PASSWORD_FOUND), e.getMessage()));
-			boolean savedSuccess = LoginPasswordManager.getAndSaveLoginAndPassword();
-			if(!savedSuccess){
-				ActionManager.exit(false);
-			}else{
-				initializeLoginAndPassword(false);
-			}
-		}
-	}
-	
-	public void initializeConfig(){
-		LogManager.logInfoRunning(Messages.getString(Lang.LOG_MESSAGE_INFO_INITIALIZATION_LOOKING_FOR_CONFIG));
-		try {
-			ConfigManager.getConfig();
-		} catch (Exception e) {
-			HCIUtils.showException(e, true);
-		}
-		LogManager.logInfoFinished(Messages.getString(Lang.LOG_MESSAGE_INFO_INITIALIZATION_CONFIG_SUCCESS));
-	}
-	
-	public void initializeWebDriverPath(boolean logLooking){
-		if(logLooking){
-			LogManager.logInfoRunning(Messages.getString(Lang.LOG_MESSAGE_INFO_INITIALIZATION_LOOKING_FOR_WEB_DRIVER_PATH));
-		}
-		if(MiscUtils.isNullOrEmpty(ConfigManager.getWebDriverPath())){
-			ConfigManager.getAndSaveWebDrive();
-			initializeWebDriverPath(false);
-		}else{
-			LogManager.logInfoFinished(Messages.getString(Lang.LOG_MESSAGE_INFO_INITIALIZATION_WEB_DRIVER_PATH_SUCCESS));
-		}
-	}
-	
-	public void initializeLogs(){
-		List<String> oldLogs;
-		try {
-			oldLogs = FileManager.readLogs();
-			for(String oldLog : oldLogs){
-				LogPanel.appendlnAppLog(oldLog);
-			}
-		} catch (NullPointerException | IOException e) {
-			HCIUtils.showException(e, false);
-		}
-	}
-
 	public void initializeFrameComponents() {
 		this.setJMenuBar(MainMenuBar.getInstance());
 		this.setContentPane(Panel.getInstance());
