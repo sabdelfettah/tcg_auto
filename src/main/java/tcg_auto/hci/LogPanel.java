@@ -3,6 +3,7 @@ package tcg_auto.hci;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -41,12 +42,14 @@ public class LogPanel extends JPanel {
 		this.appSessionLogPanel = new JPanel(new BorderLayout());
 		this.appLogTextArea = new JTextArea();
 		this.appLogTextArea.setEditable(false);
+		this.appLogTextArea.setFont(new Font("monospaced", Font.PLAIN, 12));
 		JScrollPane appLogScrollPane = new JScrollPane(appLogTextArea);
 		appLogScrollPane.setPreferredSize(new Dimension(280, 200));
 		appLogScrollPane.setViewportBorder(BorderFactory.createLineBorder(Color.black));
 		this.appLogPanel.setMinimumSize(new Dimension(300, 300));
 		this.appSessionLogTextArea = new JTextArea();
 		this.appSessionLogTextArea.setEditable(false);
+		this.appSessionLogTextArea.setFont(new Font("monospaced", Font.PLAIN, 12));
 		this.appSessionLogTextArea.setMinimumSize(new Dimension(300, 300));
 		JScrollPane appSessionLogScrollPane = new JScrollPane(appSessionLogTextArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		appSessionLogScrollPane.setPreferredSize(new Dimension(280, 200));
