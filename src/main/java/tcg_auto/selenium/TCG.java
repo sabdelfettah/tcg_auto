@@ -6,12 +6,14 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
+import org.openqa.selenium.phantomjs.PhantomJSDriver;
 
 import tcg_auto.hci.WaitingDialog;
 import tcg_auto.lang.Lang;
@@ -73,7 +75,7 @@ public class TCG {
 
 	@SuppressWarnings({ "rawtypes" })
 	private List executeWebAction(WebAction actionToExecute) {
-		LogManager.logInfo(String.format(Messages.getString(Lang.LOG_MESSAGE_INFO_EXECUTING_WEB_ACTION), actionToExecute.name()));
+		LogManager.logInfoRunning(String.format(Messages.getString(Lang.LOG_MESSAGE_INFO_EXECUTING_WEB_ACTION), actionToExecute.name()));
 		try{
 			switch (actionToExecute) {
 			case ACTION_CONNECT:
@@ -106,14 +108,14 @@ public class TCG {
 				lastActionElemets = confirmBooking();
 				break;
 			default:
-				LogManager.logError(String.format(Messages.getString(Lang.LOG_MESSAGE_ERROR_EXECUTING_WEB_ACTION), actionToExecute.name(), "web action not recognized"));
+				LogManager.logErrorFinished(String.format(Messages.getString(Lang.LOG_MESSAGE_ERROR_EXECUTING_WEB_ACTION), actionToExecute.name(), "web action not recognized"));
 				return (lastActionElemets = MiscUtils.getFalseAsList());
 			}
 		}catch(WebDriverException e){
-			LogManager.logError(String.format(Messages.getString(Lang.LOG_MESSAGE_ERROR_EXECUTING_WEB_ACTION), actionToExecute.name(), e.getMessage()));
+			LogManager.logErrorFinished(String.format(Messages.getString(Lang.LOG_MESSAGE_ERROR_EXECUTING_WEB_ACTION), actionToExecute.name(), e.getMessage()));
 			return (lastActionElemets = MiscUtils.getFalseAsList());
 		}
-		LogManager.logInfo(String.format(Messages.getString(Lang.LOG_MESSAGE_INFO_WEB_ACTION_EXECUTED_WITH_SUCCESS), actionToExecute.name()));
+		LogManager.logInfoFinished(String.format(Messages.getString(Lang.LOG_MESSAGE_INFO_WEB_ACTION_EXECUTED_WITH_SUCCESS), actionToExecute.name()));
 		return lastActionElemets;
 	}
 	
@@ -150,16 +152,11 @@ public class TCG {
 		if(driverInstance == null){
 			try {
 				String current = new java.io.File( "." ).getCanonicalPath();
-				System.setProperty(ChromeDriverService.CHROME_DRIVER_EXE_PROPERTY, ConfigManager.getWebDriverPath());
-				System.setProperty(ChromeDriverService.CHROME_DRIVER_LOG_PROPERTY, current + "/chromedriver.log");
-				//System.setProperty(ChromeDriverService.CHROME_DRIVER_VERBOSE_LOG_PROPERTY, "true");
-				//System.setProperty(ChromeDriverService.CHROME_DRIVER_SILENT_OUTPUT_PROPERTY, "true");
-				//ChromeOptions chromeOptions= new ChromeOptions();
-				//chromeOptions.addArguments("--no-startup-window");
-				//chromeOptions.addArguments("--silent-launch");
-				//DesiredCapabilities capabilities = DesiredCapabilities.chrome();
-				//capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
-				driverInstance = new ChromeDriver();
+//				System.setProperty(ChromeDriverService.CHROME_DRIVER_EXE_PROPERTY, ConfigManager.getWebDriverPath());
+//				System.setProperty(ChromeDriverService.CHROME_DRIVER_LOG_PROPERTY, current + "/chromedriver.log");
+//				driverInstance = new ChromeDriver();
+				System.setProperty("phantomjs.binary.path", ConfigManager.getWebDriverPath());
+				driverInstance = new PhantomJSDriver();
 			} catch (IOException e) {
 				HCIUtils.showException(e, true);
 			}

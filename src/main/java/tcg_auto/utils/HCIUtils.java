@@ -69,6 +69,7 @@ public abstract class HCIUtils {
 		result.setFileSelectionMode(JFileChooser.FILES_ONLY);
 		FileFilter windowsWebDriverFilterer = new WindowsFileFilter();
 		result.setFileFilter(windowsWebDriverFilterer);
+		result.setDialogTitle("Choose web driver file for Windows OS");
 		return result;
 	}
 	
@@ -173,15 +174,19 @@ public abstract class HCIUtils {
 	
 	// PRIVATE CLASSES
 	private static class WindowsFileFilter extends javax.swing.filechooser.FileFilter{
+		private static final String CHROME_DRIVER_FILTER = "chromedriver.exe";
+		private static final String PHAONTOM_DRIVER_FILTER = "phantomjs.exe";
+		private static final String CHROME_DRIVER_FILTER_DESCRIPTION = "ChromeDriver for Windows";
+		private static final String PHAONTOM_DRIVER_FILTER_DESCRIPTION = "Phantom Driver for Windows";
 
 		@Override
 		public boolean accept(File f) {
-			return f.getName().toLowerCase().equals("chromedriver.exe");
+			return f.getName().toLowerCase().equals(PHAONTOM_DRIVER_FILTER);
 		}
 
 		@Override
 		public String getDescription() {
-			return "Windows webdriver filterer";
+			return PHAONTOM_DRIVER_FILTER_DESCRIPTION;
 		}
 		
 	}
