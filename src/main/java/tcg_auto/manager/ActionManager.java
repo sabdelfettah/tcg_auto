@@ -19,11 +19,11 @@ import tcg_auto.lang.Messages;
 import tcg_auto.model.Course;
 import tcg_auto.model.PersistentWebElement;
 import tcg_auto.selenium.TCG;
+import tcg_auto.selenium.TCG.WebAction;
 import tcg_auto.utils.HCIUtils;
 import tcg_auto.utils.HCIUtils.Action;
 import tcg_auto.utils.MiscUtils;
 import tcg_auto.utils.TCGUtils;
-import tcg_auto.utils.TCGUtils.WebAction;
 
 public abstract class ActionManager {
 	

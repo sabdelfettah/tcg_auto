@@ -20,6 +20,7 @@ import tcg_auto.model.Course.Day;
 import tcg_auto.model.Course.Room;
 import tcg_auto.model.PersistentWebElement;
 import tcg_auto.selenium.TCG;
+import tcg_auto.selenium.TCG.WebAction;
 
 public abstract class TCGUtils {
 
@@ -126,7 +127,7 @@ public abstract class TCGUtils {
 		if(MiscUtils.isNullOrEmpty(inputList)){
 			return null;
 		}
-		Object firstInstance = inputList.get(0);
+		Object firstInstance = inputList.iterator().next();
 		return new Boolean(firstInstance instanceof WebElement);
 	}
 	
@@ -135,7 +136,7 @@ public abstract class TCGUtils {
 		if(MiscUtils.isNullOrEmpty(inputList)){
 			return null;
 		}
-		Object firstInstance = inputList.get(0);
+		Object firstInstance = inputList.iterator().next();
 		return new Boolean(firstInstance instanceof Boolean);
 	}
 	
@@ -233,17 +234,4 @@ public abstract class TCGUtils {
 		}
 	}
 	
-	// ENUMERATIONS
-	public enum WebAction {
-		ACTION_CONNECT,
-		ACTION_SIGN_IN_LOGIN_PASSWORD,
-		ACTION_CLOSE,
-		ACTION_CLICK_BOOKING,
-		ACTION_CLICK_ROOM_1,
-		ACTION_CLICK_ROOM_2,
-		ACTION_GET_COURSES_ROOM_1,
-		ACTION_GET_COURSES_ROOM_2,
-		ACTION_SELECT_COURSE,
-		ACTION_CONFIRM_BOOKING;
-	}
 }

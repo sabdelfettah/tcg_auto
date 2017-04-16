@@ -26,7 +26,7 @@ import com.google.gson.reflect.TypeToken;
 
 import tcg_auto.hci.WaitingDialog;
 import tcg_auto.model.Subscription;
-import tcg_auto.utils.TCGUtils.WebAction;
+import tcg_auto.selenium.TCG.WebAction;
 
 public abstract class MiscUtils {
 	

@@ -20,7 +20,7 @@ import tcg_auto.lang.Messages;
 import tcg_auto.manager.ActionManager;
 import tcg_auto.manager.LogManager;
 import tcg_auto.model.Course;
-import tcg_auto.utils.TCGUtils.WebAction;
+import tcg_auto.selenium.TCG.WebAction;
 
 public abstract class HCIUtils {
 

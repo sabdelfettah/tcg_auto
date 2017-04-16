@@ -12,8 +12,8 @@ import javax.swing.JProgressBar;
 
 import tcg_auto.lang.Lang;
 import tcg_auto.lang.Messages;
+import tcg_auto.selenium.TCG.WebAction;
 import tcg_auto.utils.HCIUtils;
-import tcg_auto.utils.TCGUtils.WebAction;
 
 public class WaitingDialog extends JDialog{
 

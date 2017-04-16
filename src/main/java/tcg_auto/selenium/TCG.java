@@ -21,7 +21,6 @@ import tcg_auto.model.PersistentWebElement;
 import tcg_auto.utils.HCIUtils;
 import tcg_auto.utils.MiscUtils;
 import tcg_auto.utils.TCGUtils;
-import tcg_auto.utils.TCGUtils.WebAction;
 
 public class TCG {
 	
@@ -118,6 +117,7 @@ public class TCG {
 	}
 
 	// STATIC METHODS
+	// GETTERS AND SETTERS
 	public static void setBaseUrl(String baseUrl) {
 		TCG.baseUrl = baseUrl;
 	}
@@ -151,12 +151,13 @@ public class TCG {
 		return driverInstance;
 	}
 	
-	public static List<Boolean> connectToTCG() {
+	// ACTION METHODS
+	private static List<Boolean> connectToTCG() {
 		getWebDriver().get(baseUrl);
 		return MiscUtils.getTrueAsList();
 	}
 	
-	public static List<Boolean> enterLoginAndPassword() {
+	private static List<Boolean> enterLoginAndPassword() {
 		WebElement inputLogin = getWebDriver().findElement(By.xpath(TCGUtils.XPATH_INPUT_LOGIN));
 		WebElement inputPassword = getWebDriver().findElement(By.xpath(TCGUtils.XPATH_INPUT_PASSWORD));
 		WebElement buttonSubmit = getWebDriver().findElement(By.xpath(TCGUtils.XPATH_BUTTON_SUBMIT_LOGIN_PASSWORD));
@@ -166,38 +167,11 @@ public class TCG {
 		return MiscUtils.getTrueAsList();
 	}
 
-	public static List<Boolean> closeConnection() {
+	private static List<Boolean> closeConnection() {
 		getWebDriver().close();
 		return MiscUtils.getTrueAsList();
 	}
 
-	public static List<Boolean> findButtonAndClick(String XPath) {
-		WebElement button = getWebDriver().findElement(By.xpath(XPath));
-		if(button == null){
-			return MiscUtils.getFalseAsList();
-		}
-		button.click();
-		return MiscUtils.getTrueAsList();
-	}
-
-	public static List<WebElement> getElements(String XPath) {
-		List<WebElement> result = getWebDriver().findElements(By.xpath(XPath));
-		return result;
-	}
-	
-	public static List<WebElement> getDialogElement(String[] XPaths) {
-		List<WebElement> result = null;
-		int index = 0;
-		while(MiscUtils.isNullOrEmpty(result) && index < XPaths.length){
-			result = getWebDriver().findElements(By.xpath(XPaths[index]));
-			index++;
-		}
-		if(result == null){
-			return null;
-		}
-		return result;
-	}
-	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private static List selectCourse(Course course){
 		if(course == null){
@@ -253,6 +227,38 @@ public class TCG {
 		return Arrays.asList(getWebDriver().getCurrentUrl().equals(TCGUtils.URL_BOOKING_SPACE));
 	}
 	
+	// OTHER METHODS
+	protected static List<Boolean> findButtonAndClick(String XPath) {
+		WebElement button = getWebDriver().findElement(By.xpath(XPath));
+		if(button == null){
+			return MiscUtils.getFalseAsList();
+		}
+		button.click();
+		return MiscUtils.getTrueAsList();
+	}
+	
+	protected static List<WebElement> getElements(String XPath) {
+		List<WebElement> result = getWebDriver().findElements(By.xpath(XPath));
+		return result;
+	}
+	
+	protected static List<WebElement> getDialogElement(String[] XPaths) {
+		List<WebElement> result = null;
+		int index = 0;
+		while(MiscUtils.isNullOrEmpty(result) && index < XPaths.length){
+			result = getWebDriver().findElements(By.xpath(XPaths[index]));
+			index++;
+		}
+		if(result == null){
+			return null;
+		}
+		return result;
+	}
+	
+	protected static void waitJavaScriptLoading(){
+		
+	}
+	
 	public static TCG getNewTCGInstance(List<WebAction> webActionList){
 		TCG newInstance = new TCG(webActionList);
 		return newInstance;
@@ -260,5 +266,19 @@ public class TCG {
 	
 	public static boolean isDriverInitialized(){
 		return driverInstance != null;
+	}
+	
+	// ENUMERATIONS
+	public enum WebAction {
+		ACTION_CONNECT,
+		ACTION_SIGN_IN_LOGIN_PASSWORD,
+		ACTION_CLOSE,
+		ACTION_CLICK_BOOKING,
+		ACTION_CLICK_ROOM_1,
+		ACTION_CLICK_ROOM_2,
+		ACTION_GET_COURSES_ROOM_1,
+		ACTION_GET_COURSES_ROOM_2,
+		ACTION_SELECT_COURSE,
+		ACTION_CONFIRM_BOOKING;
 	}
 }
