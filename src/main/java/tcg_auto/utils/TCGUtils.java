@@ -35,9 +35,10 @@ public abstract class TCGUtils {
 	public static final String XPATH_BUTTON_GO_TO_ROOM_1_SPACE = "//a[contains(text(), 'SALLE 1')]";
 	public static final String XPATH_BUTTON_GO_TO_ROOM_2_SPACE = "//a[contains(text(), 'SALLE 2')]";
 	public static final String XPATH_BUTTON_GO_TO_NEXT_WEEK = "//a[contains(text(), 'Suivant')]";
-	public static final String XPATH_BUTTON_CONFIRM_BOOKING = "//a[contains(text(), 'Réserver')]";
+	public static final String XPATH_BUTTON_CONFIRM_BOOKING = "//a[contains(text(), 'RÃ©server')]";
+	public static final String XPATH_DIALOG_WAITING = "//a[contains(text(), 'moment')]";
 	public static final String XPATH_DIVS_COURSES = "//div[@class='groupclasse']";
-	public static final String XPATH_SPAN_SIGN_IN_IMPOSSIBLE = "//span[contains(text(), 'Réservation impossible')]";
+	public static final String XPATH_SPAN_SIGN_IN_IMPOSSIBLE = "//span[contains(text(), 'RÃ©servation impossible')]";
 	public static final String[] XPATHS_SIGN_IN_COURSE_DIALOG = {XPATH_SPAN_SIGN_IN_IMPOSSIBLE, XPATH_BUTTON_CONFIRM_BOOKING};
 	// WEBACTION LISTS
 	public static final List<WebAction> ACTION_GET_ROOM_1_COURSE_LIST = Arrays.asList(

@@ -84,7 +84,8 @@ public abstract class Lang {
 	public static final String LOG_MESSAGE_ERROR_HCI_INITIALIZATION_TRAYICON = "logs.error_hci_initialization_tray";
 	public static final String LOG_MESSAGE_ERROR_FILE_WRITE_LOGIN_PASSWORD = "logs.error_file_writing_login_password";
 	public static final String LOG_MESSAGE_ERROR_EXIT_APP = "logs.error_exit_application";
-	public static final String LOG_MESSAGE_ERROR_ACTION_EXECUTE_ACTION = "logs.error_action_execute_action";
+	public static final String LOG_MESSAGE_ERROR_EXECUTING_ACTION = "logs.error_executing_action";
+	public static final String LOG_MESSAGE_ERROR_EXECUTING_WEB_ACTION = "logs.error_executing_web_action";
 	public static final String LOG_MESSAGE_WARN_INITIALIZATION_NO_LOGIN_PASSWORD_FOUND = "logs.warn_initialization_no_login_password_found";
 	public static final String LOG_MESSAGE_INFO_INITIALIZATION_STARTING_APP = "logs.info_initialization_starting_application";
 	public static final String LOG_MESSAGE_INFO_INITIALIZATION_APP_STARTED = "logs.info_initialization_application_started";
@@ -94,8 +95,10 @@ public abstract class Lang {
 	public static final String LOG_MESSAGE_INFO_INITIALIZATION_CONFIG_SUCCESS = "logs.info_initialization_config_success";
 	public static final String LOG_MESSAGE_INFO_INITIALIZATION_LOOKING_FOR_WEB_DRIVER_PATH = "logs.info_initialization_looking_for_web_driver_path";
 	public static final String LOG_MESSAGE_INFO_INITIALIZATION_WEB_DRIVER_PATH_SUCCESS = "logs.info_initialization_web_driver_path_success";
-	public static final String LOG_MESSAGE_INFO_UPDATING_COURSE_LIST = "logs.info_updating_course_list";
-	public static final String LOG_MESSAGE_INFO_UPDATE_COURSE_LIST_SUCCESS = "logs.info_update_course_list_success";
+	public static final String LOG_MESSAGE_INFO_EXECUTING_WEB_ACTION = "logs.info_executin_web_action";
+	public static final String LOG_MESSAGE_INFO_WEB_ACTION_EXECUTED_WITH_SUCCESS = "logs.info_web_action_executed_with_success";
+	public static final String LOG_MESSAGE_INFO_ACTION_UPDATING_COURSE_LIST = "logs.info_updating_course_list";
+	public static final String LOG_MESSAGE_INFO_ACTION_UPDATE_COURSE_LIST_SUCCESS = "logs.info_update_course_list_success";
 	public static final String LOG_MESSAGE_INFO_EXIT_APP = "logs.info_exit_application";
 	public static final String LOG_MESSAGE_INFO_ACTION_GET_SAVE_LOGIN_PASSWORD = "logs.info_action_get_save_login_password";
 	public static final String LOG_MESSAGE_INFO_CREATE_TASK_SUCCESS = "logs.info_create_task_success";

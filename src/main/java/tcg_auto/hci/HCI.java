@@ -159,9 +159,9 @@ public class HCI extends JFrame implements ActionListener {
 		try {
 			ActionManager.executeAction(actionEvent.getActionCommand());
 		} catch (IOException e) {
-			HCIUtils.showException(e, false, true, Messages.getString(Lang.LOG_MESSAGE_ERROR_ACTION_EXECUTE_ACTION), MiscUtils.getValueOfObject(actionEvent));
+			HCIUtils.showException(e, false, true, Messages.getString(Lang.LOG_MESSAGE_ERROR_EXECUTING_ACTION), MiscUtils.getValueOfObject(actionEvent));
 		} catch (Exception e) {
-			HCIUtils.showException(e, false, true, Messages.getString(Lang.LOG_MESSAGE_ERROR_ACTION_EXECUTE_ACTION), MiscUtils.getValueOfObject(actionEvent));
+			HCIUtils.showException(e, false, true, Messages.getString(Lang.LOG_MESSAGE_ERROR_EXECUTING_ACTION), MiscUtils.getValueOfObject(actionEvent));
 		}
 	}
 

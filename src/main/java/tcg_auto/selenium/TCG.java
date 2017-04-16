@@ -6,7 +6,6 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
@@ -15,7 +14,10 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 
 import tcg_auto.hci.WaitingDialog;
+import tcg_auto.lang.Lang;
+import tcg_auto.lang.Messages;
 import tcg_auto.manager.ConfigManager;
+import tcg_auto.manager.LogManager;
 import tcg_auto.model.Course;
 import tcg_auto.model.PersistentWebElement;
 import tcg_auto.utils.HCIUtils;
@@ -71,34 +73,48 @@ public class TCG {
 
 	@SuppressWarnings({ "rawtypes" })
 	private List executeWebAction(WebAction actionToExecute) {
+		LogManager.logInfo(String.format(Messages.getString(Lang.LOG_MESSAGE_INFO_EXECUTING_WEB_ACTION), actionToExecute.name()));
 		try{
 			switch (actionToExecute) {
 			case ACTION_CONNECT:
-				return (lastActionElemets = connectToTCG());
+				lastActionElemets = connectToTCG();
+				break;
 			case ACTION_SIGN_IN_LOGIN_PASSWORD:
-				return (lastActionElemets = enterLoginAndPassword());
+				lastActionElemets = enterLoginAndPassword();
+				break;
 			case ACTION_CLOSE:
-				return (lastActionElemets = closeConnection());
+				lastActionElemets = closeConnection();
+				break;
 			case ACTION_CLICK_BOOKING:
-				return (lastActionElemets = findButtonAndClick(TCGUtils.XPATH_BUTTON_GO_TO_BOOKING_SPACE));
+				lastActionElemets = findButtonAndClick(TCGUtils.XPATH_BUTTON_GO_TO_BOOKING_SPACE);
+				break;
 			case ACTION_CLICK_ROOM_1:
-				return (lastActionElemets = findButtonAndClick(TCGUtils.XPATH_BUTTON_GO_TO_ROOM_1_SPACE));
+				lastActionElemets = findButtonAndClick(TCGUtils.XPATH_BUTTON_GO_TO_ROOM_1_SPACE);
+				break;
 			case ACTION_CLICK_ROOM_2:
-				return (lastActionElemets = findButtonAndClick(TCGUtils.XPATH_BUTTON_GO_TO_ROOM_2_SPACE));
+				lastActionElemets = findButtonAndClick(TCGUtils.XPATH_BUTTON_GO_TO_ROOM_2_SPACE);
+				break;
 			case ACTION_GET_COURSES_ROOM_1:
 			case ACTION_GET_COURSES_ROOM_2:
-				return (lastActionElemets = getElements(TCGUtils.XPATH_DIVS_COURSES));
+				lastActionElemets = getElements(TCGUtils.XPATH_DIVS_COURSES);
+				break;
 			case ACTION_SELECT_COURSE : 
 				Course course = getCourseArgument();
-				return (lastActionElemets = selectCourse(course));
+				lastActionElemets = selectCourse(course);
+				break;
 			case ACTION_CONFIRM_BOOKING :
-				return (lastActionElemets = confirmBooking());
+				lastActionElemets = confirmBooking();
+				break;
 			default:
+				LogManager.logError(String.format(Messages.getString(Lang.LOG_MESSAGE_ERROR_EXECUTING_WEB_ACTION), actionToExecute.name(), "web action not recognized"));
 				return (lastActionElemets = MiscUtils.getFalseAsList());
 			}
 		}catch(WebDriverException e){
+			LogManager.logError(String.format(Messages.getString(Lang.LOG_MESSAGE_ERROR_EXECUTING_WEB_ACTION), actionToExecute.name(), e.getMessage()));
 			return (lastActionElemets = MiscUtils.getFalseAsList());
 		}
+		LogManager.logInfo(String.format(Messages.getString(Lang.LOG_MESSAGE_INFO_WEB_ACTION_EXECUTED_WITH_SUCCESS), actionToExecute.name()));
+		return lastActionElemets;
 	}
 	
 	private Object getArgument(String argument){
@@ -194,6 +210,7 @@ public class TCG {
 			return (lastActionElemets = MiscUtils.getFalseAsList());
 		}
 		elementToClick.click();
+		waitJavaScriptLoading();
 		int attemps = 1;
 		List<WebElement> dialogElement = getDialogElement(TCGUtils.XPATHS_SIGN_IN_COURSE_DIALOG);
 		System.out.println(MiscUtils.getValueOfObject(dialogElement) + " ; " + attemps);
@@ -256,7 +273,10 @@ public class TCG {
 	}
 	
 	protected static void waitJavaScriptLoading(){
-		
+		boolean finished = false;
+		do{
+			finished = MiscUtils.isNullOrEmpty(getElements(TCGUtils.XPATH_DIALOG_WAITING));
+		}while(!finished);
 	}
 	
 	public static TCG getNewTCGInstance(List<WebAction> webActionList){
