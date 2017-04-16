@@ -57,7 +57,7 @@ public class HCI extends JFrame implements ActionListener {
 		this.setJMenuBar(MainMenuBar.getInstance());
 		this.setContentPane(Panel.getInstance());
 		LogPanel.setPanelVisible(ConfigManager.getSeeLogs());
-		((JCheckBox) MainMenuBar.getMenuBarComponent(Messages.getString(Lang.MENU_ITEM_HELP_SEE_LOG))).setSelected(ConfigManager.getSeeLogs());
+		((JCheckBox) MainMenuBar.getMenuBarComponent(Messages.getString(Lang.MENU_ITEM_OPTIONS_SEE_LOG))).setSelected(ConfigManager.getSeeLogs());
 	}
 	
 	// GETTERS

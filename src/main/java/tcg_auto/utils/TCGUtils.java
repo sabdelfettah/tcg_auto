@@ -28,6 +28,7 @@ public abstract class TCGUtils {
 	// STATIC FINAL FIELDS
 	public static final String URL_HOME = "http://center.thecorporategym.com/citylights/";
 	public static final String URL_BOOKING_SPACE = "https://citylights.thecorporategym.com/fr/poliwin/reservas";
+	public static final String URL_MY_RESERVATIONS = "https://citylights.thecorporategym.com/fr/poliwin/misreservas";
 	// XPATHS
 	public static final String XPATH_INPUT_LOGIN = "//input[@name='myusername']";
 	public static final String XPATH_INPUT_PASSWORD = "//input[@name='mypassword']";
@@ -39,6 +40,9 @@ public abstract class TCGUtils {
 	public static final String XPATH_BUTTON_CONFIRM_BOOKING = "//a[contains(text(), 'Réserver')]";
 	public static final String XPATH_DIALOG_LOADING = "//div[@id='loading']";
 	public static final String XPATH_DIVS_COURSES = "//div[@class='groupclasse']";
+	public static final String XPATH_TABLE_RESERVATIONS = "//table[@id='dades-reserva']";
+	public static final String XPATH_TABLE_RESERVATIONS_TH = "//th[@class='text']";
+	public static final String XPATH_TABLE_RESERVATIONS_TD = "//td[@class='text']";
 	public static final String XPATH_SPAN_SIGN_IN_IMPOSSIBLE = "//span[contains(text(), 'Réservation impossible')]";
 	public static final String[] XPATHS_SIGN_IN_COURSE_DIALOG = {XPATH_SPAN_SIGN_IN_IMPOSSIBLE, XPATH_BUTTON_CONFIRM_BOOKING};
 	// WEBACTION LISTS
@@ -65,6 +69,24 @@ public abstract class TCGUtils {
 			WebAction.ACTION_CLICK_BOOKING,
 			WebAction.ACTION_CLICK_ROOM_2,
 			WebAction.ACTION_GET_COURSES_ROOM_2
+			);
+	public static final List<WebAction> ACTION_GET_BOOKED_COURSE_LIST = Arrays.asList(
+			WebAction.ACTION_CONNECT,
+			WebAction.ACTION_SIGN_IN_LOGIN_PASSWORD,
+			WebAction.ACTION_GO_TO_MY_RESERVATIONS,
+			WebAction.ACTION_GET_MY_RESERVATIONS
+			);
+	public static final List<WebAction> ACTION_GET_FULL_LISTS = Arrays.asList(
+			WebAction.ACTION_CONNECT,
+			WebAction.ACTION_SIGN_IN_LOGIN_PASSWORD,
+			WebAction.ACTION_CLICK_BOOKING,
+			WebAction.ACTION_CLICK_ROOM_1,
+			WebAction.ACTION_GET_COURSES_ROOM_1,
+			WebAction.ACTION_CLICK_BOOKING,
+			WebAction.ACTION_CLICK_ROOM_2,
+			WebAction.ACTION_GET_COURSES_ROOM_2,
+			WebAction.ACTION_GO_TO_MY_RESERVATIONS,
+			WebAction.ACTION_GET_MY_RESERVATIONS
 			);
 	public static final List<WebAction> ACTION_BOOKING_COURSE_ROOM_1 = Arrays.asList(
 			WebAction.ACTION_CONNECT,

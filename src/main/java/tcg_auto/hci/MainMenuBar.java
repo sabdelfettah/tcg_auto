@@ -14,6 +14,7 @@ import tcg_auto.lang.Lang;
 import tcg_auto.lang.Messages;
 import tcg_auto.model.MenuData;
 import tcg_auto.model.MenuData.COMPONENT_TYPE;
+import tcg_auto.utils.HCIUtils;
 import tcg_auto.utils.HCIUtils.Action;
 import tcg_auto.utils.MiscUtils;
 
@@ -34,12 +35,16 @@ public class MainMenuBar extends JMenuBar {
 
 	// CONSTRUCTORS
 	public MainMenuBar() {
-		this.initializeMenusData();
+		try {
+			this.initializeMenusData();
+		} catch (Exception e) {
+			HCIUtils.showException(e, false);
+		}
 		this.initializeMenus();
 	}
 
 	// NOT STATIC METHODS
-	private void initializeMenusData() {
+	private void initializeMenusData() throws Exception {
 		myConfig = new HashMap<MenuData, List<MenuData>>();
 		myConfig.put(new MenuData(0, Messages.getString(Lang.MENU_FILE), COMPONENT_TYPE.JMENU),
 				Arrays.asList(
@@ -49,12 +54,18 @@ public class MainMenuBar extends JMenuBar {
 				Arrays.asList(
 						new MenuData(Messages.getString(Lang.MENU_ITEM_ACTIONS_SET_LOGIN_PASSWORD), COMPONENT_TYPE.JMENUITEM, Action.ACTION_SET_LOGIN_PASSWORD),
 						new MenuData(Messages.getString(Lang.MENU_ITEM_ACTIONS_UPDATE_COURSES), COMPONENT_TYPE.JMENUITEM, Action.ACTION_UPDATE_COURSES),
+						new MenuData(Messages.getString(Lang.MENU_ITEM_ACTIONS_UPDATE_BOOKED_COURSES), COMPONENT_TYPE.JMENUITEM, Action.ACTION_UPDATE_BOOKED_COURSES),
+						new MenuData(COMPONENT_TYPE.JSEPARATOR),
 						new MenuData(Messages.getString(Lang.MENU_ITEM_ACTIONS_ADD_SUBSCRIPTION), COMPONENT_TYPE.JMENUITEM, Action.ACTION_ADD_SUBSCRIPTION),
 						new MenuData(Messages.getString(Lang.MENU_ITEM_ACTIONS_BOOKING), COMPONENT_TYPE.JMENUITEM, Action.ACTION_BOOKING_COURSE)
 				));
-		myConfig.put(new MenuData(2, Messages.getString(Lang.MENU_HELP), COMPONENT_TYPE.JMENU),
+		myConfig.put(new MenuData(2, Messages.getString(Lang.MENU_OPTIONS), COMPONENT_TYPE.JMENU),
 				Arrays.asList(
-						new MenuData(Messages.getString(Lang.MENU_ITEM_HELP_SEE_LOG), COMPONENT_TYPE.JCHECKBOX, Action.ACTION_SEE_LOG, MiscUtils.getCtrlKeyStroke('L'))
+						new MenuData(Messages.getString(Lang.MENU_ITEM_OPTIONS_SEE_LOG), COMPONENT_TYPE.JCHECKBOX, Action.ACTION_SEE_LOG, MiscUtils.getCtrlKeyStroke('L'))
+				));
+		myConfig.put(new MenuData(3, Messages.getString(Lang.MENU_HELP), COMPONENT_TYPE.JMENU),
+				Arrays.asList(
+						new MenuData(Messages.getString(Lang.MENU_ITEM_HELP_ABOUT), COMPONENT_TYPE.JMENUITEM, Action.ACTION_SEE_ABOUT, MiscUtils.getCtrlKeyStroke('A'))
 				));
 	}
 

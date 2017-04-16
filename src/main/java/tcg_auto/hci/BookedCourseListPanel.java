@@ -2,12 +2,11 @@ package tcg_auto.hci;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.util.List;
 
 import javax.swing.JList;
 import javax.swing.JPanel;
 
-import tcg_auto.manager.CourseManager;
-import tcg_auto.model.Course;
 import tcg_auto.utils.HCIUtils;
 
 public class BookedCourseListPanel extends JPanel {
@@ -21,12 +20,12 @@ public class BookedCourseListPanel extends JPanel {
 	private static BookedCourseListPanel instance = null;
 	
 	// NOT STATIC FIELDS
-	private JList<Course> list;
+	private JList<String> list;
 
 	// CONSTRUCTORS
 	public BookedCourseListPanel() {
 		this.setLayout(new BorderLayout());
-		this.list = new JList<Course>();
+		this.list = new JList<String>();
 		this.list.setFocusable(false);
 		this.list.setEnabled(false);
 		this.list.setForeground(Color.BLACK);
@@ -34,7 +33,7 @@ public class BookedCourseListPanel extends JPanel {
 	}
 
 	// NOT STATIC FIELDS
-	public JList<Course> getJList() {
+	public JList<String> getJList() {
 		return list;
 	}
 	
@@ -45,8 +44,8 @@ public class BookedCourseListPanel extends JPanel {
 		return instance;
 	}
 	
-	public static void updateBookedCourseList(){
-		HCIUtils.UpdateJList(getInstance().getJList(), CourseManager.getCourseList());
+	public static void updateBookedCourseList(List<String> bookedCourseList){
+		HCIUtils.UpdateJList(getInstance().getJList(), bookedCourseList);
 	}
 
 }

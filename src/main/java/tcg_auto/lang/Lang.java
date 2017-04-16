@@ -9,6 +9,7 @@ public abstract class Lang {
 	// MENUS
 	public static final String MENU_FILE = "menus.file";
 	public static final String MENU_ACTIONS = "menus.actions";
+	public static final String MENU_OPTIONS = "menus.options";
 	public static final String MENU_HELP = "menus.help";
 	public static final String MENU_OPEN_APPLICATION = "menus.open_application";
 	
@@ -16,9 +17,11 @@ public abstract class Lang {
 	public static final String MENU_ITEM_FILE_EXIT = "menuitems.menu_file_exit";
 	public static final String MENU_ITEM_ACTIONS_SET_LOGIN_PASSWORD = "menuitems.menu_actions_set_login_password";
 	public static final String MENU_ITEM_ACTIONS_UPDATE_COURSES = "menuitems.menu_actions_update_courses";
+	public static final String MENU_ITEM_ACTIONS_UPDATE_BOOKED_COURSES = "menuitems.menu_actions_update_booked_courses";
 	public static final String MENU_ITEM_ACTIONS_ADD_SUBSCRIPTION = "menuitems.menu_actions_add_subscription";
 	public static final String MENU_ITEM_ACTIONS_BOOKING = "menuitems.menu_actions_booking";
-	public static final String MENU_ITEM_HELP_SEE_LOG = "menuitems.menu_help_see_logs";
+	public static final String MENU_ITEM_OPTIONS_SEE_LOG = "menuitems.menu_options_see_logs";
+	public static final String MENU_ITEM_HELP_ABOUT = "menuitems.menu_help_about";
 		
 	// CLICKABLES
 	public static final String CLICKABLES_SUBSCRIPTION_BUTTON_VALIDATION_SUBSCIPTION = "clickables.subscription_button_validate_subscription";
@@ -76,6 +79,8 @@ public abstract class Lang {
 	public static final String MESSAGE_WAITING_DIALOG_WEBACTION_ACTION_GET_COURSES = "messages.waiting_dialog_webaction_get_courses";
 	public static final String MESSAGE_WAITING_DIALOG_WEBACTION_ACTION_SELECT_COURSE = "messages.waiting_dialog_webaction_select_course";
 	public static final String MESSAGE_WAITING_DIALOG_WEBACTION_ACTION_CONFIRM_BOOKING = "messages.waiting_dialog_webaction_confirm_booking";
+	public static final String MESSAGE_WAITING_DIALOG_WEBACTION_ACTION_GO_TO_MY_RESERVATIONS = "messages.waiting_dialog_webaction_go_to_my_reservations";
+	public static final String MESSAGE_WAITING_DIALOG_WEBACTION_ACTION_GET_MY_RESERVATIONS = "messages.waiting_dialog_webaction_get_my_reservations";
 	
 	// LOG CONTENTS
 	public static final String LOG_MESSAGE_ERROR_CIPHER_INITIALIZATION_ENCRYPTER = "logs.error_cipher_initialization_encrypter";

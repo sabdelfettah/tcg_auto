@@ -107,6 +107,12 @@ public class TCG {
 			case ACTION_CONFIRM_BOOKING :
 				lastActionElemets = confirmBooking();
 				break;
+			case ACTION_GO_TO_MY_RESERVATIONS :
+				lastActionElemets = goToMyReservations();
+				break;
+			case ACTION_GET_MY_RESERVATIONS :
+				lastActionElemets = getElements(TCGUtils.XPATH_TABLE_RESERVATIONS);
+				break;
 			default:
 				LogManager.logErrorFinished(String.format(Messages.getString(Lang.LOG_MESSAGE_ERROR_EXECUTING_WEB_ACTION), actionToExecute.name(), "web action not recognized"));
 				return (lastActionElemets = MiscUtils.getFalseAsList());
@@ -233,6 +239,12 @@ public class TCG {
 		return Arrays.asList(getWebDriver().getCurrentUrl().equals(TCGUtils.URL_BOOKING_SPACE));
 	}
 	
+	@SuppressWarnings("rawtypes")
+	private static List goToMyReservations(){
+		getWebDriver().get(TCGUtils.URL_MY_RESERVATIONS);
+		return MiscUtils.getTrueAsList();
+	}
+	
 	// OTHER METHODS
 	protected static List<Boolean> findButtonAndClick(String XPath) {
 		WebElement button = getWebDriver().findElement(By.xpath(XPath));
@@ -298,6 +310,8 @@ public class TCG {
 		ACTION_GET_COURSES_ROOM_1,
 		ACTION_GET_COURSES_ROOM_2,
 		ACTION_SELECT_COURSE,
-		ACTION_CONFIRM_BOOKING;
+		ACTION_CONFIRM_BOOKING,
+		ACTION_GO_TO_MY_RESERVATIONS,
+		ACTION_GET_MY_RESERVATIONS;
 	}
 }

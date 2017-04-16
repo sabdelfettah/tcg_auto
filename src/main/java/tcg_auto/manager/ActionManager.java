@@ -1,12 +1,20 @@
 package tcg_auto.manager;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
+import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
+import javax.swing.JOptionPane;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+
+import tcg_auto.hci.BookedCourseListPanel;
 import tcg_auto.hci.CourseBookingDialog;
 import tcg_auto.hci.CourseListPanel;
 import tcg_auto.hci.HCI;
@@ -32,7 +40,7 @@ public abstract class ActionManager {
 	// STATIC METHODS
 	public static JCheckBox getSeeLogButtonInstance(){
 		if(seeLogButtonInstance == null){
-			seeLogButtonInstance = (JCheckBox) MainMenuBar.getMenuBarComponent(Messages.getString(Lang.MENU_ITEM_HELP_SEE_LOG));
+			seeLogButtonInstance = (JCheckBox) MainMenuBar.getMenuBarComponent(Messages.getString(Lang.MENU_ITEM_OPTIONS_SEE_LOG));
 		}
 		return seeLogButtonInstance;
 	}
@@ -69,21 +77,27 @@ public abstract class ActionManager {
 			break;
 		case ACTION_CONFIRM_BOOKING_COURSE:
 			CourseBookingDialog.confirmBooking();
+			break;
+		case ACTION_UPDATE_BOOKED_COURSES:
+			updateBookedCourseList();
+			break;
+		case ACTION_SEE_ABOUT :
+			JOptionPane.showMessageDialog(null, "", Messages.getString(Lang.MENU_ITEM_HELP_ABOUT), JOptionPane.INFORMATION_MESSAGE);
+			break;
 		}
 	}
 
 	@SuppressWarnings({ "rawtypes" })
 	public static void updateCourseList() {
-		LogManager.logInfoRunning(Messages.getString(Lang.LOG_MESSAGE_INFO_ACTION_UPDATING_COURSE_LIST));
 		Map<String, List> executionResults = MiscUtils.getListElementMap(TCGUtils.ACTION_GET_FULL_COURSE_LIST);
-		int numberOfCourses = updateCourseList(executionResults);
-		LogManager.logInfoFinished(String.format(Messages.getString(Lang.LOG_MESSAGE_INFO_ACTION_UPDATE_COURSE_LIST_SUCCESS), numberOfCourses));
+		updateCourseList(executionResults);
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private static int updateCourseList(Map<String, List> executionResults) {
+	private static void updateCourseList(Map<String, List> executionResults) {
+		LogManager.logInfoRunning(Messages.getString(Lang.LOG_MESSAGE_INFO_ACTION_UPDATING_COURSE_LIST));
 		List<PersistentWebElement> listToUpdate = executionResults.get(PersistentWebElement.getPersistentMapKey(WebAction.ACTION_GET_COURSES_ROOM_1.name()));
-		int result = listToUpdate.size();
+		int numberOfTotalCourses = listToUpdate.size();
 		CourseManager.initCourseList();
 		if(MiscUtils.isNotNullOrEmpty(listToUpdate)){
 			listToUpdate.forEach(course -> {
@@ -92,7 +106,7 @@ public abstract class ActionManager {
 			});
 		}
 		listToUpdate = executionResults.get(PersistentWebElement.getPersistentMapKey(WebAction.ACTION_GET_COURSES_ROOM_2.name()));
-		result += listToUpdate.size();
+		numberOfTotalCourses += listToUpdate.size();
 		if(MiscUtils.isNotNullOrEmpty(listToUpdate)){
 			listToUpdate.forEach(course -> {
 				short[] timeOptions = TCGUtils.getTimeOptionsFromPersistentWebElement(course);
@@ -102,7 +116,31 @@ public abstract class ActionManager {
 		CourseManager.sortCourseList();
 		CourseListPanel.updateCourseList();
 		HCI.getInstance().repaint();
-		return result;
+		LogManager.logInfoFinished(String.format(Messages.getString(Lang.LOG_MESSAGE_INFO_ACTION_UPDATE_COURSE_LIST_SUCCESS), numberOfTotalCourses));
+	}
+	
+	@SuppressWarnings("rawtypes")
+	private static void updateBookedCourseList(){
+		Map<String, List> executionResults = MiscUtils.getListElementMap(TCGUtils.ACTION_GET_BOOKED_COURSE_LIST);
+		updateBookedCourseList(executionResults);
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	private static void updateBookedCourseList(Map<String, List> executionResults){
+		List<String> bookedCourseList = new ArrayList<String>();
+		List<WebElement> listToUpdate = executionResults.get(WebAction.ACTION_GET_MY_RESERVATIONS.name());
+		for(WebElement webElement : listToUpdate){
+			WebElement thElement = webElement.findElement(By.xpath(TCGUtils.XPATH_TABLE_RESERVATIONS_TH)); 
+			List<WebElement> tdElements = webElement.findElements(By.xpath(TCGUtils.XPATH_TABLE_RESERVATIONS_TD)); 
+			bookedCourseList.add(
+					String.format("%s - %s", 	thElement.getText(),
+												com.google.common.base.Joiner.on(" - ").join(
+																								tdElements	.parallelStream()
+																											.map(element -> element.getText())
+																											.collect(Collectors.toList())
+																								)));
+		}
+		BookedCourseListPanel.updateBookedCourseList(bookedCourseList);
 	}
 	
 	public static void addSubscription(){
@@ -111,8 +149,9 @@ public abstract class ActionManager {
 
 	@SuppressWarnings("rawtypes")
 	public static void initiliazeLists(){
-		Map<String, List> executionResults = MiscUtils.getListElementMap(TCGUtils.ACTION_GET_FULL_COURSE_LIST);
+		Map<String, List> executionResults = MiscUtils.getListElementMap(TCGUtils.ACTION_GET_FULL_LISTS);
 		updateCourseList(executionResults);
+		updateBookedCourseList(executionResults);
 		SubscriptionListPanel.updateSubscriptionList();
 		HCI.getInstance().initilizationComplete();
 	}
