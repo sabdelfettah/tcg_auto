@@ -25,6 +25,7 @@ import tcg_auto.selenium.TCG.WebAction;
 public abstract class HCIUtils {
 
 	// STATIC FINAL FIELDS
+	public static final boolean CHROME_MODE = true;
 	// IMAGES
 	public static final String PATH_APPLICATION_ICON = "tcg_auto/images/app.png";
 	public static final String PATH_LOADING_IMAGE = "tcg_auto/images/loading.gif";
@@ -181,12 +182,16 @@ public abstract class HCIUtils {
 
 		@Override
 		public boolean accept(File f) {
-			return f.getName().toLowerCase().equals(PHAONTOM_DRIVER_FILTER);
+			if(CHROME_MODE){
+				return CHROME_DRIVER_FILTER.equals(f.getName().toLowerCase());
+			}else{
+				return PHAONTOM_DRIVER_FILTER.equals(f.getName().toLowerCase());
+			}
 		}
 
 		@Override
 		public String getDescription() {
-			return PHAONTOM_DRIVER_FILTER_DESCRIPTION;
+			return CHROME_MODE ? CHROME_DRIVER_FILTER_DESCRIPTION : PHAONTOM_DRIVER_FILTER_DESCRIPTION;
 		}
 		
 	}

@@ -151,12 +151,15 @@ public class TCG {
 	public static WebDriver getWebDriver(){
 		if(driverInstance == null){
 			try {
-				String current = new java.io.File( "." ).getCanonicalPath();
-//				System.setProperty(ChromeDriverService.CHROME_DRIVER_EXE_PROPERTY, ConfigManager.getWebDriverPath());
-//				System.setProperty(ChromeDriverService.CHROME_DRIVER_LOG_PROPERTY, current + "/chromedriver.log");
-//				driverInstance = new ChromeDriver();
-				System.setProperty("phantomjs.binary.path", ConfigManager.getWebDriverPath());
-				driverInstance = new PhantomJSDriver();
+				if(HCIUtils.CHROME_MODE){
+					String current = new java.io.File( "." ).getCanonicalPath();
+					System.setProperty(ChromeDriverService.CHROME_DRIVER_EXE_PROPERTY, ConfigManager.getWebDriverPath());
+					System.setProperty(ChromeDriverService.CHROME_DRIVER_LOG_PROPERTY, current + "/chromedriver.log");
+					driverInstance = new ChromeDriver();
+				}else{
+					System.setProperty("phantomjs.binary.path", ConfigManager.getWebDriverPath());
+					driverInstance = new PhantomJSDriver();
+				}
 			} catch (IOException e) {
 				HCIUtils.showException(e, true);
 			}
@@ -208,19 +211,7 @@ public class TCG {
 		}
 		elementToClick.click();
 		waitJavaScriptLoading();
-		int attemps = 1;
 		List<WebElement> dialogElement = getDialogElement(TCGUtils.XPATHS_SIGN_IN_COURSE_DIALOG);
-		System.out.println(MiscUtils.getValueOfObject(dialogElement) + " ; " + attemps);
-		while(MiscUtils.isNullOrEmpty(dialogElement) && attemps < 5){
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				return null;
-			}
-			dialogElement = getDialogElement(TCGUtils.XPATHS_SIGN_IN_COURSE_DIALOG);
-			attemps++;
-			System.out.println(MiscUtils.getValueOfObject(dialogElement) + " ; " + attemps);
-		}
 		return dialogElement;
 	}
 	
@@ -237,6 +228,7 @@ public class TCG {
 			if(elementToClick.getTagName().equals("a")){
 				elementToClick.click();
 			}
+			waitJavaScriptLoading();
 		}
 		return Arrays.asList(getWebDriver().getCurrentUrl().equals(TCGUtils.URL_BOOKING_SPACE));
 	}
@@ -272,7 +264,17 @@ public class TCG {
 	protected static void waitJavaScriptLoading(){
 		boolean finished = false;
 		do{
-			finished = MiscUtils.isNullOrEmpty(getElements(TCGUtils.XPATH_DIALOG_WAITING));
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				HCIUtils.showException(e, false);
+			}
+			List<WebElement> divLoadingElements = getElements(TCGUtils.XPATH_DIALOG_LOADING);
+			if(MiscUtils.isNullOrEmpty(divLoadingElements)){
+				return;
+			}
+			String style = divLoadingElements.iterator().next().getAttribute("style");
+			finished = style.contains("display: none;");
 		}while(!finished);
 	}
 	
