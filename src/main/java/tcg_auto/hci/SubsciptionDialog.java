@@ -170,7 +170,6 @@ public class SubsciptionDialog extends JDialog{
 		Course selectedCourse = (Course) getCourseComboBox().getSelectedItem();
 		Course.Day selectedDay = (Day) getDayComboBox().getSelectedItem();
 		SubscriptionManager.addSubscriptionToSubscriptionList(new Subscription(selectedCourse, selectedDay, hour, minute));
-		SubscriptionListPanel.updateSubscriptionList();
 		getInstance().dispose();
 	}
 	

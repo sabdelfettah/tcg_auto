@@ -74,7 +74,7 @@ public class Course {
 	
 	// ENUMERATIONS
 	public enum Room {
-		ROOM_1, ROOM_2,
+		ROOM_1, ROOM_2;
 	}
 	
 	public enum Day {

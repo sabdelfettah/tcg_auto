@@ -23,7 +23,7 @@ public class ShowingPanel extends JPanel {
 	// CONSTRUCTORS
 	public ShowingPanel() {
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-		JPanel coursePanel = new JPanel(new GridLayout(1, 3));
+		JPanel coursePanel = new JPanel(new GridLayout(1, 4));
 		JPanel panelBookedCourseList = new JPanel(new BorderLayout());
 		panelBookedCourseList.add(BorderLayout.NORTH, new JLabel(Messages.getString(Lang.LABELS_BOOKED_COURSE_LIST)));
 		panelBookedCourseList.add(BorderLayout.CENTER, BookedCourseListPanel.getInstance());
@@ -33,9 +33,14 @@ public class ShowingPanel extends JPanel {
 		JPanel panelCourseList = new JPanel(new BorderLayout());
 		panelCourseList.add(BorderLayout.NORTH, new JLabel(Messages.getString(Lang.LABELS_COURSE_LIST)));
 		panelCourseList.add(BorderLayout.CENTER, CourseListPanel.getInstance());
-		coursePanel.add(panelBookedCourseList);
-		coursePanel.add(panelSubscriptionList);
+		JPanel panelCourseTaskList = new JPanel(new BorderLayout());
+		panelCourseTaskList.add(BorderLayout.NORTH, new JLabel(Messages.getString(Lang.LABELS_COURSE_TASK_LIST)));
+		panelCourseTaskList.add(BorderLayout.CENTER, CourseTaskListPanel.getInstance());
+		// adding panels
 		coursePanel.add(panelCourseList);
+		coursePanel.add(panelSubscriptionList);
+		coursePanel.add(panelCourseTaskList);
+		coursePanel.add(panelBookedCourseList);
 		this.add(coursePanel);
 		this.add(LogPanel.getInstance());
 	}

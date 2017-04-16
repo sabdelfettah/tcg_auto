@@ -35,6 +35,7 @@ public abstract class Lang {
 	public static final String LABELS_BOOKED_COURSE_LIST = "labels.label_booked_course_list";
 	public static final String LABELS_SUBSCRIPTION_LIST = "labels.label_subscription_list";
 	public static final String LABELS_COURSE_LIST = "labels.label_course_list";
+	public static final String LABELS_COURSE_TASK_LIST = "labels.label_course_task_list";
 	public static final String LABEL_PREPARING = "labels.preparing";
 	
 	// ENUMS

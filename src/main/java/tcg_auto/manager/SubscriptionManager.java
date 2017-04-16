@@ -1,5 +1,6 @@
 package tcg_auto.manager;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -52,24 +53,31 @@ public abstract class SubscriptionManager {
 		subscriptionToAdd.programSigningCourse();
 		boolean result = getSubscriptionList().add(subscriptionToAdd);
 		ConfigManager.saveConfig();
+		SubscriptionListPanel.updateSubscriptionList();
 		return result;
 	}
 	
 	public static boolean removeSubscriptionFromSubscriptionList(Subscription subscriptionToRemove){
+		subscriptionToRemove.getCourseTask().cancel();
 		boolean result = getSubscriptionList().remove(subscriptionToRemove);
 		ConfigManager.saveConfig();
+		SubscriptionListPanel.updateSubscriptionList();
 		return result;
 	}
 	
 	public static void scheduleSigningCourse(Subscription subscriptionToSchedule){
-		Date nextExecutingDate = subscriptionToSchedule.nextExecutingDate();
-		getTimerInstance().schedule(new CourseTask(subscriptionToSchedule), nextExecutingDate);
+		Date nextExecutingDate = subscriptionToSchedule.computeNextExecutingDate();
+		CourseTask courseTask = new CourseTask(subscriptionToSchedule);
+		subscriptionToSchedule.setCourseTask(courseTask);
+		subscriptionToSchedule.setNextExecutingDate(nextExecutingDate);
+		getTimerInstance().schedule(courseTask, nextExecutingDate);
 		LogManager.logInfo(String.format(Messages.getString(Lang.LOG_MESSAGE_INFO_CREATE_TASK_SUCCESS), subscriptionToSchedule, nextExecutingDate));
 	}
 	
 	// CLASSES
-	private static class CourseTask extends TimerTask {
+	public static class CourseTask extends TimerTask {
 		
+		private static final SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 		private Subscription subscriptionToSchedule;
 		
 		public CourseTask(Subscription subscriptionToSchedule){
@@ -80,6 +88,13 @@ public abstract class SubscriptionManager {
 		public void run() {
 			TrayButton.displayInfo(Messages.getString(Lang.TITLE_COURSE_BOOKING), String.format(Messages.getString(Lang.MESSAGE_TRAY_INFO_TRY_BOOKING), subscriptionToSchedule.getCourseName()));
 			TCGUtils.bookingCourse(subscriptionToSchedule.getCourse());
+		}
+		
+		public String toString(){
+			Date executionDate = new Date(this.scheduledExecutionTime());
+			String executionDateFormatted = dateFormatter.format(executionDate);
+			String result = String.format("%s - %s", executionDateFormatted, subscriptionToSchedule);
+			return result;
 		}
 		
 	}

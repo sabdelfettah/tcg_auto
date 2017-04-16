@@ -41,6 +41,7 @@ public class SubscriptionListPanel extends JPanel {
 	
 	public static void updateSubscriptionList(){
 		HCIUtils.UpdateJList(getInstance().list, SubscriptionManager.getSubscriptionList());
+		CourseTaskListPanel.updateCourseTaskList();
 	}
 
 }
