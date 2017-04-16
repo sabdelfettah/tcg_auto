@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 
@@ -82,7 +81,9 @@ public abstract class ActionManager {
 			updateBookedCourseList();
 			break;
 		case ACTION_SEE_ABOUT :
-			JOptionPane.showMessageDialog(null, "", Messages.getString(Lang.MENU_ITEM_HELP_ABOUT), JOptionPane.INFORMATION_MESSAGE);
+			Package.getPackages();
+			String message = String.format("%s v%s\n%s", Messages.getString(Lang.APPLICATION_NAME), "1.0.2", "https://github.com/sabdelfettah/tcg_auto/releases");
+			JOptionPane.showMessageDialog(null, message, Messages.getString(Lang.MENU_ITEM_HELP_ABOUT), JOptionPane.INFORMATION_MESSAGE);
 			break;
 		}
 	}
