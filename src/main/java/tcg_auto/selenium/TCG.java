@@ -161,7 +161,7 @@ public class TCG {
 					driverInstance = new PhantomJSDriver();
 				}
 			} catch (IOException e) {
-				HCIUtils.showException(e, true);
+				HCIUtils.showException(e, true, true, Messages.getString(Lang.LOG_MESSAGE_ERROR_WEB_DRIVER_INITIALIZATION));
 			}
 		}
 		return driverInstance;

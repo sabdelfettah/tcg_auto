@@ -82,6 +82,7 @@ public abstract class Lang {
 	public static final String LOG_MESSAGE_ERROR_CIPHER_ENCRYPTION = "logs.error_cipher_encryption";
 	public static final String LOG_MESSAGE_ERROR_CIPHER_DECRYPTING = "logs.error_cipher_decrypting";
 	public static final String LOG_MESSAGE_ERROR_HCI_INITIALIZATION_TRAYICON = "logs.error_hci_initialization_tray";
+	public static final String LOG_MESSAGE_ERROR_WEB_DRIVER_INITIALIZATION = "logs.error_web_driver_initialization";
 	public static final String LOG_MESSAGE_ERROR_FILE_WRITE_LOGIN_PASSWORD = "logs.error_file_writing_login_password";
 	public static final String LOG_MESSAGE_ERROR_EXIT_APP = "logs.error_exit_application";
 	public static final String LOG_MESSAGE_ERROR_EXECUTING_ACTION = "logs.error_executing_action";
