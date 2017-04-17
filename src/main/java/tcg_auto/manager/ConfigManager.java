@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.codec.binary.Base64;
+
 import tcg_auto.lang.Lang;
 import tcg_auto.lang.Messages;
 import tcg_auto.model.Subscription;
@@ -31,6 +33,7 @@ public class ConfigManager {
 			configToWrite.put(CONFIG_SUBSCRIPTION_LIST, MiscUtils.getStringFromSubscirptionList(subscritpionList));
 		}
 		String configFormattedToWrite = MiscUtils.getStringFromMap(configToWrite);
+		configFormattedToWrite = new String (Base64.encodeBase64(configFormattedToWrite.getBytes()));
 		FileManager.writeConfig(configFormattedToWrite);
 	}
 	
@@ -63,6 +66,7 @@ public class ConfigManager {
 	public static Map<String, Object> getConfig() throws Exception{
 		Map<String, Object> result = new HashMap<String, Object>();
 		String configContent = FileManager.readConfig();
+		configContent = new String(Base64.decodeBase64(configContent.getBytes()));
 		if(!configContent.isEmpty()){
 			Map<String, String> tempResult = MiscUtils.getMapFromString(configContent);
 			initializeValuesFromMap(tempResult);
