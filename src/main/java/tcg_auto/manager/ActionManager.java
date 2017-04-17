@@ -85,6 +85,9 @@ public abstract class ActionManager {
 			String message = String.format("%s v%s\n%s", Messages.getString(Lang.APPLICATION_NAME), "1.0.2", "https://github.com/sabdelfettah/tcg_auto/releases");
 			JOptionPane.showMessageDialog(null, message, Messages.getString(Lang.MENU_ITEM_HELP_ABOUT), JOptionPane.INFORMATION_MESSAGE);
 			break;
+		case ACTION_SELECT_WEB_DRIVER_PATH:
+			ConfigManager.getAndSaveWebDrive();
+			break;
 		}
 	}
 
@@ -154,7 +157,6 @@ public abstract class ActionManager {
 		updateCourseList(executionResults);
 		updateBookedCourseList(executionResults);
 		SubscriptionListPanel.updateSubscriptionList();
-		HCI.getInstance().initilizationComplete();
 	}
 	
 	public static void exit(boolean normalExit){

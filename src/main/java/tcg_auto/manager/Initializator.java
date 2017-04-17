@@ -2,6 +2,8 @@ package tcg_auto.manager;
 
 import java.io.IOException;
 import java.util.List;
+
+import tcg_auto.hci.HCI;
 import tcg_auto.hci.LogPanel;
 import tcg_auto.lang.Lang;
 import tcg_auto.lang.Messages;
@@ -19,6 +21,7 @@ public abstract class Initializator {
 		initializeConfig();
 		initializeWebDriverPath(true);
 		SubscriptionManager.scheduleTasksReInitializer();
+		HCI.getInstance().initilizationOfDataComplete();
 	}
 	
 	private static void initializeLogs(){

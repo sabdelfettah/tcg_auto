@@ -32,12 +32,12 @@ public class HCI extends JFrame implements ActionListener {
 	
 	// STATIC FIELDS
 	private static HCI instance = null;
-	private static boolean initialized= false;
+	private static boolean hciInitialized = false;
+	private static boolean dataInitialized= false;
 	
 	// CONSTRUCTORS
 	public HCI() {
 		this.initializeFrame();
-		Initializator.initializeData();
 	}
 
 	private void initializeFrame(){
@@ -58,6 +58,7 @@ public class HCI extends JFrame implements ActionListener {
 		this.setContentPane(Panel.getInstance());
 		LogPanel.setPanelVisible(ConfigManager.getSeeLogs());
 		((JCheckBox) MainMenuBar.getMenuBarComponent(Messages.getString(Lang.MENU_ITEM_OPTIONS_SEE_LOG))).setSelected(ConfigManager.getSeeLogs());
+		hciInitialized = true;
 	}
 	
 	// GETTERS
@@ -83,13 +84,21 @@ public class HCI extends JFrame implements ActionListener {
 		return getImageFromPath(HCIUtils.PATH_LOADING_IMAGE);
 	}
 	
-	public boolean isInitialized(){
-		return initialized;
+	public boolean isHCIInitialized(){
+		return hciInitialized;
+	}
+	
+	public boolean isDataInitialized(){
+		return dataInitialized;
 	}
 	
 	// SETTERS
-	public void initilizationComplete(){
-		initialized = true;
+	public void initilizationOfHCIComplete(){
+		hciInitialized = true;
+	}
+	
+	public void initilizationOfDataComplete(){
+		dataInitialized = true;
 	}
 	
 	// OTHER METHODS
@@ -114,6 +123,7 @@ public class HCI extends JFrame implements ActionListener {
 	
 	public static void main(String[] args) {
 		getInstance().initializeFrameComponents();
+		Initializator.initializeData();
 		ActionManager.initiliazeLists();
 		TrayButton.getSystemTrayInstance();
 		TrayButton.displayInfo(Messages.getString(Lang.APPLICATION_NAME), Messages.getString(Lang.MESSAGE_TRAY_APP_STARTED));

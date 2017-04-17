@@ -85,7 +85,7 @@ public abstract class HCIUtils {
 		}
 		if(choice == JFileChooser.APPROVE_OPTION){
 			result = fileChooser.getSelectedFile().getPath();
-		}else{
+		}else if(!HCI.getInstance().isDataInitialized()){
 			ActionManager.exit(false);
 		}
 		return result;
@@ -126,7 +126,7 @@ public abstract class HCIUtils {
 	
 	public static void showApplication(){
 		if(!HCI.getInstance().isVisible()){
-			if(!HCI.getInstance().isInitialized()){
+			if(!HCI.getInstance().isDataInitialized()){
 				ActionManager.initiliazeLists();
 			}
 			HCI.getInstance().setVisible(true);
@@ -171,6 +171,7 @@ public abstract class HCIUtils {
 		ACTION_ADD_SUBSCRIPTION,
 		ACTION_BOOKING_COURSE,
 		ACTION_SEE_LOG,
+		ACTION_SELECT_WEB_DRIVER_PATH,
 		ACTION_SEE_ABOUT,
 		ACTION_OPEN_APPLICATION,
 		ACTION_VALIDATE_SUBSCRIPTION,

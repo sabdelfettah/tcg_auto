@@ -61,7 +61,8 @@ public class MainMenuBar extends JMenuBar {
 				));
 		myConfig.put(new MenuData(2, Messages.getString(Lang.MENU_OPTIONS), COMPONENT_TYPE.JMENU),
 				Arrays.asList(
-						new MenuData(Messages.getString(Lang.MENU_ITEM_OPTIONS_SEE_LOG), COMPONENT_TYPE.JCHECKBOX, Action.ACTION_SEE_LOG, MiscUtils.getCtrlKeyStroke('L'))
+						new MenuData(Messages.getString(Lang.MENU_ITEM_OPTIONS_SEE_LOG), COMPONENT_TYPE.JCHECKBOX, Action.ACTION_SEE_LOG, MiscUtils.getCtrlKeyStroke('L')),
+						new MenuData(Messages.getString(Lang.MENU_ITEM_OPTIONS_SELECT_WEB_DRIVER_PATH), COMPONENT_TYPE.JMENUITEM, Action.ACTION_SELECT_WEB_DRIVER_PATH, MiscUtils.getCtrlKeyStroke('W'))
 				));
 		myConfig.put(new MenuData(3, Messages.getString(Lang.MENU_HELP), COMPONENT_TYPE.JMENU),
 				Arrays.asList(

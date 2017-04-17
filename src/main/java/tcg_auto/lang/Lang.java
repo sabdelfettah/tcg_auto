@@ -21,6 +21,7 @@ public abstract class Lang {
 	public static final String MENU_ITEM_ACTIONS_ADD_SUBSCRIPTION = "menuitems.menu_actions_add_subscription";
 	public static final String MENU_ITEM_ACTIONS_BOOKING = "menuitems.menu_actions_booking";
 	public static final String MENU_ITEM_OPTIONS_SEE_LOG = "menuitems.menu_options_see_logs";
+	public static final String MENU_ITEM_OPTIONS_SELECT_WEB_DRIVER_PATH = "menuitems.menu_options_select_web_driver_path";
 	public static final String MENU_ITEM_HELP_ABOUT = "menuitems.menu_help_about";
 		
 	// CLICKABLES

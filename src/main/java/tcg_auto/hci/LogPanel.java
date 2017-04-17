@@ -57,6 +57,7 @@ public class LogPanel extends JPanel {
 		this.seleniumLogTextArea = new JTextArea();
 		this.seleniumLogTextArea.setEditable(false);
 		this.seleniumLogTextArea.setMinimumSize(new Dimension(300, 300));
+		this.seleniumLogTextArea.setFont(new Font("monospaced", Font.PLAIN, 12));
 		JScrollPane seleniumLogScrollPane = new JScrollPane(seleniumLogTextArea);
 		seleniumLogScrollPane.setPreferredSize(new Dimension(280, 200));
 		seleniumLogScrollPane.setViewportBorder(BorderFactory.createLineBorder(Color.black));
