@@ -29,6 +29,7 @@ public class HCI extends JFrame implements ActionListener {
 	// STATIC FINAL FIELDS
 	// IMAGES
 	private static final Map<String, Image> images = new HashMap<String, Image>();
+	public static final String VERSION = "1.0.3";
 	
 	// STATIC FIELDS
 	private static HCI instance = null;

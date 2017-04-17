@@ -82,7 +82,7 @@ public abstract class ActionManager {
 			break;
 		case ACTION_SEE_ABOUT :
 			Package.getPackages();
-			String message = String.format("%s v%s\n%s", Messages.getString(Lang.APPLICATION_NAME), "1.0.2", "https://github.com/sabdelfettah/tcg_auto/releases");
+			String message = String.format("%s v%s\n%s", Messages.getString(Lang.APPLICATION_NAME), HCI.VERSION, "https://github.com/sabdelfettah/tcg_auto/releases");
 			JOptionPane.showMessageDialog(null, message, Messages.getString(Lang.MENU_ITEM_HELP_ABOUT), JOptionPane.INFORMATION_MESSAGE);
 			break;
 		case ACTION_SELECT_WEB_DRIVER_PATH:

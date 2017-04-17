@@ -19,13 +19,12 @@ import tcg_auto.lang.Lang;
 import tcg_auto.lang.Messages;
 import tcg_auto.manager.ActionManager;
 import tcg_auto.manager.LogManager;
+import tcg_auto.manager.WebDriverManager;
 import tcg_auto.model.Course;
 import tcg_auto.selenium.TCG.WebAction;
 
 public abstract class HCIUtils {
 
-	// STATIC FINAL FIELDS
-	public static final boolean CHROME_MODE = true;
 	// IMAGES
 	public static final String PATH_APPLICATION_ICON = "tcg_auto/images/app.png";
 	public static final String PATH_LOADING_IMAGE = "tcg_auto/images/loading.gif";
@@ -187,7 +186,7 @@ public abstract class HCIUtils {
 
 		@Override
 		public boolean accept(File f) {
-			if(CHROME_MODE){
+			if(WebDriverManager.CHROME_MODE){
 				return CHROME_DRIVER_FILTER.equals(f.getName().toLowerCase());
 			}else{
 				return PHAONTOM_DRIVER_FILTER.equals(f.getName().toLowerCase());
@@ -196,7 +195,7 @@ public abstract class HCIUtils {
 
 		@Override
 		public String getDescription() {
-			return CHROME_MODE ? CHROME_DRIVER_FILTER_DESCRIPTION : PHAONTOM_DRIVER_FILTER_DESCRIPTION;
+			return WebDriverManager.CHROME_MODE ? CHROME_DRIVER_FILTER_DESCRIPTION : PHAONTOM_DRIVER_FILTER_DESCRIPTION;
 		}
 		
 	}

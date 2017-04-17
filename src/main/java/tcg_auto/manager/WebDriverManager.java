@@ -14,6 +14,9 @@ import tcg_auto.utils.HCIUtils;
 
 public abstract class WebDriverManager {
 	
+	// STATIC FINAL FIELDS
+	public static final boolean CHROME_MODE = false;
+	
 	// STATIC FIELDS
 	private static WebDriver driverInstance;
 	private static boolean isWebDriverFree = false;
@@ -34,7 +37,7 @@ public abstract class WebDriverManager {
 	public static WebDriver getWebDriver(){
 		if(driverInstance == null){
 			try {
-				if(HCIUtils.CHROME_MODE){
+				if(CHROME_MODE){
 					String current = new java.io.File( "." ).getCanonicalPath();
 					System.setProperty(ChromeDriverService.CHROME_DRIVER_EXE_PROPERTY, ConfigManager.getWebDriverPath());
 					System.setProperty(ChromeDriverService.CHROME_DRIVER_LOG_PROPERTY, current + "/chromedriver.log");

@@ -5,7 +5,7 @@
 	<groupId>tcg_auto</groupId>
 	<artifactId>tcg_auto</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0.3-SNAPSHOT</version>
+	<version>1.0.3</version>
 	<name>tcg_auto</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
