@@ -56,9 +56,12 @@ public class HCI extends JFrame implements ActionListener {
 	public void initializeFrameComponents() {
 		this.setJMenuBar(MainMenuBar.getInstance());
 		this.setContentPane(Panel.getInstance());
+		hciInitialized = true;
+	}
+	
+	public void postInitializationFrame(){
 		LogPanel.setPanelVisible(ConfigManager.getSeeLogs());
 		((JCheckBox) MainMenuBar.getMenuBarComponent(Messages.getString(Lang.MENU_ITEM_OPTIONS_SEE_LOG))).setSelected(ConfigManager.getSeeLogs());
-		hciInitialized = true;
 	}
 	
 	// GETTERS
@@ -125,6 +128,7 @@ public class HCI extends JFrame implements ActionListener {
 		getInstance().initializeFrameComponents();
 		Initializator.initializeData();
 		ActionManager.initiliazeLists();
+		getInstance().postInitializationFrame();
 		TrayButton.getSystemTrayInstance();
 		TrayButton.displayInfo(Messages.getString(Lang.APPLICATION_NAME), Messages.getString(Lang.MESSAGE_TRAY_APP_STARTED));
 		LogManager.logInfoFinished(Messages.getString(Lang.LOG_MESSAGE_INFO_INITIALIZATION_APP_STARTED));
