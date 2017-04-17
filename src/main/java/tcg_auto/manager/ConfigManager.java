@@ -12,7 +12,7 @@ import tcg_auto.model.Subscription;
 import tcg_auto.utils.HCIUtils;
 import tcg_auto.utils.MiscUtils;
 
-public class ConfigManager {
+public abstract class ConfigManager {
 	// STATIC FINAL FIELDS
 	public static final String CONFIG_SEE_LOGS = "see_logs";
 	public static final String CONFIG_SUBSCRIPTION_LIST = "subscription_list";

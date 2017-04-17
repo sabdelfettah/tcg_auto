@@ -63,6 +63,7 @@ public class TCG {
 			});
 		}
 		WaitingDialog.incrementProgressBarValue();
+		WebDriverManager.releaseWebDriver();
 		return result;
 	}
 

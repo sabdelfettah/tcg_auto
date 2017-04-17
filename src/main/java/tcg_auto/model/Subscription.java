@@ -4,7 +4,6 @@ import java.util.Calendar;
 import java.util.Date;
 
 import tcg_auto.manager.SubscriptionManager;
-import tcg_auto.manager.SubscriptionManager.CourseTask;
 import tcg_auto.utils.MiscUtils;
 
 public class Subscription {
@@ -14,7 +13,6 @@ public class Subscription {
 	private Course.Day configDay;
 	private short configHour;
 	private short configMinute;
-	private CourseTask subscriptionTask;
 	private Date nextExecutingDate;
 	
 	// CONSTRUCTORS
@@ -26,12 +24,7 @@ public class Subscription {
 	}
 	
 	// SETTERS
-	public void setCourseTask(CourseTask subscriptionTask){
-		this.subscriptionTask = subscriptionTask;
-	}
-	
 	public void cancelOrTerminateCourseTask(){
-		this.subscriptionTask = null;
 		this.nextExecutingDate = null;
 	}
 	
@@ -45,10 +38,6 @@ public class Subscription {
 	}
 	public String getCourseName(){
 		return course.getName();
-	}
-	
-	public CourseTask getCourseTask(){
-		return this.subscriptionTask;
 	}
 	
 	public Date getNextExecutingDate(){
