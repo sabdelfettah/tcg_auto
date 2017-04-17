@@ -1,6 +1,5 @@
 package tcg_auto.selenium;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -8,18 +7,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeDriverService;
-import org.openqa.selenium.phantomjs.PhantomJSDriver;
-
 import tcg_auto.hci.WaitingDialog;
 import tcg_auto.lang.Lang;
 import tcg_auto.lang.Messages;
-import tcg_auto.manager.ConfigManager;
 import tcg_auto.manager.LogManager;
+import tcg_auto.manager.WebDriverManager;
 import tcg_auto.model.Course;
 import tcg_auto.model.PersistentWebElement;
 import tcg_auto.utils.HCIUtils;
@@ -35,7 +29,6 @@ public class TCG {
 	private static String baseUrl;
 	private static String login;
 	private static String password;
-	private static WebDriver driverInstance;
 	@SuppressWarnings("rawtypes")
 	private static List lastActionElemets;
 	
@@ -75,6 +68,13 @@ public class TCG {
 
 	@SuppressWarnings({ "rawtypes" })
 	private List executeWebAction(WebAction actionToExecute) {
+		while(!WebDriverManager.askForWebDriver(this)){
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				HCIUtils.showException(e, false);
+			}
+		}
 		LogManager.logInfoRunning(String.format(Messages.getString(Lang.LOG_MESSAGE_INFO_EXECUTING_WEB_ACTION), actionToExecute.name()));
 		try{
 			switch (actionToExecute) {
@@ -154,35 +154,16 @@ public class TCG {
 		TCG.password = password;
 	}
 	
-	public static WebDriver getWebDriver(){
-		if(driverInstance == null){
-			try {
-				if(HCIUtils.CHROME_MODE){
-					String current = new java.io.File( "." ).getCanonicalPath();
-					System.setProperty(ChromeDriverService.CHROME_DRIVER_EXE_PROPERTY, ConfigManager.getWebDriverPath());
-					System.setProperty(ChromeDriverService.CHROME_DRIVER_LOG_PROPERTY, current + "/chromedriver.log");
-					driverInstance = new ChromeDriver();
-				}else{
-					System.setProperty("phantomjs.binary.path", ConfigManager.getWebDriverPath());
-					driverInstance = new PhantomJSDriver();
-				}
-			} catch (IOException e) {
-				HCIUtils.showException(e, true, true, Messages.getString(Lang.LOG_MESSAGE_ERROR_WEB_DRIVER_INITIALIZATION));
-			}
-		}
-		return driverInstance;
-	}
-	
 	// ACTION METHODS
 	private static List<Boolean> connectToTCG() {
-		getWebDriver().get(baseUrl);
+		WebDriverManager.getWebDriver().get(baseUrl);
 		return MiscUtils.getTrueAsList();
 	}
 	
 	private static List<Boolean> enterLoginAndPassword() {
-		WebElement inputLogin = getWebDriver().findElement(By.xpath(TCGUtils.XPATH_INPUT_LOGIN));
-		WebElement inputPassword = getWebDriver().findElement(By.xpath(TCGUtils.XPATH_INPUT_PASSWORD));
-		WebElement buttonSubmit = getWebDriver().findElement(By.xpath(TCGUtils.XPATH_BUTTON_SUBMIT_LOGIN_PASSWORD));
+		WebElement inputLogin = WebDriverManager.getWebDriver().findElement(By.xpath(TCGUtils.XPATH_INPUT_LOGIN));
+		WebElement inputPassword = WebDriverManager.getWebDriver().findElement(By.xpath(TCGUtils.XPATH_INPUT_PASSWORD));
+		WebElement buttonSubmit = WebDriverManager.getWebDriver().findElement(By.xpath(TCGUtils.XPATH_BUTTON_SUBMIT_LOGIN_PASSWORD));
 		inputLogin.sendKeys(login);
 		inputPassword.sendKeys(password);
 		buttonSubmit.click();
@@ -190,7 +171,7 @@ public class TCG {
 	}
 
 	private static List<Boolean> closeConnection() {
-		getWebDriver().close();
+		WebDriverManager.getWebDriver().close();
 		return MiscUtils.getTrueAsList();
 	}
 
@@ -236,18 +217,18 @@ public class TCG {
 			}
 			waitJavaScriptLoading();
 		}
-		return Arrays.asList(getWebDriver().getCurrentUrl().equals(TCGUtils.URL_BOOKING_SPACE));
+		return Arrays.asList(WebDriverManager.getWebDriver().getCurrentUrl().equals(TCGUtils.URL_BOOKING_SPACE));
 	}
 	
 	@SuppressWarnings("rawtypes")
 	private static List goToMyReservations(){
-		getWebDriver().get(TCGUtils.URL_MY_RESERVATIONS);
+		WebDriverManager.getWebDriver().get(TCGUtils.URL_MY_RESERVATIONS);
 		return MiscUtils.getTrueAsList();
 	}
 	
 	// OTHER METHODS
 	protected static List<Boolean> findButtonAndClick(String XPath) {
-		WebElement button = getWebDriver().findElement(By.xpath(XPath));
+		WebElement button = WebDriverManager.getWebDriver().findElement(By.xpath(XPath));
 		if(button == null){
 			return MiscUtils.getFalseAsList();
 		}
@@ -256,7 +237,7 @@ public class TCG {
 	}
 	
 	protected static List<WebElement> getElements(String XPath) {
-		List<WebElement> result = getWebDriver().findElements(By.xpath(XPath));
+		List<WebElement> result = WebDriverManager.getWebDriver().findElements(By.xpath(XPath));
 		return result;
 	}
 	
@@ -264,7 +245,7 @@ public class TCG {
 		List<WebElement> result = null;
 		int index = 0;
 		while(MiscUtils.isNullOrEmpty(result) && index < XPaths.length){
-			result = getWebDriver().findElements(By.xpath(XPaths[index]));
+			result = WebDriverManager.getWebDriver().findElements(By.xpath(XPaths[index]));
 			index++;
 		}
 		if(result == null){
@@ -293,10 +274,6 @@ public class TCG {
 	public static TCG getNewTCGInstance(List<WebAction> webActionList){
 		TCG newInstance = new TCG(webActionList);
 		return newInstance;
-	}
-	
-	public static boolean isDriverInitialized(){
-		return driverInstance != null;
 	}
 	
 	// ENUMERATIONS

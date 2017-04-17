@@ -165,7 +165,7 @@ public abstract class ActionManager {
 		}else{
 			LogManager.logError(Messages.getString(Lang.LOG_MESSAGE_ERROR_EXIT_APP));
 		}
-		if(TCG.isDriverInitialized()){
+		if(WebDriverManager.isDriverInitialized()){
 			TCG.getNewTCGInstance(Arrays.asList(WebAction.ACTION_CLOSE)).execute();
 		}
 		System.exit(0);
