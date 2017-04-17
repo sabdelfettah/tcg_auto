@@ -125,7 +125,7 @@ public abstract class MiscUtils {
 		Map<String, List> result = null;
 		try {
 			result = aw.get();
-		} catch (InterruptedException | ExecutionException e) {
+		} catch (InterruptedException | ExecutionException | org.openqa.selenium.StaleElementReferenceException e) {
 			HCIUtils.showException(e, false);
 		}
 		return result;

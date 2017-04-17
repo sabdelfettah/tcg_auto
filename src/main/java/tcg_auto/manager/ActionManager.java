@@ -101,7 +101,7 @@ public abstract class ActionManager {
 	private static void updateCourseList(Map<String, List> executionResults) {
 		LogManager.logInfoRunning(Messages.getString(Lang.LOG_MESSAGE_INFO_ACTION_UPDATING_COURSE_LIST));
 		List<PersistentWebElement> listToUpdate = executionResults.get(PersistentWebElement.getPersistentMapKey(WebAction.ACTION_GET_COURSES_ROOM_1.name()));
-		int numberOfTotalCourses = listToUpdate.size();
+		int numberOfTotalCourses = listToUpdate == null ? 0 : listToUpdate.size();
 		CourseManager.initCourseList();
 		if(MiscUtils.isNotNullOrEmpty(listToUpdate)){
 			listToUpdate.forEach(course -> {
@@ -110,7 +110,7 @@ public abstract class ActionManager {
 			});
 		}
 		listToUpdate = executionResults.get(PersistentWebElement.getPersistentMapKey(WebAction.ACTION_GET_COURSES_ROOM_2.name()));
-		numberOfTotalCourses += listToUpdate.size();
+		numberOfTotalCourses += listToUpdate == null ? 0 : listToUpdate.size();
 		if(MiscUtils.isNotNullOrEmpty(listToUpdate)){
 			listToUpdate.forEach(course -> {
 				short[] timeOptions = TCGUtils.getTimeOptionsFromPersistentWebElement(course);
