@@ -18,6 +18,7 @@ import tcg_auto.hci.HCI;
 import tcg_auto.lang.Lang;
 import tcg_auto.lang.Messages;
 import tcg_auto.manager.ActionManager;
+import tcg_auto.manager.Initializator;
 import tcg_auto.manager.LogManager;
 import tcg_auto.manager.WebDriverManager;
 import tcg_auto.model.Course;
@@ -126,7 +127,7 @@ public abstract class HCIUtils {
 	public static void showApplication(){
 		if(!HCI.getInstance().isVisible()){
 			if(!HCI.getInstance().isDataInitialized()){
-				ActionManager.initiliazeLists();
+				Initializator.initiliazeLists();
 			}
 			HCI.getInstance().setVisible(true);
 		}
