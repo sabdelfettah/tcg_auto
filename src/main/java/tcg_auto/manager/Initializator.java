@@ -2,9 +2,11 @@ package tcg_auto.manager;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import tcg_auto.hci.HCI;
 import tcg_auto.hci.LogPanel;
+import tcg_auto.hci.SubscriptionListPanel;
 import tcg_auto.lang.Lang;
 import tcg_auto.lang.Messages;
 import tcg_auto.selenium.TCG;
@@ -14,6 +16,7 @@ import tcg_auto.utils.TCGUtils;
 
 public abstract class Initializator {
 	
+	// STATIC METHODS
 	public static void initializeData(){
 		initializeLogs();
 		LogManager.logInfoRunning(Messages.getString(Lang.LOG_MESSAGE_INFO_INITIALIZATION_STARTING_APP));
@@ -22,6 +25,14 @@ public abstract class Initializator {
 		initializeWebDriverPath(true);
 		SubscriptionManager.scheduleTasksReInitializer();
 		HCI.getInstance().initilizationOfDataComplete();
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public static void initiliazeLists(){
+		Map<String, List> executionResults = MiscUtils.getListElementMap(TCGUtils.ACTION_GET_FULL_LISTS);
+		ActionManager.updateCourseList(executionResults);
+		ActionManager.updateBookedCourseList(executionResults);
+		SubscriptionListPanel.updateSubscriptionList();
 	}
 	
 	private static void initializeLogs(){

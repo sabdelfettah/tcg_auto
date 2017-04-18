@@ -20,7 +20,6 @@ import tcg_auto.hci.HCI;
 import tcg_auto.hci.LogPanel;
 import tcg_auto.hci.MainMenuBar;
 import tcg_auto.hci.SubsciptionDialog;
-import tcg_auto.hci.SubscriptionListPanel;
 import tcg_auto.lang.Lang;
 import tcg_auto.lang.Messages;
 import tcg_auto.model.Course;
@@ -98,7 +97,7 @@ public abstract class ActionManager {
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private static void updateCourseList(Map<String, List> executionResults) {
+	protected static void updateCourseList(Map<String, List> executionResults) {
 		LogManager.logInfoRunning(Messages.getString(Lang.LOG_MESSAGE_INFO_ACTION_UPDATING_COURSE_LIST));
 		List<PersistentWebElement> listToUpdate = executionResults.get(PersistentWebElement.getPersistentMapKey(WebAction.ACTION_GET_COURSES_ROOM_1.name()));
 		int numberOfTotalCourses = listToUpdate == null ? 0 : listToUpdate.size();
@@ -124,13 +123,13 @@ public abstract class ActionManager {
 	}
 	
 	@SuppressWarnings("rawtypes")
-	private static void updateBookedCourseList(){
+	protected static void updateBookedCourseList(){
 		Map<String, List> executionResults = MiscUtils.getListElementMap(TCGUtils.ACTION_GET_BOOKED_COURSE_LIST);
 		updateBookedCourseList(executionResults);
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	private static void updateBookedCourseList(Map<String, List> executionResults){
+	protected static void updateBookedCourseList(Map<String, List> executionResults){
 		List<String> bookedCourseList = new ArrayList<String>();
 		List<WebElement> listToUpdate = executionResults.get(WebAction.ACTION_GET_MY_RESERVATIONS.name());
 		for(WebElement webElement : listToUpdate){
@@ -151,14 +150,6 @@ public abstract class ActionManager {
 		SubsciptionDialog.showDialog();
 	}
 
-	@SuppressWarnings("rawtypes")
-	public static void initiliazeLists(){
-		Map<String, List> executionResults = MiscUtils.getListElementMap(TCGUtils.ACTION_GET_FULL_LISTS);
-		updateCourseList(executionResults);
-		updateBookedCourseList(executionResults);
-		SubscriptionListPanel.updateSubscriptionList();
-	}
-	
 	public static void exit(boolean normalExit){
 		if(normalExit){
 			LogManager.logInfo(Messages.getString(Lang.LOG_MESSAGE_INFO_EXIT_APP));
