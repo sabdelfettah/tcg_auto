@@ -1,5 +1,6 @@
 package tcg_auto.selenium;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -9,6 +10,7 @@ import java.util.Map;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
+
 import tcg_auto.hci.WaitingDialog;
 import tcg_auto.lang.Lang;
 import tcg_auto.lang.Messages;
@@ -51,16 +53,21 @@ public class TCG {
 	public Map<String, List> execute() {
 		Map<String, List> result = new HashMap<String, List>();
 		if (MiscUtils.isNotNullOrEmpty(webActionList)) {
-			webActionList.forEach(webAction -> {
+			for(WebAction webAction : webActionList){
 				WaitingDialog.setLabelText(webAction);
-				List resultOfExecution = executeWebAction(webAction);
-				result.put(webAction.name(), resultOfExecution);
-				Boolean isWebElementList = TCGUtils.isWebElementList(resultOfExecution);
-				if(isWebElementList != null && isWebElementList.booleanValue()){
-					result.put(PersistentWebElement.getPersistentMapKey(webAction.name()), TCGUtils.getPersistentWebElementListFromWebElementList(resultOfExecution));
+				List resultOfExecution;
+				try {
+					resultOfExecution = executeWebAction(webAction);
+					result.put(webAction.name(), resultOfExecution);
+					Boolean isWebElementList = TCGUtils.isWebElementList(resultOfExecution);
+					if(isWebElementList != null && isWebElementList.booleanValue()){
+						result.put(PersistentWebElement.getPersistentMapKey(webAction.name()), TCGUtils.getPersistentWebElementListFromWebElementList(resultOfExecution));
+					}
+					WaitingDialog.incrementProgressBarValue();
+				} catch (Exception e) {
+					return result;
 				}
-				WaitingDialog.incrementProgressBarValue();
-			});
+			}
 		}
 		WaitingDialog.incrementProgressBarValue();
 		WebDriverManager.releaseWebDriver();
@@ -68,7 +75,7 @@ public class TCG {
 	}
 
 	@SuppressWarnings({ "rawtypes" })
-	private List executeWebAction(WebAction actionToExecute) {
+	private List executeWebAction(WebAction actionToExecute) throws Exception {
 		while(!WebDriverManager.askForWebDriver(this)){
 			try {
 				Thread.sleep(500);
@@ -118,8 +125,11 @@ public class TCG {
 				LogManager.logErrorFinished(String.format(Messages.getString(Lang.LOG_MESSAGE_ERROR_EXECUTING_WEB_ACTION), actionToExecute.name(), "web action not recognized"));
 				return (lastActionElemets = MiscUtils.getFalseAsList());
 			}
-		}catch(WebDriverException e){
+		}catch(Exception e){
 			LogManager.logErrorFinished(String.format(Messages.getString(Lang.LOG_MESSAGE_ERROR_EXECUTING_WEB_ACTION), actionToExecute.name(), e.getMessage()));
+			WaitingDialog.disposeDialog();
+			WebDriverManager.releaseWebDriver();
+			HCIUtils.showException(e, false);
 			return (lastActionElemets = MiscUtils.getFalseAsList());
 		}
 		LogManager.logInfoFinished(String.format(Messages.getString(Lang.LOG_MESSAGE_INFO_WEB_ACTION_EXECUTED_WITH_SUCCESS), actionToExecute.name()));
@@ -157,17 +167,25 @@ public class TCG {
 	
 	// ACTION METHODS
 	private static List<Boolean> connectToTCG() {
-		WebDriverManager.getWebDriver().get(baseUrl);
+		try{
+			WebDriverManager.getWebDriver().get(baseUrl);
+		}catch(WebDriverException e){
+			throw e;
+		}
 		return MiscUtils.getTrueAsList();
 	}
 	
 	private static List<Boolean> enterLoginAndPassword() {
-		WebElement inputLogin = WebDriverManager.getWebDriver().findElement(By.xpath(TCGUtils.XPATH_INPUT_LOGIN));
-		WebElement inputPassword = WebDriverManager.getWebDriver().findElement(By.xpath(TCGUtils.XPATH_INPUT_PASSWORD));
-		WebElement buttonSubmit = WebDriverManager.getWebDriver().findElement(By.xpath(TCGUtils.XPATH_BUTTON_SUBMIT_LOGIN_PASSWORD));
-		inputLogin.sendKeys(login);
-		inputPassword.sendKeys(password);
-		buttonSubmit.click();
+		try{
+			WebElement inputLogin = WebDriverManager.getWebDriver().findElement(By.xpath(TCGUtils.XPATH_INPUT_LOGIN));
+			WebElement inputPassword = WebDriverManager.getWebDriver().findElement(By.xpath(TCGUtils.XPATH_INPUT_PASSWORD));
+			WebElement buttonSubmit = WebDriverManager.getWebDriver().findElement(By.xpath(TCGUtils.XPATH_BUTTON_SUBMIT_LOGIN_PASSWORD));
+			inputLogin.sendKeys(login);
+			inputPassword.sendKeys(password);
+			buttonSubmit.click();
+		}catch(WebDriverException e){
+			throw e;
+		}
 		return MiscUtils.getTrueAsList();
 	}
 
@@ -177,14 +195,14 @@ public class TCG {
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private static List selectCourse(Course course){
+	private static List selectCourse(Course course) throws Exception{
 		if(course == null){
-			return (lastActionElemets = MiscUtils.getFalseAsList());
+			throw new Exception(Messages.getString(Lang.MESSAGE_EXCEPTION_NO_COURSE_FOUND));
 		}
 		List<WebElement> lastActionElemetsAsWebElementList = lastActionElemets;
 		WebElement elementToClick = TCGUtils.getWebElementFilteredByCourse(lastActionElemetsAsWebElementList, course);
 		if(elementToClick == null){
-			return (lastActionElemets = MiscUtils.getFalseAsList());
+			throw new WebDriverException(String.format(Messages.getString(Lang.MESSAGE_EXCEPTION_NO_COURSE_WEB_ELEMENT_FOUND), course));
 		}
 		Calendar nowCalendar = Calendar.getInstance();
 		Calendar elementProgrammingCalendar =  TCGUtils.getCalendarFromElement(elementToClick);
@@ -195,26 +213,38 @@ public class TCG {
 			elementToClick = TCGUtils.getWebElementFilteredByCourse(lastActionElemetsAsWebElementList, course);
 		}
 		if(elementToClick == null){
-			return (lastActionElemets = MiscUtils.getFalseAsList());
+			throw new WebDriverException(String.format(Messages.getString(Lang.MESSAGE_EXCEPTION_NO_COURSE_WEB_ELEMENT_FOUND), course));
 		}
 		elementToClick.click();
 		waitJavaScriptLoading();
-		List<WebElement> dialogElement = getDialogElement(TCGUtils.XPATHS_SIGN_IN_COURSE_DIALOG);
+		List<WebElement> dialogElement = getDialogElements(TCGUtils.XPATHS_SIGN_IN_COURSE_DIALOG);
 		return dialogElement;
 	}
 	
 	@SuppressWarnings("rawtypes")
-	private static List confirmBooking(){
+	private static List confirmBooking() throws Exception{
 		Boolean isLastElementsBoolean = TCGUtils.isBooleanList(lastActionElemets);
 		if(isLastElementsBoolean != null && isLastElementsBoolean.booleanValue()){
 			return (lastActionElemets = MiscUtils.getFalseAsList());
 		}
 		Boolean isLastElementsWebElement = TCGUtils.isWebElementList(lastActionElemets);
 		if(isLastElementsWebElement != null && isLastElementsWebElement.booleanValue()){
-			Object firstElement = lastActionElemets.get(0);
-			WebElement elementToClick = (WebElement) firstElement;
-			if(elementToClick.getTagName().equals("a")){
-				elementToClick.click();
+			WebElement dialogConfirmBooking = (WebElement) lastActionElemets.get(0);
+			String confirmDialogStyle = dialogConfirmBooking == null ? null : dialogConfirmBooking.getAttribute("style");
+			if(MiscUtils.isNotNullOrEmpty(confirmDialogStyle) && confirmDialogStyle.contains("display") && confirmDialogStyle.contains("block")){
+				WebElement buttonToClick = (WebElement) lastActionElemets.get(2);
+				if(buttonToClick != null && buttonToClick.getTagName().equals("a")){
+					buttonToClick.click();
+				}else{
+					throw new Exception(String.format(Messages.getString(Lang.MESSAGE_EXCEPTION_NO_BOOKING_CONFIRM_BUTTON_FOUND), dialogConfirmBooking.getText()));
+				}
+			}else{
+				WebElement dialogErrorBooking = (WebElement) lastActionElemets.get(1);
+				if(dialogErrorBooking == null){
+					throw new Exception(String.format(Messages.getString(Lang.MESSAGE_EXCEPTION_BOOKING_IMPOSSIBLE), "null"));
+				}else{
+					throw new Exception(String.format(Messages.getString(Lang.MESSAGE_EXCEPTION_BOOKING_IMPOSSIBLE), dialogErrorBooking.getText()));
+				}
 			}
 			waitJavaScriptLoading();
 		}
@@ -242,15 +272,18 @@ public class TCG {
 		return result;
 	}
 	
-	protected static List<WebElement> getDialogElement(String[] XPaths) {
-		List<WebElement> result = null;
-		int index = 0;
-		while(MiscUtils.isNullOrEmpty(result) && index < XPaths.length){
-			result = WebDriverManager.getWebDriver().findElements(By.xpath(XPaths[index]));
-			index++;
-		}
-		if(result == null){
-			return null;
+	protected static List<WebElement> getDialogElements(String[] XPaths) {
+		List<WebElement> result = new ArrayList<WebElement>();
+		for(String XPath : XPaths){
+			try{
+				WebElement element = WebDriverManager.getWebDriver().findElement(By.xpath(XPath));
+				if(element == null){
+					throw new WebDriverException();
+				}
+				result.add(element);
+			}catch(WebDriverException e){
+				result.add(null);
+			}
 		}
 		return result;
 	}
@@ -268,7 +301,7 @@ public class TCG {
 				return;
 			}
 			String style = divLoadingElements.iterator().next().getAttribute("style");
-			finished = style.contains("display: none;");
+			finished = style.contains("display") && style.contains("none");
 		}while(!finished);
 	}
 	

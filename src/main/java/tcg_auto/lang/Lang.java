@@ -65,6 +65,10 @@ public abstract class Lang {
 	public static final String MESSAGE_SUBSCRIPTION_ERROR_NO_COURSE_FOUND = "messages.subscription_error_no_course_found";
 	public static final String MESSAGE_EXCEPTION_WITHOUT_CLOSE = "messages.exception_without_close";
 	public static final String MESSAGE_EXCEPTION_WITH_CLOSE = "messages.exception_with_close";
+	public static final String MESSAGE_EXCEPTION_NO_COURSE_FOUND = "messages.exception_no_course_found";
+	public static final String MESSAGE_EXCEPTION_NO_COURSE_WEB_ELEMENT_FOUND = "messages.exception_no_course_webelement_found";
+	public static final String MESSAGE_EXCEPTION_NO_BOOKING_CONFIRM_BUTTON_FOUND = "messages.exception_no_booking_confirm_button_found";
+	public static final String MESSAGE_EXCEPTION_BOOKING_IMPOSSIBLE = "messages.exception_booking_impossible";
 	public static final String MESSAGE_TRAY_APP_STARTED = "messages.tray_application_started";
 	public static final String MESSAGE_TRAY_INFO_TRY_BOOKING = "messages.tray_info_try_booking";
 	public static final String MESSAGE_TRAY_INFO_BOOKING_SUCCESS = "messages.tray_info_booking_success";
