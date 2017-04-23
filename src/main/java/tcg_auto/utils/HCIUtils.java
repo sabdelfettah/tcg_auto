@@ -104,13 +104,16 @@ public abstract class HCIUtils {
 		showException(e, closeApplication, logAsError, logMessage, null);
 	}
 	public static void showException(Exception e, boolean closeApplication, boolean logAsError, String logMessage, String optionalMessage){
-		e.printStackTrace(System.err);
+		String exceptionMessage = e == null ? "?" : e.getMessage().replaceAll("\n", ", ");
+		if(e != null){
+			e.printStackTrace(System.err);
+		}
 		String message = "";
 		if(logMessage != null){
 			if(optionalMessage == null){
-				message = String.format(logMessage, e.getMessage());
+				message = String.format(logMessage, exceptionMessage);
 			}else{
-				message = String.format(logMessage, optionalMessage, e.getMessage());
+				message = String.format(logMessage, optionalMessage, exceptionMessage);
 			}
 			if(logAsError){
 				LogManager.logError(message);
@@ -118,8 +121,21 @@ public abstract class HCIUtils {
 				LogManager.logWarn(message);
 			}
 		}
-		message = String.format(closeApplication ? Messages.getString(Lang.MESSAGE_EXCEPTION_WITH_CLOSE) : Messages.getString(Lang.MESSAGE_EXCEPTION_WITHOUT_CLOSE), e.getMessage());
-		JOptionPane.showMessageDialog(null, message, Messages.getString(Lang.TITLE_EXCEPTION_OCCURRED), JOptionPane.ERROR_MESSAGE);
+		message = String.format(closeApplication ? Messages.getString(Lang.MESSAGE_EXCEPTION_WITH_CLOSE) : Messages.getString(Lang.MESSAGE_EXCEPTION_WITHOUT_CLOSE), exceptionMessage);
+		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+			
+			private String message;
+			
+			public Runnable setMessage(String message){
+				this.message = message;
+				return this;
+			}
+			
+			@Override
+			public void run() {
+				JOptionPane.showMessageDialog(null, message, Messages.getString(Lang.TITLE_EXCEPTION_OCCURRED), JOptionPane.ERROR_MESSAGE);
+			}
+		}.setMessage(message));
 		if(closeApplication){
 			ActionManager.exit(false);
 		}
