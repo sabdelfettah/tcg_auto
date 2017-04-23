@@ -38,7 +38,8 @@ public class TrayPopup extends PopupMenu {
 	private void initializeMenusData(){
 		myConfig = new HashMap<MenuData, List<MenuData>>();
 		myConfig.put(new MenuData(0, Messages.getString(Lang.MENU_OPEN_APPLICATION), COMPONENT_TYPE.MENUITEM, Action.ACTION_OPEN_APPLICATION), null);
-		myConfig.put(new MenuData(1, Messages.getString(Lang.MENU_ITEM_FILE_EXIT), COMPONENT_TYPE.MENUITEM, Action.ACTION_EXIT_APPLICATION), null);
+		myConfig.put(new MenuData(1, Messages.getString(Lang.MENU_ITEM_HELP_ABOUT), COMPONENT_TYPE.MENUITEM, Action.ACTION_SEE_ABOUT), null);
+		myConfig.put(new MenuData(2, Messages.getString(Lang.MENU_ITEM_FILE_EXIT), COMPONENT_TYPE.MENUITEM, Action.ACTION_EXIT_APPLICATION), null);
 	}
 	
 	private void initializeMenus(){

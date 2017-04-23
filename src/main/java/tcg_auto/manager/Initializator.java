@@ -28,7 +28,7 @@ public abstract class Initializator {
 	}
 	
 	@SuppressWarnings("rawtypes")
-	public static void initiliazeLists(){
+	public static void initializeLists(){
 		Map<String, List> executionResults = MiscUtils.getListElementMap(TCGUtils.ACTION_GET_FULL_LISTS);
 		ActionManager.updateCourseList(executionResults);
 		ActionManager.updateBookedCourseList(executionResults);

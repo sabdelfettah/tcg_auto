@@ -128,7 +128,7 @@ public class HCI extends JFrame implements ActionListener {
 	public static void main(String[] args) {
 		getInstance().initializeFrameComponents();
 		Initializator.initializeData();
-		Initializator.initiliazeLists();
+		Initializator.initializeLists();
 		getInstance().postInitializationFrame();
 		TrayButton.getSystemTrayInstance();
 		TrayButton.displayInfo(Messages.getString(Lang.APPLICATION_NAME), Messages.getString(Lang.MESSAGE_TRAY_APP_STARTED));

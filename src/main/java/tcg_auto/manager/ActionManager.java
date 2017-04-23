@@ -80,7 +80,6 @@ public abstract class ActionManager {
 			updateBookedCourseList();
 			break;
 		case ACTION_SEE_ABOUT :
-			Package.getPackages();
 			String message = String.format("%s v%s\n%s", Messages.getString(Lang.APPLICATION_NAME), HCI.VERSION, "https://github.com/sabdelfettah/tcg_auto/releases");
 			JOptionPane.showMessageDialog(null, message, Messages.getString(Lang.MENU_ITEM_HELP_ABOUT), JOptionPane.INFORMATION_MESSAGE);
 			break;

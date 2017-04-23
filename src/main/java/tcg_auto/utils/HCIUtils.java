@@ -127,7 +127,7 @@ public abstract class HCIUtils {
 	public static void showApplication(){
 		if(!HCI.getInstance().isVisible()){
 			if(!HCI.getInstance().isDataInitialized()){
-				Initializator.initiliazeLists();
+				Initializator.initializeLists();
 			}
 			HCI.getInstance().setVisible(true);
 		}
