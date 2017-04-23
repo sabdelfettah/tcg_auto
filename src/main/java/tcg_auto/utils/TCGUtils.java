@@ -29,6 +29,7 @@ public abstract class TCGUtils {
 	public static final String URL_HOME = "http://center.thecorporategym.com/citylights/";
 	public static final String URL_BOOKING_SPACE = "https://citylights.thecorporategym.com/fr/poliwin/reservas";
 	public static final String URL_MY_RESERVATIONS = "https://citylights.thecorporategym.com/fr/poliwin/misreservas";
+	public static final String URL_SIGN_IN = "https://citylights.thecorporategym.com/fr/usuari/login";
 	// XPATHS
 	public static final String XPATH_INPUT_LOGIN = "//input[@name='myusername']";
 	public static final String XPATH_INPUT_PASSWORD = "//input[@name='mypassword']";
@@ -157,12 +158,37 @@ public abstract class TCGUtils {
 	}
 	
 	@SuppressWarnings("rawtypes")
-	public static Boolean isBooleanList(List inputList){
+	public static Boolean isUniqueBooleanElementList(List inputList){
 		if(MiscUtils.isNullOrEmpty(inputList)){
 			return null;
 		}
+		if(inputList.size() > 1){
+			return false;
+		}
 		Object firstInstance = inputList.iterator().next();
 		return new Boolean(firstInstance instanceof Boolean);
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public static boolean isTrueBooleanValueList(List inputList){
+		Boolean isUniqueBooleanElementList = isUniqueBooleanElementList(inputList);
+		if(isUniqueBooleanElementList == null || !isUniqueBooleanElementList.booleanValue()){
+			return false;
+		}
+		Object firstInstance = inputList.iterator().next();
+		Boolean firstInstanceAsBoolean = (Boolean) firstInstance;
+		return firstInstanceAsBoolean.booleanValue();
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public static boolean isFalseBooleanValueList(List inputList){
+		Boolean isUniqueBooleanElementList = isUniqueBooleanElementList(inputList);
+		if(isUniqueBooleanElementList == null || !isUniqueBooleanElementList.booleanValue()){
+			return false;
+		}
+		Object firstInstance = inputList.iterator().next();
+		Boolean firstInstanceAsBoolean = (Boolean) firstInstance;
+		return !firstInstanceAsBoolean.booleanValue();
 	}
 	
 	private static String getParentOnClickAttribute(PersistentWebElement course){

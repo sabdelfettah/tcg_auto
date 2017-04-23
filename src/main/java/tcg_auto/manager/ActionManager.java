@@ -157,7 +157,11 @@ public abstract class ActionManager {
 			LogManager.logError(Messages.getString(Lang.LOG_MESSAGE_ERROR_EXIT_APP));
 		}
 		if(WebDriverManager.isDriverInitialized()){
-			TCG.getNewTCGInstance(Arrays.asList(WebAction.ACTION_CLOSE)).execute();
+			try {
+				TCG.getNewTCGInstance(Arrays.asList(WebAction.ACTION_CLOSE)).execute();
+			} catch (Exception e) {
+				HCIUtils.showException(e, false);
+			}
 		}
 		System.exit(0);
 	}

@@ -33,6 +33,8 @@ public class TCG {
 	private static String password;
 	@SuppressWarnings("rawtypes")
 	private static List lastActionElemets;
+	private static boolean exitApplication = false;
+	private static Exception exceptionToThrow = null;
 	
 	// NOT STATIC FIELDS
 	private List<WebAction> webActionList;
@@ -50,7 +52,15 @@ public class TCG {
 
 	// NOT STATIC METHODS
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public Map<String, List> execute() {
+	public Map<String, List> execute() throws Exception {
+		while(!WebDriverManager.askForWebDriver(this)){
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				HCIUtils.showException(e, false);
+			}
+		}
+		initialize();
 		Map<String, List> result = new HashMap<String, List>();
 		if (MiscUtils.isNotNullOrEmpty(webActionList)) {
 			for(WebAction webAction : webActionList){
@@ -64,8 +74,21 @@ public class TCG {
 						result.put(PersistentWebElement.getPersistentMapKey(webAction.name()), TCGUtils.getPersistentWebElementListFromWebElementList(resultOfExecution));
 					}
 					WaitingDialog.incrementProgressBarValue();
+					LogManager.logInfoFinished(String.format(Messages.getString(Lang.LOG_MESSAGE_INFO_WEB_ACTION_EXECUTED_WITH_SUCCESS), webAction.name()));
 				} catch (Exception e) {
+					LogManager.logErrorFinished(String.format(Messages.getString(Lang.LOG_MESSAGE_ERROR_EXECUTING_WEB_ACTION), webAction.name(), e.getMessage()));
+					HCIUtils.showException(e, false);
 					return result;
+				}
+				if(TCGUtils.isFalseBooleanValueList(lastActionElemets)){
+					WaitingDialog.disposeDialog();
+					WebDriverManager.releaseWebDriver();
+					if(exceptionToThrow == null){
+						exceptionToThrow = new Exception("Unknown");
+					}
+					LogManager.logErrorFinished(String.format(Messages.getString(Lang.LOG_MESSAGE_ERROR_EXECUTING_WEB_ACTION), webAction.name(), exceptionToThrow.getMessage()));
+					HCIUtils.showException(exceptionToThrow, exitApplication);
+					break;
 				}
 			}
 		}
@@ -73,66 +96,58 @@ public class TCG {
 		WebDriverManager.releaseWebDriver();
 		return result;
 	}
+	
+	private void initialize(){
+		exitApplication = false;
+		exceptionToThrow = null;
+		lastActionElemets = null;
+	}
 
 	@SuppressWarnings({ "rawtypes" })
 	private List executeWebAction(WebAction actionToExecute) throws Exception {
-		while(!WebDriverManager.askForWebDriver(this)){
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				HCIUtils.showException(e, false);
-			}
-		}
 		LogManager.logInfoRunning(String.format(Messages.getString(Lang.LOG_MESSAGE_INFO_EXECUTING_WEB_ACTION), actionToExecute.name()));
-		try{
-			switch (actionToExecute) {
-			case ACTION_CONNECT:
-				lastActionElemets = connectToTCG();
-				break;
-			case ACTION_SIGN_IN_LOGIN_PASSWORD:
-				lastActionElemets = enterLoginAndPassword();
-				break;
-			case ACTION_CLOSE:
-				lastActionElemets = closeConnection();
-				break;
-			case ACTION_CLICK_BOOKING:
-				lastActionElemets = findButtonAndClick(TCGUtils.XPATH_BUTTON_GO_TO_BOOKING_SPACE);
-				break;
-			case ACTION_CLICK_ROOM_1:
-				lastActionElemets = findButtonAndClick(TCGUtils.XPATH_BUTTON_GO_TO_ROOM_1_SPACE);
-				break;
-			case ACTION_CLICK_ROOM_2:
-				lastActionElemets = findButtonAndClick(TCGUtils.XPATH_BUTTON_GO_TO_ROOM_2_SPACE);
-				break;
-			case ACTION_GET_COURSES_ROOM_1:
-			case ACTION_GET_COURSES_ROOM_2:
-				lastActionElemets = getElements(TCGUtils.XPATH_DIVS_COURSES);
-				break;
-			case ACTION_SELECT_COURSE : 
-				Course course = getCourseArgument();
-				lastActionElemets = selectCourse(course);
-				break;
-			case ACTION_CONFIRM_BOOKING :
-				lastActionElemets = confirmBooking();
-				break;
-			case ACTION_GO_TO_MY_RESERVATIONS :
-				lastActionElemets = goToMyReservations();
-				break;
-			case ACTION_GET_MY_RESERVATIONS :
-				lastActionElemets = getElements(TCGUtils.XPATH_TABLE_RESERVATIONS);
-				break;
-			default:
-				LogManager.logErrorFinished(String.format(Messages.getString(Lang.LOG_MESSAGE_ERROR_EXECUTING_WEB_ACTION), actionToExecute.name(), "web action not recognized"));
-				return (lastActionElemets = MiscUtils.getFalseAsList());
-			}
-		}catch(Exception e){
-			LogManager.logErrorFinished(String.format(Messages.getString(Lang.LOG_MESSAGE_ERROR_EXECUTING_WEB_ACTION), actionToExecute.name(), e.getMessage()));
-			WaitingDialog.disposeDialog();
-			WebDriverManager.releaseWebDriver();
-			HCIUtils.showException(e, false);
+		switch (actionToExecute) {
+		case ACTION_CONNECT:
+			lastActionElemets = connectToTCG();
+			break;
+		case ACTION_SIGN_IN_LOGIN_PASSWORD:
+			lastActionElemets = enterLoginAndPassword();
+			break;
+		case ACTION_CLOSE:
+			lastActionElemets = closeConnection();
+			break;
+		case ACTION_CLICK_BOOKING:
+			lastActionElemets = findButtonAndClick(TCGUtils.XPATH_BUTTON_GO_TO_BOOKING_SPACE);
+			break;
+		case ACTION_CLICK_ROOM_1:
+			lastActionElemets = findButtonAndClick(TCGUtils.XPATH_BUTTON_GO_TO_ROOM_1_SPACE);
+			break;
+		case ACTION_CLICK_ROOM_2:
+			lastActionElemets = findButtonAndClick(TCGUtils.XPATH_BUTTON_GO_TO_ROOM_2_SPACE);
+			break;
+		case ACTION_GET_COURSES_ROOM_1:
+		case ACTION_GET_COURSES_ROOM_2:
+			lastActionElemets = getElements(TCGUtils.XPATH_DIVS_COURSES);
+			break;
+		case ACTION_SELECT_COURSE : 
+			Course course = getCourseArgument();
+			lastActionElemets = selectCourse(course);
+			break;
+		case ACTION_CONFIRM_BOOKING :
+			lastActionElemets = confirmBooking();
+			break;
+		case ACTION_GO_TO_MY_RESERVATIONS :
+			lastActionElemets = goToMyReservations();
+			break;
+		case ACTION_GET_MY_RESERVATIONS :
+			lastActionElemets = getElements(TCGUtils.XPATH_TABLE_RESERVATIONS);
+			break;
+		default:
+			String message = String.format(Messages.getString(Lang.LOG_MESSAGE_ERROR_EXECUTING_WEB_ACTION), actionToExecute.name(), "web action not recognized");
+			LogManager.logErrorFinished(message);
+			exceptionToThrow = new Exception(message);
 			return (lastActionElemets = MiscUtils.getFalseAsList());
 		}
-		LogManager.logInfoFinished(String.format(Messages.getString(Lang.LOG_MESSAGE_INFO_WEB_ACTION_EXECUTED_WITH_SUCCESS), actionToExecute.name()));
 		return lastActionElemets;
 	}
 	
@@ -166,16 +181,13 @@ public class TCG {
 	}
 	
 	// ACTION METHODS
-	private static List<Boolean> connectToTCG() {
-		try{
-			WebDriverManager.getWebDriver().get(baseUrl);
-		}catch(WebDriverException e){
-			throw e;
-		}
-		return MiscUtils.getTrueAsList();
+	@SuppressWarnings("rawtypes")
+	private static List connectToTCG() {
+		return goToWebPage(baseUrl);
 	}
 	
-	private static List<Boolean> enterLoginAndPassword() {
+	@SuppressWarnings("rawtypes")
+	private static List enterLoginAndPassword() {
 		try{
 			WebElement inputLogin = WebDriverManager.getWebDriver().findElement(By.xpath(TCGUtils.XPATH_INPUT_LOGIN));
 			WebElement inputPassword = WebDriverManager.getWebDriver().findElement(By.xpath(TCGUtils.XPATH_INPUT_PASSWORD));
@@ -183,10 +195,18 @@ public class TCG {
 			inputLogin.sendKeys(login);
 			inputPassword.sendKeys(password);
 			buttonSubmit.click();
-		}catch(WebDriverException e){
-			throw e;
+			if(TCGUtils.URL_SIGN_IN.equals(WebDriverManager.getWebDriver().getCurrentUrl())){
+				exitApplication = true;
+				throw new Exception("Bad login or password");
+			}
+		}catch(Exception e){
+			exceptionToThrow = e;
 		}
-		return MiscUtils.getTrueAsList();
+		if(exceptionToThrow == null){
+			return MiscUtils.getTrueAsList();
+		} else{
+			return MiscUtils.getFalseAsList();
+		}
 	}
 
 	private static List<Boolean> closeConnection() {
@@ -195,14 +215,16 @@ public class TCG {
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private static List selectCourse(Course course) throws Exception{
+	private static List selectCourse(Course course){
 		if(course == null){
-			throw new Exception(Messages.getString(Lang.MESSAGE_EXCEPTION_NO_COURSE_FOUND));
+			exceptionToThrow = new Exception(Messages.getString(Lang.MESSAGE_EXCEPTION_NO_COURSE_FOUND));
+			return MiscUtils.getFalseAsList();
 		}
 		List<WebElement> lastActionElemetsAsWebElementList = lastActionElemets;
 		WebElement elementToClick = TCGUtils.getWebElementFilteredByCourse(lastActionElemetsAsWebElementList, course);
 		if(elementToClick == null){
-			throw new WebDriverException(String.format(Messages.getString(Lang.MESSAGE_EXCEPTION_NO_COURSE_WEB_ELEMENT_FOUND), course));
+			exceptionToThrow = new WebDriverException(String.format(Messages.getString(Lang.MESSAGE_EXCEPTION_NO_COURSE_WEB_ELEMENT_FOUND), course));
+			return MiscUtils.getFalseAsList();
 		}
 		Calendar nowCalendar = Calendar.getInstance();
 		Calendar elementProgrammingCalendar =  TCGUtils.getCalendarFromElement(elementToClick);
@@ -213,7 +235,8 @@ public class TCG {
 			elementToClick = TCGUtils.getWebElementFilteredByCourse(lastActionElemetsAsWebElementList, course);
 		}
 		if(elementToClick == null){
-			throw new WebDriverException(String.format(Messages.getString(Lang.MESSAGE_EXCEPTION_NO_COURSE_WEB_ELEMENT_FOUND), course));
+			exceptionToThrow = new WebDriverException(String.format(Messages.getString(Lang.MESSAGE_EXCEPTION_NO_COURSE_WEB_ELEMENT_FOUND), course));
+			return MiscUtils.getFalseAsList();
 		}
 		elementToClick.click();
 		waitJavaScriptLoading();
@@ -222,11 +245,7 @@ public class TCG {
 	}
 	
 	@SuppressWarnings("rawtypes")
-	private static List confirmBooking() throws Exception{
-		Boolean isLastElementsBoolean = TCGUtils.isBooleanList(lastActionElemets);
-		if(isLastElementsBoolean != null && isLastElementsBoolean.booleanValue()){
-			return (lastActionElemets = MiscUtils.getFalseAsList());
-		}
+	private static List confirmBooking(){
 		Boolean isLastElementsWebElement = TCGUtils.isWebElementList(lastActionElemets);
 		if(isLastElementsWebElement != null && isLastElementsWebElement.booleanValue()){
 			WebElement dialogConfirmBooking = (WebElement) lastActionElemets.get(0);
@@ -236,15 +255,17 @@ public class TCG {
 				if(buttonToClick != null && buttonToClick.getTagName().equals("a")){
 					buttonToClick.click();
 				}else{
-					throw new Exception(String.format(Messages.getString(Lang.MESSAGE_EXCEPTION_NO_BOOKING_CONFIRM_BUTTON_FOUND), dialogConfirmBooking.getText()));
+					exceptionToThrow = new Exception(String.format(Messages.getString(Lang.MESSAGE_EXCEPTION_NO_BOOKING_CONFIRM_BUTTON_FOUND), dialogConfirmBooking.getText()));
+					return MiscUtils.getFalseAsList();
 				}
 			}else{
 				WebElement dialogErrorBooking = (WebElement) lastActionElemets.get(1);
 				if(dialogErrorBooking == null){
-					throw new Exception(String.format(Messages.getString(Lang.MESSAGE_EXCEPTION_BOOKING_IMPOSSIBLE), "null"));
+					exceptionToThrow = new Exception(String.format(Messages.getString(Lang.MESSAGE_EXCEPTION_BOOKING_IMPOSSIBLE), "null"));
 				}else{
-					throw new Exception(String.format(Messages.getString(Lang.MESSAGE_EXCEPTION_BOOKING_IMPOSSIBLE), dialogErrorBooking.getText()));
+					exceptionToThrow = new Exception(String.format(Messages.getString(Lang.MESSAGE_EXCEPTION_BOOKING_IMPOSSIBLE), dialogErrorBooking.getText()));
 				}
+				return MiscUtils.getFalseAsList();
 			}
 			waitJavaScriptLoading();
 		}
@@ -253,11 +274,20 @@ public class TCG {
 	
 	@SuppressWarnings("rawtypes")
 	private static List goToMyReservations(){
-		WebDriverManager.getWebDriver().get(TCGUtils.URL_MY_RESERVATIONS);
-		return MiscUtils.getTrueAsList();
+		return goToWebPage(TCGUtils.URL_MY_RESERVATIONS);
 	}
 	
 	// OTHER METHODS
+	@SuppressWarnings("rawtypes")
+	protected static List goToWebPage(String URL){
+		try{
+			WebDriverManager.getWebDriver().get(URL);
+		}catch(Exception e){
+			exceptionToThrow = e;
+			return MiscUtils.getFalseAsList();
+		}
+		return MiscUtils.getTrueAsList();
+	}
 	protected static List<Boolean> findButtonAndClick(String XPath) {
 		WebElement button = WebDriverManager.getWebDriver().findElement(By.xpath(XPath));
 		if(button == null){
