@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import javax.imageio.ImageIO;
 import javax.swing.JCheckBox;
@@ -29,10 +30,10 @@ public class HCI extends JFrame implements ActionListener {
 	// STATIC FINAL FIELDS
 	// IMAGES
 	private static final Map<String, Image> images = new HashMap<String, Image>();
-	public static final String VERSION = "1.0.3";
 	
 	// STATIC FIELDS
 	private static HCI instance = null;
+	private static Properties properties = null;
 	private static boolean hciInitialized = false;
 	private static boolean dataInitialized= false;
 	
@@ -125,10 +126,19 @@ public class HCI extends JFrame implements ActionListener {
 		return instance;
 	}
 	
+	public static String getVersion(){
+		return properties.getProperty(Initializator.KEY_VERSION);
+	}
+	
+	public static Properties getProperties(){
+		return properties;
+	}
+	
 	public static void main(String[] args) {
 		getInstance().initializeFrameComponents();
 		Initializator.initializeData();
 		Initializator.initializeLists();
+		properties = Initializator.initializeProperties();
 		getInstance().postInitializationFrame();
 		TrayButton.getSystemTrayInstance();
 		TrayButton.displayInfo(Messages.getString(Lang.APPLICATION_NAME), Messages.getString(Lang.MESSAGE_TRAY_APP_STARTED));

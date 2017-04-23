@@ -29,6 +29,7 @@ public abstract class HCIUtils {
 	// IMAGES
 	public static final String PATH_APPLICATION_ICON = "tcg_auto/images/app.png";
 	public static final String PATH_LOADING_IMAGE = "tcg_auto/images/loading.gif";
+	public static final String PATH_PROPERTIES_FILE = "../../project.properties";
 	
 	// STATIC METHODS
 	public static URL getUrlFromPath(String path){

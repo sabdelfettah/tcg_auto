@@ -5,6 +5,7 @@ public abstract class Lang {
 	// APPLICATION
 	public static final String APPLICATION_NAME = "application.name";
 	public static final String APPLICATION_TITLE = "application.title";
+	public static final String APPLICATION_ABOUT = "application.about";
 	
 	// MENUS
 	public static final String MENU_FILE = "menus.file";

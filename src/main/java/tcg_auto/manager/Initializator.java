@@ -3,6 +3,7 @@ package tcg_auto.manager;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import tcg_auto.hci.HCI;
 import tcg_auto.hci.LogPanel;
@@ -15,6 +16,12 @@ import tcg_auto.utils.MiscUtils;
 import tcg_auto.utils.TCGUtils;
 
 public abstract class Initializator {
+	
+	// STATIC FINAL FIELDS
+	public static final String KEY_VERSION = "project.version";
+	public static final String KEY_SELENIUM = "selenium.version";
+	public static final String KEY_SELENIUM_SERVER = "selenium.server.version";
+	public static final String KEY_GSON = "gson.version";
 	
 	// STATIC METHODS
 	public static void initializeData(){
@@ -86,6 +93,16 @@ public abstract class Initializator {
 		}else{
 			LogManager.logInfoFinished(Messages.getString(Lang.LOG_MESSAGE_INFO_INITIALIZATION_WEB_DRIVER_PATH_SUCCESS));
 		}
+	}
+	
+	public static Properties initializeProperties(){
+		final Properties properties = new Properties();
+		try {
+			properties.load(HCI.getInstance().getClass().getResourceAsStream(HCIUtils.PATH_PROPERTIES_FILE));
+		} catch (IOException | NullPointerException e) {
+			HCIUtils.showException(e, false);
+		}
+		return properties;
 	}
 	
 }

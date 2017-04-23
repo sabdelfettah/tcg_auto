@@ -80,7 +80,7 @@ public abstract class ActionManager {
 			updateBookedCourseList();
 			break;
 		case ACTION_SEE_ABOUT :
-			String message = String.format("%s v%s\n%s", Messages.getString(Lang.APPLICATION_NAME), HCI.VERSION, "https://github.com/sabdelfettah/tcg_auto/releases");
+			String message = String.format(Messages.getString(Lang.APPLICATION_ABOUT), Messages.getString(Lang.APPLICATION_NAME), HCI.getVersion(), HCI.getProperties().getProperty(Initializator.KEY_GSON), HCI.getProperties().getProperty(Initializator.KEY_SELENIUM), HCI.getProperties().getProperty(Initializator.KEY_SELENIUM_SERVER), "https://github.com/sabdelfettah/tcg_auto/releases");
 			JOptionPane.showMessageDialog(null, message, Messages.getString(Lang.MENU_ITEM_HELP_ABOUT), JOptionPane.INFORMATION_MESSAGE);
 			break;
 		case ACTION_SELECT_WEB_DRIVER_PATH:
