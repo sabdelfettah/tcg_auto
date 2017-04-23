@@ -135,10 +135,10 @@ public class HCI extends JFrame implements ActionListener {
 	}
 	
 	public static void main(String[] args) {
+		properties = Initializator.initializeProperties();
 		getInstance().initializeFrameComponents();
 		Initializator.initializeData();
 		Initializator.initializeLists();
-		properties = Initializator.initializeProperties();
 		getInstance().postInitializationFrame();
 		TrayButton.getSystemTrayInstance();
 		TrayButton.displayInfo(Messages.getString(Lang.APPLICATION_NAME), Messages.getString(Lang.MESSAGE_TRAY_APP_STARTED));
