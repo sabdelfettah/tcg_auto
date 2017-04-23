@@ -14,6 +14,7 @@ import org.openqa.selenium.WebElement;
 import tcg_auto.hci.WaitingDialog;
 import tcg_auto.lang.Lang;
 import tcg_auto.lang.Messages;
+import tcg_auto.manager.FileManager;
 import tcg_auto.manager.LogManager;
 import tcg_auto.manager.WebDriverManager;
 import tcg_auto.model.Course;
@@ -197,7 +198,8 @@ public class TCG {
 			buttonSubmit.click();
 			if(TCGUtils.URL_SIGN_IN.equals(WebDriverManager.getWebDriver().getCurrentUrl())){
 				exitApplication = true;
-				throw new Exception("Bad login or password");
+				FileManager.deleteLoginPasswordFile();
+				throw new Exception("Bad login or password : you have to type the login and password again");
 			}
 		}catch(Exception e){
 			exceptionToThrow = e;

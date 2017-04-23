@@ -147,6 +147,14 @@ public abstract class FileManager {
 		}
 	}
 	
+	public static void deleteLoginPasswordFile(){
+		try {
+			Files.delete(getPathInstanceFromString(PATH_LOGIN_PASSWORD));
+		} catch (IOException e) {
+			HCIUtils.showException(e, false);
+		}
+	}
+	
 	public static String readLoginPassword() throws IOException, NullPointerException{
 		String result = "";
 		try(BufferedReader reader = getLoginPasswordBufferedReaderInstance()){
