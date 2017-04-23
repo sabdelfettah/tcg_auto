@@ -1,6 +1,7 @@
 package tcg_auto.manager;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -98,7 +99,10 @@ public abstract class Initializator {
 	public static Properties initializeProperties(){
 		final Properties properties = new Properties();
 		try {
-			properties.load(HCI.getInstance().getClass().getResourceAsStream(HCIUtils.PATH_PROPERTIES_FILE));
+			InputStream propertiesInputStream = HCI.getInstance().getClass().getResourceAsStream(HCIUtils.PATH_PROPERTIES_FILE);
+			if(propertiesInputStream != null){
+				properties.load(propertiesInputStream);
+			}
 		} catch (IOException | NullPointerException e) {
 			HCIUtils.showException(e, false);
 		}
