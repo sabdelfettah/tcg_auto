@@ -42,11 +42,12 @@ public abstract class TCGUtils {
 	public static final String XPATH_DIALOG_CONFIRM_BOOKING = "//div[@id='ferreserva']";
 	public static final String XPATH_DIALOG_LOADING = "//div[@id='loading']";
 	public static final String XPATH_DIALOG_BOOKING_IMPOSSIBLE = "//div[@role='dialog']";
+	public static final String XPATH_DIALOG_CONFIRM = "//div[@id='dialog-confirm']";
 	public static final String XPATH_DIVS_COURSES = "//div[@class='groupclasse']";
 	public static final String XPATH_TABLE_RESERVATIONS = "//table[@id='dades-reserva']";
 	public static final String XPATH_TABLE_RESERVATIONS_TH = ".//th[@class='text']";
 	public static final String XPATH_TABLE_RESERVATIONS_TD = ".//td[@class='text']";
-	public static final String[] XPATHS_SIGN_IN_COURSE_DIALOG = {XPATH_DIALOG_CONFIRM_BOOKING, XPATH_DIALOG_BOOKING_IMPOSSIBLE, XPATH_BUTTON_CONFIRM_BOOKING};
+	public static final String[] XPATHS_SIGN_IN_COURSE_DIALOG = {XPATH_DIALOG_CONFIRM_BOOKING, XPATH_DIALOG_BOOKING_IMPOSSIBLE, XPATH_BUTTON_CONFIRM_BOOKING, XPATH_DIALOG_CONFIRM};
 	// WEBACTION LISTS
 	public static final List<WebAction> ACTION_GET_ROOM_1_COURSE_LIST = Arrays.asList(
 			WebAction.ACTION_CONNECT,

@@ -262,10 +262,11 @@ public class TCG {
 				}
 			}else{
 				WebElement dialogErrorBooking = (WebElement) lastActionElemets.get(1);
+				WebElement confirmDialogErrorBooking = (WebElement) lastActionElemets.get(3);
 				if(dialogErrorBooking == null){
 					exceptionToThrow = new Exception(String.format(Messages.getString(Lang.MESSAGE_EXCEPTION_BOOKING_IMPOSSIBLE), "null"));
 				}else{
-					exceptionToThrow = new Exception(String.format(Messages.getString(Lang.MESSAGE_EXCEPTION_BOOKING_IMPOSSIBLE), dialogErrorBooking.getText()));
+					exceptionToThrow = new Exception(String.format(Messages.getString(Lang.MESSAGE_EXCEPTION_BOOKING_IMPOSSIBLE), confirmDialogErrorBooking == null ? "Unknow" : confirmDialogErrorBooking.getText()));
 				}
 				return MiscUtils.getFalseAsList();
 			}
