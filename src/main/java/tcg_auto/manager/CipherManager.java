@@ -24,7 +24,7 @@ public abstract class CipherManager {
 	// STATIC FINAL FIELDS
 	private static final String CIPHER_ALGORITHM = "AES";
 	private static final String KEY_ALGORITHM = "AES";
-	private static final String SECRET_KEY = "B5EF45741094B76E"; // B2A7422A86C0D704
+	private static final String SECRET_KEY = ""; // B2A7422A86C0D704
 	
 	// STATIC FIELDS
 	private static Cipher cipherEncryptInstance = null;

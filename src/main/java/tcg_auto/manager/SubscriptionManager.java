@@ -77,8 +77,17 @@ public abstract class SubscriptionManager {
 	}
 	
 	public static void scheduleSigningCourse(Subscription subscriptionToSchedule){
-		Date nextExecutingDate = subscriptionToSchedule.computeNextExecutingDate();
-		CourseTask courseTask = new CourseTask(subscriptionToSchedule);
+		scheduleSigningCourse(subscriptionToSchedule, subscriptionToSchedule.computeNextExecutingDate(), 5);
+	}
+	
+	public static void reScheduleSigningCourse(Subscription subscriptionToSchedule, int newAttemps){
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.MINUTE, 3);
+		scheduleSigningCourse(subscriptionToSchedule, subscriptionToSchedule.computeNextExecutingDate(), newAttemps);
+	}
+	
+	public static void scheduleSigningCourse(Subscription subscriptionToSchedule, Date nextExecutingDate, int attempts){
+		CourseTask courseTask = new CourseTask(subscriptionToSchedule, attempts);
 		courseTasksOfSubscription.put(subscriptionToSchedule, courseTask);
 		subscriptionToSchedule.setNextExecutingDate(nextExecutingDate);
 		try{
@@ -118,8 +127,10 @@ public abstract class SubscriptionManager {
 	public static class CourseTask extends TimerTask {
 		
 		private Subscription subscriptionToSchedule;
+		private int attempts;
 		
-		public CourseTask(Subscription subscriptionToSchedule){
+		public CourseTask(Subscription subscriptionToSchedule, int attempts){
+			this.attempts = attempts;
 			this.subscriptionToSchedule = subscriptionToSchedule;
 			courseTasksOfSubscription.put(subscriptionToSchedule, this);
 		}
@@ -129,7 +140,11 @@ public abstract class SubscriptionManager {
 			courseTasksOfSubscription.put(subscriptionToSchedule, null);
 			subscriptionToSchedule.cancelOrTerminateCourseTask();
 			TrayButton.displayInfo(Messages.getString(Lang.TITLE_COURSE_BOOKING), String.format(Messages.getString(Lang.MESSAGE_TRAY_INFO_TRY_BOOKING), subscriptionToSchedule.getCourseName()));
-			TCGUtils.bookingCourse(subscriptionToSchedule.getCourse());
+			boolean isBookingOk = TCGUtils.bookingCourse(subscriptionToSchedule.getCourse());
+			if(!isBookingOk){
+				subscriptionToSchedule.reProgramSigningCourse(attempts - 1);
+			}
+			CourseTaskListPanel.updateCourseTaskList();
 		}
 		
 		public String toString(){

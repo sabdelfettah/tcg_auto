@@ -49,6 +49,10 @@ public class Subscription {
 		SubscriptionManager.scheduleSigningCourse(this);
 	}
 	
+	public void reProgramSigningCourse(int newAttemps){
+		SubscriptionManager.reScheduleSigningCourse(this, newAttemps);
+	}
+	
 	public Date computeNextExecutingDate(){
 		Calendar nowCalendar = Calendar.getInstance();
 		Calendar resultCalendar = Calendar.getInstance();

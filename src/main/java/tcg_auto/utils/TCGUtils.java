@@ -289,18 +289,18 @@ public abstract class TCGUtils {
 	}
 	
 	@SuppressWarnings("rawtypes")
-	public static void bookingCourse(Course course) {
+	public static boolean bookingCourse(Course course) {
 		List<WebAction> actionsToExecute = Room.ROOM_1.equals(course.getRoom()) ? TCGUtils.ACTION_BOOKING_COURSE_ROOM_1 : TCGUtils.ACTION_BOOKING_COURSE_ROOM_2;
 		Map<String, Object> arguments = new HashMap<String, Object>();
 		arguments.put(TCG.ARGUMENT_COURSE, course);
 		Map<String, List> resultMap = MiscUtils.getListElementMap(actionsToExecute, arguments);
 		List result = resultMap.get(WebAction.ACTION_CONFIRM_BOOKING.name());
-		Object firstElement = result.iterator().next();
-		Boolean finalResult = (Boolean) firstElement;
-		if(finalResult != null && finalResult.booleanValue()){
+		if(TCGUtils.isTrueBooleanValueList(result)){
 			JOptionPane.showMessageDialog(null, Messages.getString(Lang.MESSAGE_BOOKING_INFO_BOOKING_SUCCESS), Messages.getString(Lang.TITLE_COURSE_BOOKING), JOptionPane.INFORMATION_MESSAGE);
+			return true;
 		}else{
 			JOptionPane.showMessageDialog(null, Messages.getString(Lang.MESSAGE_BOOKING_ERROR_BOOKING), Messages.getString(Lang.TITLE_COURSE_BOOKING), JOptionPane.ERROR_MESSAGE);
+			return false;
 		}
 	}
 	
