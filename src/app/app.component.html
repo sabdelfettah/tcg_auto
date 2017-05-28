@@ -1,3 +1,23 @@
-<h1>
-  {{title}}
-</h1>
+<md-menu #appMenu="mdMenu">
+  <button md-menu-item> Settings </button>
+  <button md-menu-item> Help </button>
+</md-menu>
+
+<button md-icon-button [mdMenuTriggerFor]="appMenu">
+  <md-icon>more_vert</md-icon>
+</button>
+
+<md-tab-group>
+  <md-tab label="{{RoomOneLabel}}">
+    <h1>Some tab content</h1>
+    <p>...</p>
+  </md-tab>
+  <md-tab label="{{RoomTwoLabel}}">
+    <h1>Some more tab content</h1>
+    <p>...</p>
+  </md-tab>
+  <md-tab label="{{ReservationsLabel}}">
+    <h1>Some more tab content</h1>
+    <p>...</p>
+  </md-tab>
+</md-tab-group>

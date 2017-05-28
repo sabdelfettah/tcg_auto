@@ -7,4 +7,7 @@ import { Component } from '@angular/core';
 })
 export class TcgAutoComponent {
   title = 'TCG Auto';
+  RoomOneLabel = 'Room 1';
+  RoomTwoLabel = 'Room 2';
+  ReservationsLabel = 'My reservations';
 }
