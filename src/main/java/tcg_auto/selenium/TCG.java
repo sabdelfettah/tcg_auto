@@ -298,10 +298,12 @@ public class TCG {
 		WebElement button = WebDriverManager.getWebDriver().findElement(By.xpath(XPath));
 		if(button == null){
 			return MiscUtils.getFalseAsList();
-		}else if(!button.isDisplayed()){
-			button = TCGUtils.getParentElement(button);
 		}
-		button.click();
+		if(button.isDisplayed()){
+			button.click();
+		}else{
+			WebDriverManager.getJavaScriptExecutor().executeScript("arguments[0].click()", button);
+		}
 		return MiscUtils.getTrueAsList();
 	}
 	
