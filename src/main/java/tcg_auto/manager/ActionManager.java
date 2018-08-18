@@ -91,15 +91,18 @@ public abstract class ActionManager {
 	}
 
 	@SuppressWarnings({ "rawtypes" })
-	public static void updateCourseList() {
+	public static void updateCourseList() throws Exception {
 		Map<String, List> executionResults = MiscUtils.getListElementMap(TCGUtils.ACTION_GET_FULL_COURSE_LIST);
 		updateCourseList(executionResults);
 	}
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	protected static void updateCourseList(Map<String, List> executionResults) {
+	protected static void updateCourseList(Map<String, List> executionResults) throws Exception {
 		LogManager.logInfoRunning(Messages.getString(Lang.LOG_MESSAGE_INFO_ACTION_UPDATING_COURSE_LIST));
-		List<PersistentWebElement> listToUpdate = executionResults.get(PersistentWebElement.getPersistentMapKey(WebAction.ACTION_GET_COURSES_ROOM_1.name()));
+//		if(executionResults == null){
+//			throw new Exception(String.format(Messages.getString(Lang.LOG_MESSAGE_ERROR_EXECUTING_WEB_ACTION), Action.ACTION_UPDATE_COURSES, Messages.getString(Lang.LOG_MESSAGE_ERROR_NOTHIG_WAS_FOUND)));
+//		}
+		List<PersistentWebElement> listToUpdate = executionResults.get(PersistentWebElement.getPersistentMapKey(WebAction.WEB_ACTION_GET_COURSES_ROOM_1.name()));
 		int numberOfTotalCourses = listToUpdate == null ? 0 : listToUpdate.size();
 		CourseManager.initCourseList();
 		if(CollectionUtils.isNotEmpty(listToUpdate)){
@@ -108,7 +111,7 @@ public abstract class ActionManager {
 				CourseManager.addCourseToCourseList(new Course(MiscUtils.removeRoomInLabel(course.getText()), Course.Room.ROOM_1, TCGUtils.getDayFromPersistentWebElement(course), timeOptions));
 			});
 		}
-		listToUpdate = executionResults.get(PersistentWebElement.getPersistentMapKey(WebAction.ACTION_GET_COURSES_ROOM_2.name()));
+		listToUpdate = executionResults.get(PersistentWebElement.getPersistentMapKey(WebAction.WEB_ACTION_GET_COURSES_ROOM_2.name()));
 		numberOfTotalCourses += listToUpdate == null ? 0 : listToUpdate.size();
 		if(CollectionUtils.isNotEmpty(listToUpdate)){
 			listToUpdate.forEach(course -> {
@@ -123,15 +126,18 @@ public abstract class ActionManager {
 	}
 	
 	@SuppressWarnings("rawtypes")
-	protected static void updateBookedCourseList(){
+	protected static void updateBookedCourseList() throws Exception{
 		Map<String, List> executionResults = MiscUtils.getListElementMap(TCGUtils.ACTION_GET_BOOKED_COURSE_LIST);
 		updateBookedCourseList(executionResults);
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	protected static void updateBookedCourseList(Map<String, List> executionResults){
+	protected static void updateBookedCourseList(Map<String, List> executionResults) throws Exception{
 		List<String> bookedCourseList = new ArrayList<String>();
-		List<WebElement> listToUpdate = executionResults.get(WebAction.ACTION_GET_MY_RESERVATIONS.name());
+		List<WebElement> listToUpdate = executionResults.get(WebAction.WEB_ACTION_GET_MY_RESERVATIONS.name());
+//		if(listToUpdate == null){
+//			throw new Exception(String.format(Messages.getString(Lang.LOG_MESSAGE_ERROR_EXECUTING_WEB_ACTION), Action.ACTION_UPDATE_COURSES, Messages.getString(Lang.LOG_MESSAGE_ERROR_NOTHIG_WAS_FOUND)));
+//		}
 		for(WebElement webElement : listToUpdate){
 			WebElement thElement = webElement.findElement(By.xpath(TCGUtils.XPATH_TABLE_RESERVATIONS_TH)); 
 			List<WebElement> tdElements = webElement.findElements(By.xpath(TCGUtils.XPATH_TABLE_RESERVATIONS_TD)); 
@@ -158,7 +164,7 @@ public abstract class ActionManager {
 		}
 		if(WebDriverManager.isDriverInitialized()){
 			try {
-				TCG.getNewTCGInstance(Arrays.asList(WebAction.ACTION_CLOSE)).execute();
+				TCG.getNewTCGInstance(Arrays.asList(WebAction.WEB_ACTION_CLOSE)).execute();
 			} catch (Exception e) {
 				HCIUtils.showException(e, false);
 			}

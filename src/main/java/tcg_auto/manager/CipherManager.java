@@ -24,17 +24,21 @@ public abstract class CipherManager {
 	// STATIC FINAL FIELDS
 	private static final String CIPHER_ALGORITHM = "AES";
 	private static final String KEY_ALGORITHM = "AES";
-	private static final String SECRET_KEY = ""; // B2A7422A86C0D704
+	private static final String SECRET_KEY = "B2A7422A86C0D704"; // B2A7422A86C0D704
 	
 	// STATIC FIELDS
 	private static Cipher cipherEncryptInstance = null;
 	private static Cipher cipherDecryptInstance = null;
-	private static SecretKey secretKeyInstance= null;
+	private static SecretKey secretKeyInstance = null;
 	
 	// STATIC METHODS
 	private static SecretKey getSecretKeyInstance() {
 		if(secretKeyInstance == null){
-			secretKeyInstance = new SecretKeySpec(SECRET_KEY.getBytes(), KEY_ALGORITHM);
+			try{
+				secretKeyInstance = new SecretKeySpec(SECRET_KEY.getBytes(), KEY_ALGORITHM);
+			}catch(java.lang.IllegalArgumentException e){
+				HCIUtils.showException(e, true, true, Messages.getString(Lang.LOG_MESSAGE_ERROR_CIPHER_INITIALIZATION_ENCRYPTER));
+			}
 		}
 		return secretKeyInstance;
 	}

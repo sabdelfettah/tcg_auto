@@ -29,14 +29,15 @@ public abstract class TCGUtils {
 
 	// STATIC FINAL FIELDS
 	public static final String URL_HOME = "http://center.thecorporategym.com/citylights/";
-	public static final String URL_BOOKING_SPACE = "https://citylights.thecorporategym.com/fr/poliwin/reservas";
-	public static final String URL_MY_RESERVATIONS = "https://citylights.thecorporategym.com/fr/poliwin/misreservas";
-	public static final String URL_SIGN_IN = "https://citylights.thecorporategym.com/fr/usuari/login";
+	public static final String URL_ROOT = "https://citylights.thecorporategym.com/fr/";
+	public static final String URL_BOOKING_SPACE   = URL_ROOT + "poliwin/reservation";
+	public static final String URL_MY_RESERVATIONS = URL_ROOT + "poliwin/misreservas";
+	public static final String URL_SIGN_IN         = URL_ROOT + "usuari/login";
 	// XPATHS
 	public static final String XPATH_INPUT_LOGIN = "//input[@name='myusername']";
 	public static final String XPATH_INPUT_PASSWORD = "//input[@name='mypassword']";
 	public static final String XPATH_BUTTON_SUBMIT_LOGIN_PASSWORD = "//input[@type='submit']";
-	public static final String XPATH_BUTTON_GO_TO_BOOKING_SPACE = "//a[@href='/fr/poliwin/reservas']";
+	public static final String XPATH_BUTTON_GO_TO_BOOKING_SPACE = "//a[@href='/fr/poliwin/reservation']";
 	public static final String XPATH_BUTTON_GO_TO_ROOM_1_SPACE = "//a[contains(text(), 'SALLE 1')]";
 	public static final String XPATH_BUTTON_GO_TO_ROOM_2_SPACE = "//a[contains(text(), 'SALLE 2')]";
 	public static final String XPATH_BUTTON_GO_TO_NEXT_WEEK = "//a[contains(text(), 'Suivant')]";
@@ -52,64 +53,64 @@ public abstract class TCGUtils {
 	public static final String[] XPATHS_SIGN_IN_COURSE_DIALOG = {XPATH_DIALOG_CONFIRM_BOOKING, XPATH_DIALOG_BOOKING_IMPOSSIBLE, XPATH_BUTTON_CONFIRM_BOOKING, XPATH_DIALOG_CONFIRM};
 	// WEBACTION LISTS
 	public static final List<WebAction> ACTION_GET_ROOM_1_COURSE_LIST = Arrays.asList(
-			WebAction.ACTION_CONNECT,
-			WebAction.ACTION_SIGN_IN_LOGIN_PASSWORD,
-			WebAction.ACTION_CLICK_BOOKING,
-			WebAction.ACTION_CLICK_ROOM_1,
-			WebAction.ACTION_GET_COURSES_ROOM_1
+			WebAction.WEB_ACTION_CONNECT,
+			WebAction.WEB_ACTION_SIGN_IN_LOGIN_PASSWORD,
+			WebAction.WEB_ACTION_CLICK_BOOKING,
+			WebAction.WEB_ACTION_CLICK_ROOM_1,
+			WebAction.WEB_ACTION_GET_COURSES_ROOM_1
 			);
 	public static final List<WebAction> ACTION_GET_ROOM_2_COURSE_LIST = Arrays.asList(
-			WebAction.ACTION_CONNECT,
-			WebAction.ACTION_SIGN_IN_LOGIN_PASSWORD,
-			WebAction.ACTION_CLICK_BOOKING,
-			WebAction.ACTION_CLICK_ROOM_2,
-			WebAction.ACTION_GET_COURSES_ROOM_2
+			WebAction.WEB_ACTION_CONNECT,
+			WebAction.WEB_ACTION_SIGN_IN_LOGIN_PASSWORD,
+			WebAction.WEB_ACTION_CLICK_BOOKING,
+			WebAction.WEB_ACTION_CLICK_ROOM_2,
+			WebAction.WEB_ACTION_GET_COURSES_ROOM_2
 			);
 	public static final List<WebAction> ACTION_GET_FULL_COURSE_LIST = Arrays.asList(
-			WebAction.ACTION_CONNECT,
-			WebAction.ACTION_SIGN_IN_LOGIN_PASSWORD,
-			WebAction.ACTION_CLICK_BOOKING,
-			WebAction.ACTION_CLICK_ROOM_1,
-			WebAction.ACTION_GET_COURSES_ROOM_1,
-			WebAction.ACTION_CLICK_BOOKING,
-			WebAction.ACTION_CLICK_ROOM_2,
-			WebAction.ACTION_GET_COURSES_ROOM_2
+			WebAction.WEB_ACTION_CONNECT,
+			WebAction.WEB_ACTION_SIGN_IN_LOGIN_PASSWORD,
+			WebAction.WEB_ACTION_CLICK_BOOKING,
+			WebAction.WEB_ACTION_CLICK_ROOM_1,
+			WebAction.WEB_ACTION_GET_COURSES_ROOM_1,
+			WebAction.WEB_ACTION_CLICK_BOOKING,
+			WebAction.WEB_ACTION_CLICK_ROOM_2,
+			WebAction.WEB_ACTION_GET_COURSES_ROOM_2
 			);
 	public static final List<WebAction> ACTION_GET_BOOKED_COURSE_LIST = Arrays.asList(
-			WebAction.ACTION_CONNECT,
-			WebAction.ACTION_SIGN_IN_LOGIN_PASSWORD,
-			WebAction.ACTION_GO_TO_MY_RESERVATIONS,
-			WebAction.ACTION_GET_MY_RESERVATIONS
+			WebAction.WEB_ACTION_CONNECT,
+			WebAction.WEB_ACTION_SIGN_IN_LOGIN_PASSWORD,
+			WebAction.WEB_ACTION_GO_TO_MY_RESERVATIONS,
+			WebAction.WEB_ACTION_GET_MY_RESERVATIONS
 			);
 	public static final List<WebAction> ACTION_GET_FULL_LISTS = Arrays.asList(
-			WebAction.ACTION_CONNECT,
-			WebAction.ACTION_SIGN_IN_LOGIN_PASSWORD,
-			WebAction.ACTION_CLICK_BOOKING,
-			WebAction.ACTION_CLICK_ROOM_1,
-			WebAction.ACTION_GET_COURSES_ROOM_1,
-			WebAction.ACTION_CLICK_BOOKING,
-			WebAction.ACTION_CLICK_ROOM_2,
-			WebAction.ACTION_GET_COURSES_ROOM_2,
-			WebAction.ACTION_GO_TO_MY_RESERVATIONS,
-			WebAction.ACTION_GET_MY_RESERVATIONS
+			WebAction.WEB_ACTION_CONNECT,
+			WebAction.WEB_ACTION_SIGN_IN_LOGIN_PASSWORD,
+			WebAction.WEB_ACTION_CLICK_BOOKING,
+			WebAction.WEB_ACTION_CLICK_ROOM_1,
+			WebAction.WEB_ACTION_GET_COURSES_ROOM_1,
+			WebAction.WEB_ACTION_CLICK_BOOKING,
+			WebAction.WEB_ACTION_CLICK_ROOM_2,
+			WebAction.WEB_ACTION_GET_COURSES_ROOM_2,
+			WebAction.WEB_ACTION_GO_TO_MY_RESERVATIONS,
+			WebAction.WEB_ACTION_GET_MY_RESERVATIONS
 			);
 	public static final List<WebAction> ACTION_BOOKING_COURSE_ROOM_1 = Arrays.asList(
-			WebAction.ACTION_CONNECT,
-			WebAction.ACTION_SIGN_IN_LOGIN_PASSWORD,
-			WebAction.ACTION_CLICK_BOOKING,
-			WebAction.ACTION_CLICK_ROOM_1,
-			WebAction.ACTION_GET_COURSES_ROOM_1,
-			WebAction.ACTION_SELECT_COURSE,
-			WebAction.ACTION_CONFIRM_BOOKING
+			WebAction.WEB_ACTION_CONNECT,
+			WebAction.WEB_ACTION_SIGN_IN_LOGIN_PASSWORD,
+			WebAction.WEB_ACTION_CLICK_BOOKING,
+			WebAction.WEB_ACTION_CLICK_ROOM_1,
+			WebAction.WEB_ACTION_GET_COURSES_ROOM_1,
+			WebAction.WEB_ACTION_SELECT_COURSE,
+			WebAction.WEB_ACTION_CONFIRM_BOOKING
 			);
 	public static final List<WebAction> ACTION_BOOKING_COURSE_ROOM_2 = Arrays.asList(
-			WebAction.ACTION_CONNECT,
-			WebAction.ACTION_SIGN_IN_LOGIN_PASSWORD,
-			WebAction.ACTION_CLICK_BOOKING,
-			WebAction.ACTION_CLICK_ROOM_2,
-			WebAction.ACTION_GET_COURSES_ROOM_2,
-			WebAction.ACTION_SELECT_COURSE,
-			WebAction.ACTION_CONFIRM_BOOKING
+			WebAction.WEB_ACTION_CONNECT,
+			WebAction.WEB_ACTION_SIGN_IN_LOGIN_PASSWORD,
+			WebAction.WEB_ACTION_CLICK_BOOKING,
+			WebAction.WEB_ACTION_CLICK_ROOM_2,
+			WebAction.WEB_ACTION_GET_COURSES_ROOM_2,
+			WebAction.WEB_ACTION_SELECT_COURSE,
+			WebAction.WEB_ACTION_CONFIRM_BOOKING
 			);
 	
 	// STATIC METHODS
@@ -170,28 +171,6 @@ public abstract class TCGUtils {
 		}
 		Object firstInstance = inputList.iterator().next();
 		return new Boolean(firstInstance instanceof Boolean);
-	}
-	
-	@SuppressWarnings("rawtypes")
-	public static boolean isTrueBooleanValueList(List inputList){
-		Boolean isUniqueBooleanElementList = isUniqueBooleanElementList(inputList);
-		if(isUniqueBooleanElementList == null || !isUniqueBooleanElementList.booleanValue()){
-			return false;
-		}
-		Object firstInstance = inputList.iterator().next();
-		Boolean firstInstanceAsBoolean = (Boolean) firstInstance;
-		return firstInstanceAsBoolean.booleanValue();
-	}
-	
-	@SuppressWarnings("rawtypes")
-	public static boolean isFalseBooleanValueList(List inputList){
-		Boolean isUniqueBooleanElementList = isUniqueBooleanElementList(inputList);
-		if(isUniqueBooleanElementList == null || !isUniqueBooleanElementList.booleanValue()){
-			return false;
-		}
-		Object firstInstance = inputList.iterator().next();
-		Boolean firstInstanceAsBoolean = (Boolean) firstInstance;
-		return !firstInstanceAsBoolean.booleanValue();
 	}
 	
 	private static String getParentOnClickAttribute(PersistentWebElement course){
@@ -296,8 +275,8 @@ public abstract class TCGUtils {
 		Map<String, Object> arguments = new HashMap<String, Object>();
 		arguments.put(TCG.ARGUMENT_COURSE, course);
 		Map<String, List> resultMap = MiscUtils.getListElementMap(actionsToExecute, arguments);
-		List result = resultMap.get(WebAction.ACTION_CONFIRM_BOOKING.name());
-		if(TCGUtils.isTrueBooleanValueList(result)){
+		List result = resultMap.get(WebAction.WEB_ACTION_CONFIRM_BOOKING.name());
+		if(MiscUtils.isTrueBooleanValueList(result)){
 			JOptionPane.showMessageDialog(null, Messages.getString(Lang.MESSAGE_BOOKING_INFO_BOOKING_SUCCESS), Messages.getString(Lang.TITLE_COURSE_BOOKING), JOptionPane.INFORMATION_MESSAGE);
 			return true;
 		}else{

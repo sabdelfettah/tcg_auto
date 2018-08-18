@@ -76,17 +76,17 @@ public abstract class Lang {
 	public static final String MESSAGE_TRAY_ERROR_BOOKING = "messages.tray_error_booking";
 	public static final String MESSAGE_BOOKING_INFO_BOOKING_SUCCESS = "messages.booking_info_booking_success";
 	public static final String MESSAGE_BOOKING_ERROR_BOOKING = "messages.booking_error_booking";
-	public static final String MESSAGE_WAITING_DIALOG_WEBACTION_ACTION_CONNECT = "messages.waiting_dialog_webaction_connect";
-	public static final String MESSAGE_WAITING_DIALOG_WEBACTION_ACTION_SIGN_IN_LOGIN_PASSWORD = "messages.waiting_dialog_webaction_sign_in_login_password";
-	public static final String MESSAGE_WAITING_DIALOG_WEBACTION_ACTION_CLOSE = "messages.waiting_dialog_webaction_close";
-	public static final String MESSAGE_WAITING_DIALOG_WEBACTION_ACTION_CLICK_BOOKING = "messages.waiting_dialog_webaction_click_booking";
-	public static final String MESSAGE_WAITING_DIALOG_WEBACTION_ACTION_CLICK_ROOM_1 = "messages.waiting_dialog_webaction_click_room_1";
-	public static final String MESSAGE_WAITING_DIALOG_WEBACTION_ACTION_CLICK_ROOM_2 = "messages.waiting_dialog_webaction_click_room_2";
-	public static final String MESSAGE_WAITING_DIALOG_WEBACTION_ACTION_GET_COURSES = "messages.waiting_dialog_webaction_get_courses";
-	public static final String MESSAGE_WAITING_DIALOG_WEBACTION_ACTION_SELECT_COURSE = "messages.waiting_dialog_webaction_select_course";
-	public static final String MESSAGE_WAITING_DIALOG_WEBACTION_ACTION_CONFIRM_BOOKING = "messages.waiting_dialog_webaction_confirm_booking";
-	public static final String MESSAGE_WAITING_DIALOG_WEBACTION_ACTION_GO_TO_MY_RESERVATIONS = "messages.waiting_dialog_webaction_go_to_my_reservations";
-	public static final String MESSAGE_WAITING_DIALOG_WEBACTION_ACTION_GET_MY_RESERVATIONS = "messages.waiting_dialog_webaction_get_my_reservations";
+	public static final String MESSAGE_WAITING_DIALOG_WEB_ACTION_CONNECT = "messages.waiting_dialog_webaction_connect";
+	public static final String MESSAGE_WAITING_DIALOG_WEB_ACTION_SIGN_IN_LOGIN_PASSWORD = "messages.waiting_dialog_webaction_sign_in_login_password";
+	public static final String MESSAGE_WAITING_DIALOG_WEB_ACTION_CLOSE = "messages.waiting_dialog_webaction_close";
+	public static final String MESSAGE_WAITING_DIALOG_WEB_ACTION_CLICK_BOOKING = "messages.waiting_dialog_webaction_click_booking";
+	public static final String MESSAGE_WAITING_DIALOG_WEB_ACTION_CLICK_ROOM_1 = "messages.waiting_dialog_webaction_click_room_1";
+	public static final String MESSAGE_WAITING_DIALOG_WEB_ACTION_CLICK_ROOM_2 = "messages.waiting_dialog_webaction_click_room_2";
+	public static final String MESSAGE_WAITING_DIALOG_WEB_ACTION_GET_COURSES = "messages.waiting_dialog_webaction_get_courses";
+	public static final String MESSAGE_WAITING_DIALOG_WEB_ACTION_SELECT_COURSE = "messages.waiting_dialog_webaction_select_course";
+	public static final String MESSAGE_WAITING_DIALOG_WEB_ACTION_CONFIRM_BOOKING = "messages.waiting_dialog_webaction_confirm_booking";
+	public static final String MESSAGE_WAITING_DIALOG_WEB_ACTION_GO_TO_MY_RESERVATIONS = "messages.waiting_dialog_webaction_go_to_my_reservations";
+	public static final String MESSAGE_WAITING_DIALOG_WEB_ACTION_GET_MY_RESERVATIONS = "messages.waiting_dialog_webaction_get_my_reservations";
 	
 	// LOG CONTENTS
 	public static final String LOG_MESSAGE_ERROR_CIPHER_INITIALIZATION_ENCRYPTER = "logs.error_cipher_initialization_encrypter";

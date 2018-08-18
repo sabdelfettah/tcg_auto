@@ -58,8 +58,7 @@ public abstract class HCIUtils {
 		}
 		panel.add(lbl);
 		panel.add(txt);
-		int selectedOption = JOptionPane.showOptionDialog(null, panel, title, JOptionPane.NO_OPTION,
-				JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+		int selectedOption = JOptionPane.showOptionDialog(null, panel, title, JOptionPane.NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 		if (selectedOption == 0) {
 			result = txt.getText();
 		}
@@ -104,7 +103,14 @@ public abstract class HCIUtils {
 		showException(e, closeApplication, logAsError, logMessage, null);
 	}
 	public static void showException(Exception e, boolean closeApplication, boolean logAsError, String logMessage, String optionalMessage){
-		String exceptionMessage = e == null ? "?" : e.getMessage().replaceAll("\n", ", ");
+		String exceptionMessage = e == null || e.getMessage() == null ? "Unknown Error" : e.getMessage().replaceAll("\n", ", ");
+		if(exceptionMessage.length() > 200){
+			exceptionMessage = exceptionMessage.substring(0, 200) + " ...";
+		}
+		Throwable cause = e.getCause();
+		if(cause != null){
+			exceptionMessage += "\nCaused by : " + cause.getMessage();
+		}
 		if(e != null){
 			e.printStackTrace(System.err);
 		}
@@ -152,18 +158,18 @@ public abstract class HCIUtils {
 	
 	public static String getMessageOfWebAction(WebAction input){
 		switch (input) {
-		case ACTION_CONNECT: return Messages.getString(Lang.MESSAGE_WAITING_DIALOG_WEBACTION_ACTION_CONNECT);
-		case ACTION_SIGN_IN_LOGIN_PASSWORD: return Messages.getString(Lang.MESSAGE_WAITING_DIALOG_WEBACTION_ACTION_SIGN_IN_LOGIN_PASSWORD);
-		case ACTION_CLOSE: return Messages.getString(Lang.MESSAGE_WAITING_DIALOG_WEBACTION_ACTION_CLOSE);
-		case ACTION_CLICK_BOOKING: return Messages.getString(Lang.MESSAGE_WAITING_DIALOG_WEBACTION_ACTION_CLICK_BOOKING);
-		case ACTION_CLICK_ROOM_1: return Messages.getString(Lang.MESSAGE_WAITING_DIALOG_WEBACTION_ACTION_CLICK_ROOM_1);
-		case ACTION_CLICK_ROOM_2: return Messages.getString(Lang.MESSAGE_WAITING_DIALOG_WEBACTION_ACTION_CLICK_ROOM_2);
-		case ACTION_GET_COURSES_ROOM_1:
-		case ACTION_GET_COURSES_ROOM_2: return Messages.getString(Lang.MESSAGE_WAITING_DIALOG_WEBACTION_ACTION_GET_COURSES);
-		case ACTION_SELECT_COURSE: return Messages.getString(Lang.MESSAGE_WAITING_DIALOG_WEBACTION_ACTION_SELECT_COURSE);
-		case ACTION_CONFIRM_BOOKING: return Messages.getString(Lang.MESSAGE_WAITING_DIALOG_WEBACTION_ACTION_CONFIRM_BOOKING);
-		case ACTION_GO_TO_MY_RESERVATIONS : return Messages.getString(Lang.MESSAGE_WAITING_DIALOG_WEBACTION_ACTION_GO_TO_MY_RESERVATIONS);
-		case ACTION_GET_MY_RESERVATIONS : return Messages.getString(Lang.MESSAGE_WAITING_DIALOG_WEBACTION_ACTION_GET_MY_RESERVATIONS);
+		case WEB_ACTION_CONNECT: return Messages.getString(Lang.MESSAGE_WAITING_DIALOG_WEB_ACTION_CONNECT);
+		case WEB_ACTION_SIGN_IN_LOGIN_PASSWORD: return Messages.getString(Lang.MESSAGE_WAITING_DIALOG_WEB_ACTION_SIGN_IN_LOGIN_PASSWORD);
+		case WEB_ACTION_CLOSE: return Messages.getString(Lang.MESSAGE_WAITING_DIALOG_WEB_ACTION_CLOSE);
+		case WEB_ACTION_CLICK_BOOKING: return Messages.getString(Lang.MESSAGE_WAITING_DIALOG_WEB_ACTION_CLICK_BOOKING);
+		case WEB_ACTION_CLICK_ROOM_1: return Messages.getString(Lang.MESSAGE_WAITING_DIALOG_WEB_ACTION_CLICK_ROOM_1);
+		case WEB_ACTION_CLICK_ROOM_2: return Messages.getString(Lang.MESSAGE_WAITING_DIALOG_WEB_ACTION_CLICK_ROOM_2);
+		case WEB_ACTION_GET_COURSES_ROOM_1:
+		case WEB_ACTION_GET_COURSES_ROOM_2: return Messages.getString(Lang.MESSAGE_WAITING_DIALOG_WEB_ACTION_GET_COURSES);
+		case WEB_ACTION_SELECT_COURSE: return Messages.getString(Lang.MESSAGE_WAITING_DIALOG_WEB_ACTION_SELECT_COURSE);
+		case WEB_ACTION_CONFIRM_BOOKING: return Messages.getString(Lang.MESSAGE_WAITING_DIALOG_WEB_ACTION_CONFIRM_BOOKING);
+		case WEB_ACTION_GO_TO_MY_RESERVATIONS : return Messages.getString(Lang.MESSAGE_WAITING_DIALOG_WEB_ACTION_GO_TO_MY_RESERVATIONS);
+		case WEB_ACTION_GET_MY_RESERVATIONS : return Messages.getString(Lang.MESSAGE_WAITING_DIALOG_WEB_ACTION_GET_MY_RESERVATIONS);
 		default: return "";
 		}
 	}

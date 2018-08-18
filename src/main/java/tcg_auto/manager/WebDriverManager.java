@@ -1,6 +1,7 @@
 package tcg_auto.manager;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -15,7 +16,8 @@ import tcg_auto.utils.HCIUtils;
 public abstract class WebDriverManager {
 	
 	// STATIC FINAL FIELDS
-	public static final boolean CHROME_MODE = false;
+	public static final boolean CHROME_MODE = true;
+	private static final int SELENIUM_IMPLICIT_WAIT = 10;
 	
 	// STATIC FIELDS
 	private static WebDriver driverInstance;
@@ -47,6 +49,7 @@ public abstract class WebDriverManager {
 					driverInstance = new PhantomJSDriver();
 				}
 				isWebDriverFree = true;
+				driverInstance.manage().timeouts().implicitlyWait(SELENIUM_IMPLICIT_WAIT, TimeUnit.SECONDS);
 			} catch (IOException e) {
 				isWebDriverFree = false;
 				HCIUtils.showException(e, true, true, Messages.getString(Lang.LOG_MESSAGE_ERROR_WEB_DRIVER_INITIALIZATION));

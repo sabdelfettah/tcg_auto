@@ -40,8 +40,15 @@ public abstract class Initializator {
 	@SuppressWarnings("rawtypes")
 	public static void initializeLists(){
 		Map<String, List> executionResults = MiscUtils.getListElementMap(TCGUtils.ACTION_GET_FULL_LISTS);
-		ActionManager.updateCourseList(executionResults);
-		ActionManager.updateBookedCourseList(executionResults);
+		if(executionResults == null){
+			return;
+		}
+		try {
+			ActionManager.updateCourseList(executionResults);
+			ActionManager.updateBookedCourseList(executionResults);
+		} catch (Exception e) {
+			HCIUtils.showException(e, true);
+		}
 		SubscriptionListPanel.updateSubscriptionList();
 	}
 	

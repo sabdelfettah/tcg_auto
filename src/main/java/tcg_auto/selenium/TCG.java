@@ -81,9 +81,10 @@ public class TCG {
 				} catch (Exception e) {
 					LogManager.logErrorFinished(String.format(Messages.getString(Lang.LOG_MESSAGE_ERROR_EXECUTING_WEB_ACTION), webAction.name(), e.getMessage()));
 					HCIUtils.showException(e, false);
-					return result;
+					exceptionToThrow = e;
+					lastActionElemets = MiscUtils.getFalseAsList();
 				}
-				if(TCGUtils.isFalseBooleanValueList(lastActionElemets)){
+				if(MiscUtils.isFalseBooleanValueList(lastActionElemets)){
 					WaitingDialog.disposeDialog();
 					WebDriverManager.releaseWebDriver();
 					if(exceptionToThrow == null){
@@ -91,7 +92,7 @@ public class TCG {
 					}
 					LogManager.logErrorFinished(String.format(Messages.getString(Lang.LOG_MESSAGE_ERROR_EXECUTING_WEB_ACTION), webAction.name(), exceptionToThrow.getMessage()));
 					HCIUtils.showException(exceptionToThrow, exitApplication);
-					break;
+					return null;
 				}
 			}
 		}
@@ -110,39 +111,39 @@ public class TCG {
 	private List executeWebAction(WebAction actionToExecute) throws Exception {
 		LogManager.logInfoRunning(String.format(Messages.getString(Lang.LOG_MESSAGE_INFO_EXECUTING_WEB_ACTION), actionToExecute.name()));
 		switch (actionToExecute) {
-		case ACTION_CONNECT:
+		case WEB_ACTION_CONNECT:
 			lastActionElemets = connectToTCG();
 			break;
-		case ACTION_SIGN_IN_LOGIN_PASSWORD:
+		case WEB_ACTION_SIGN_IN_LOGIN_PASSWORD:
 			lastActionElemets = enterLoginAndPassword();
 			break;
-		case ACTION_CLOSE:
+		case WEB_ACTION_CLOSE:
 			lastActionElemets = closeConnection();
 			break;
-		case ACTION_CLICK_BOOKING:
+		case WEB_ACTION_CLICK_BOOKING:
 			lastActionElemets = findButtonAndClick(TCGUtils.XPATH_BUTTON_GO_TO_BOOKING_SPACE);
 			break;
-		case ACTION_CLICK_ROOM_1:
+		case WEB_ACTION_CLICK_ROOM_1:
 			lastActionElemets = findButtonAndClick(TCGUtils.XPATH_BUTTON_GO_TO_ROOM_1_SPACE);
 			break;
-		case ACTION_CLICK_ROOM_2:
+		case WEB_ACTION_CLICK_ROOM_2:
 			lastActionElemets = findButtonAndClick(TCGUtils.XPATH_BUTTON_GO_TO_ROOM_2_SPACE);
 			break;
-		case ACTION_GET_COURSES_ROOM_1:
-		case ACTION_GET_COURSES_ROOM_2:
+		case WEB_ACTION_GET_COURSES_ROOM_1:
+		case WEB_ACTION_GET_COURSES_ROOM_2:
 			lastActionElemets = getElements(TCGUtils.XPATH_DIVS_COURSES);
 			break;
-		case ACTION_SELECT_COURSE : 
+		case WEB_ACTION_SELECT_COURSE : 
 			Course course = getCourseArgument();
 			lastActionElemets = selectCourse(course);
 			break;
-		case ACTION_CONFIRM_BOOKING :
+		case WEB_ACTION_CONFIRM_BOOKING :
 			lastActionElemets = confirmBooking();
 			break;
-		case ACTION_GO_TO_MY_RESERVATIONS :
+		case WEB_ACTION_GO_TO_MY_RESERVATIONS :
 			lastActionElemets = goToMyReservations();
 			break;
-		case ACTION_GET_MY_RESERVATIONS :
+		case WEB_ACTION_GET_MY_RESERVATIONS :
 			lastActionElemets = getElements(TCGUtils.XPATH_TABLE_RESERVATIONS);
 			break;
 		default:
@@ -297,6 +298,8 @@ public class TCG {
 		WebElement button = WebDriverManager.getWebDriver().findElement(By.xpath(XPath));
 		if(button == null){
 			return MiscUtils.getFalseAsList();
+		}else if(!button.isDisplayed()){
+			button = TCGUtils.getParentElement(button);
 		}
 		button.click();
 		return MiscUtils.getTrueAsList();
@@ -347,17 +350,17 @@ public class TCG {
 	
 	// ENUMERATIONS
 	public enum WebAction {
-		ACTION_CONNECT,
-		ACTION_SIGN_IN_LOGIN_PASSWORD,
-		ACTION_CLOSE,
-		ACTION_CLICK_BOOKING,
-		ACTION_CLICK_ROOM_1,
-		ACTION_CLICK_ROOM_2,
-		ACTION_GET_COURSES_ROOM_1,
-		ACTION_GET_COURSES_ROOM_2,
-		ACTION_SELECT_COURSE,
-		ACTION_CONFIRM_BOOKING,
-		ACTION_GO_TO_MY_RESERVATIONS,
-		ACTION_GET_MY_RESERVATIONS;
+		WEB_ACTION_CONNECT,
+		WEB_ACTION_SIGN_IN_LOGIN_PASSWORD,
+		WEB_ACTION_CLOSE,
+		WEB_ACTION_CLICK_BOOKING,
+		WEB_ACTION_CLICK_ROOM_1,
+		WEB_ACTION_CLICK_ROOM_2,
+		WEB_ACTION_GET_COURSES_ROOM_1,
+		WEB_ACTION_GET_COURSES_ROOM_2,
+		WEB_ACTION_SELECT_COURSE,
+		WEB_ACTION_CONFIRM_BOOKING,
+		WEB_ACTION_GO_TO_MY_RESERVATIONS,
+		WEB_ACTION_GET_MY_RESERVATIONS;
 	}
 }

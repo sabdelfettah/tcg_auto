@@ -75,6 +75,16 @@ public abstract class MiscUtils {
 	public static List<Boolean> getFalseAsList() {
 		return FALSE_AS_LIST;
 	}
+	
+	@SuppressWarnings("rawtypes")
+	public static boolean isFalseBooleanValueList(List inputList){
+		return inputList.equals(FALSE_AS_LIST);
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public static boolean isTrueBooleanValueList(List inputList){
+		return inputList.equals(TRUE_AS_LIST);
+	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static List<WebElement> getWebElementList(List<WebAction> webActionList, String key) {
