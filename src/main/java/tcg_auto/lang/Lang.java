@@ -99,6 +99,7 @@ public abstract class Lang {
 	public static final String LOG_MESSAGE_ERROR_EXIT_APP = "logs.error_exit_application";
 	public static final String LOG_MESSAGE_ERROR_EXECUTING_ACTION = "logs.error_executing_action";
 	public static final String LOG_MESSAGE_ERROR_EXECUTING_WEB_ACTION = "logs.error_executing_web_action";
+	public static final String LOG_MESSAGE_ERROR_NOTHIG_WAS_FOUND = "logs.error_nothing_was_found";
 	public static final String LOG_MESSAGE_WARN_INITIALIZATION_NO_LOGIN_PASSWORD_FOUND = "logs.warn_initialization_no_login_password_found";
 	public static final String LOG_MESSAGE_INFO_INITIALIZATION_STARTING_APP = "logs.info_initialization_starting_application";
 	public static final String LOG_MESSAGE_INFO_INITIALIZATION_APP_STARTED = "logs.info_initialization_application_started";
