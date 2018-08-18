@@ -12,13 +12,14 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import org.apache.commons.collections4.CollectionUtils;
+
 import tcg_auto.lang.Lang;
 import tcg_auto.lang.Messages;
 import tcg_auto.manager.CourseManager;
 import tcg_auto.model.Course;
 import tcg_auto.utils.HCIUtils;
 import tcg_auto.utils.HCIUtils.Action;
-import tcg_auto.utils.MiscUtils;
 import tcg_auto.utils.TCGUtils;
 
 public class CourseBookingDialog extends JDialog{
@@ -97,7 +98,7 @@ public class CourseBookingDialog extends JDialog{
 	
 	public static void showDialog(){
 		List<Course> courseList = CourseManager.getCourseList();
-		if(MiscUtils.isNullOrEmpty(courseList)){
+		if(CollectionUtils.isEmpty(courseList)){
 			JOptionPane.showMessageDialog(null, Messages.getString(Lang.MESSAGE_SUBSCRIPTION_ERROR_NO_COURSE_FOUND), getDialogTitle(), JOptionPane.WARNING_MESSAGE);
 			return;
 		}

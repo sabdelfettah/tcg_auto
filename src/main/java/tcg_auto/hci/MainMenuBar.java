@@ -10,6 +10,8 @@ import javax.swing.JComponent;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 
+import org.apache.commons.collections4.CollectionUtils;
+
 import tcg_auto.lang.Lang;
 import tcg_auto.lang.Messages;
 import tcg_auto.model.MenuData;
@@ -87,7 +89,7 @@ public class MainMenuBar extends JMenuBar {
 	private void addMenu(MenuData menu, List<MenuData> menuItems) {
 		JMenu newMenu = menu.getJMenu();
 		components.put(menu.getTitle(), newMenu);
-		if (MiscUtils.isNotNullOrEmpty(menuItems)) {
+		if (CollectionUtils.isNotEmpty(menuItems)) {
 			menuItems.forEach(menuItem -> {
 				JComponent menuItemComponent = menuItem.getJComponent();
 				newMenu.add(menuItemComponent);

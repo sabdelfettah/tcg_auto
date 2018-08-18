@@ -14,6 +14,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import org.apache.commons.collections4.CollectionUtils;
+
 import tcg_auto.lang.Lang;
 import tcg_auto.lang.Messages;
 import tcg_auto.manager.CourseManager;
@@ -23,7 +25,6 @@ import tcg_auto.model.Course.Day;
 import tcg_auto.model.Subscription;
 import tcg_auto.utils.HCIUtils;
 import tcg_auto.utils.HCIUtils.Action;
-import tcg_auto.utils.MiscUtils;
 
 public class SubsciptionDialog extends JDialog{
 
@@ -183,7 +184,7 @@ public class SubsciptionDialog extends JDialog{
 	
 	public static void showDialog(){
 		List<Course> notYetConfiguredCourseList = CourseManager.getNotYetConfiguredCourseList();
-		if(MiscUtils.isNullOrEmpty(notYetConfiguredCourseList)){
+		if(CollectionUtils.isEmpty(notYetConfiguredCourseList)){
 			JOptionPane.showMessageDialog(null, Messages.getString(Lang.MESSAGE_SUBSCRIPTION_ERROR_NO_COURSE_FOUND), getDialogTitle(), JOptionPane.WARNING_MESSAGE);
 			return;
 		}

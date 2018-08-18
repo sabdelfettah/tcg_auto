@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
+
 import tcg_auto.lang.Lang;
 import tcg_auto.lang.Messages;
 import tcg_auto.selenium.TCG;
@@ -40,11 +42,11 @@ public abstract class LoginPasswordManager {
 	private static Map<String, String> getInputLoginAndPassword() {
 		Map<String, String> result = new HashMap<String, String>();
 		String login = HCIUtils.getValueFromInputDialog(Messages.getString(Lang.TITLE_SET_LOGIN), Messages.getString(Lang.LABELS_SET_LOGIN_PASSWORD_LABEL_LOGIN), 20, false);
-		if(MiscUtils.isNullOrEmpty(login)){
+		if(StringUtils.isEmpty(login)){
 			return null;
 		}
 		String password = HCIUtils.getValueFromInputDialog(Messages.getString(Lang.TITLE_SET_PASSWORD), Messages.getString(Lang.LABELS_SET_LOGIN_PASSWORD_LABEL_PASSWORD), 10, true);
-		if(MiscUtils.isNullOrEmpty(password)){
+		if(StringUtils.isEmpty(password)){
 			return null;
 		}
 		result.put(FIELD_LOGIN, login);

@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
@@ -63,7 +65,7 @@ public class TCG {
 		}
 		initialize();
 		Map<String, List> result = new HashMap<String, List>();
-		if (MiscUtils.isNotNullOrEmpty(webActionList)) {
+		if (CollectionUtils.isNotEmpty(webActionList)) {
 			for(WebAction webAction : webActionList){
 				WaitingDialog.setLabelText(webAction);
 				List resultOfExecution;
@@ -252,7 +254,7 @@ public class TCG {
 		if(isLastElementsWebElement != null && isLastElementsWebElement.booleanValue()){
 			WebElement dialogConfirmBooking = (WebElement) lastActionElemets.get(0);
 			String confirmDialogStyle = dialogConfirmBooking == null ? null : dialogConfirmBooking.getAttribute("style");
-			if(MiscUtils.isNotNullOrEmpty(confirmDialogStyle) && confirmDialogStyle.contains("display") && confirmDialogStyle.contains("block")){
+			if(StringUtils.isNotEmpty(confirmDialogStyle) && confirmDialogStyle.contains("display") && confirmDialogStyle.contains("block")){
 				WebElement buttonToClick = (WebElement) lastActionElemets.get(2);
 				if(buttonToClick != null && buttonToClick.getTagName().equals("a")){
 					buttonToClick.click();
@@ -330,7 +332,7 @@ public class TCG {
 				HCIUtils.showException(e, false);
 			}
 			List<WebElement> divLoadingElements = getElements(TCGUtils.XPATH_DIALOG_LOADING);
-			if(MiscUtils.isNullOrEmpty(divLoadingElements)){
+			if(CollectionUtils.isEmpty(divLoadingElements)){
 				return;
 			}
 			String style = divLoadingElements.iterator().next().getAttribute("style");

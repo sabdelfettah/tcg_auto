@@ -11,6 +11,8 @@ import java.util.stream.Collectors;
 
 import javax.swing.JOptionPane;
 
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -139,7 +141,7 @@ public abstract class TCGUtils {
 	
 	public static List<PersistentWebElement> getPersistentWebElementListFromWebElementList(List<WebElement> webElementList){
 		List<PersistentWebElement> result = new ArrayList<PersistentWebElement>();
-		if(MiscUtils.isNotNullOrEmpty(webElementList)){
+		if(CollectionUtils.isNotEmpty(webElementList)){
 			webElementList	.parallelStream()
 							.filter(webElement -> webElement != null)
 							.forEach(webElement -> {
@@ -151,7 +153,7 @@ public abstract class TCGUtils {
 	
 	@SuppressWarnings("rawtypes")
 	public static Boolean isWebElementList(List inputList){
-		if(MiscUtils.isNullOrEmpty(inputList)){
+		if(CollectionUtils.isEmpty(inputList)){
 			return null;
 		}
 		Object firstInstance = inputList.iterator().next();
@@ -160,7 +162,7 @@ public abstract class TCGUtils {
 	
 	@SuppressWarnings("rawtypes")
 	public static Boolean isUniqueBooleanElementList(List inputList){
-		if(MiscUtils.isNullOrEmpty(inputList)){
+		if(CollectionUtils.isEmpty(inputList)){
 			return null;
 		}
 		if(inputList.size() > 1){
@@ -259,7 +261,7 @@ public abstract class TCGUtils {
 	}
 	
 	public static WebElement getWebElementFilteredByTextContent(List<WebElement> webElements, String textContent){
-		if(MiscUtils.isNullOrEmpty(webElements) || MiscUtils.isNullOrEmpty(textContent)){
+		if(CollectionUtils.isEmpty(webElements) || StringUtils.isEmpty(textContent)){
 			return null;
 		}
 		WebElement result = webElements	.parallelStream()
@@ -270,7 +272,7 @@ public abstract class TCGUtils {
 	}
 	
 	public static WebElement getWebElementFilteredByCourse(List<WebElement> webElements, Course course){
-		if(MiscUtils.isNullOrEmpty(webElements) || course == null){
+		if(CollectionUtils.isEmpty(webElements) || course == null){
 			return null;
 		}
 		List<WebElement> resultsByTextContentFilter = webElements	.parallelStream()

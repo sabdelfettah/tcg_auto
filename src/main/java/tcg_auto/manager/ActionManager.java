@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -101,7 +102,7 @@ public abstract class ActionManager {
 		List<PersistentWebElement> listToUpdate = executionResults.get(PersistentWebElement.getPersistentMapKey(WebAction.ACTION_GET_COURSES_ROOM_1.name()));
 		int numberOfTotalCourses = listToUpdate == null ? 0 : listToUpdate.size();
 		CourseManager.initCourseList();
-		if(MiscUtils.isNotNullOrEmpty(listToUpdate)){
+		if(CollectionUtils.isNotEmpty(listToUpdate)){
 			listToUpdate.forEach(course -> {
 				short[] timeOptions = TCGUtils.getTimeOptionsFromPersistentWebElement(course);
 				CourseManager.addCourseToCourseList(new Course(MiscUtils.removeRoomInLabel(course.getText()), Course.Room.ROOM_1, TCGUtils.getDayFromPersistentWebElement(course), timeOptions));
@@ -109,7 +110,7 @@ public abstract class ActionManager {
 		}
 		listToUpdate = executionResults.get(PersistentWebElement.getPersistentMapKey(WebAction.ACTION_GET_COURSES_ROOM_2.name()));
 		numberOfTotalCourses += listToUpdate == null ? 0 : listToUpdate.size();
-		if(MiscUtils.isNotNullOrEmpty(listToUpdate)){
+		if(CollectionUtils.isNotEmpty(listToUpdate)){
 			listToUpdate.forEach(course -> {
 				short[] timeOptions = TCGUtils.getTimeOptionsFromPersistentWebElement(course);
 				CourseManager.addCourseToCourseList(new Course(MiscUtils.removeRoomInLabel(course.getText()), Course.Room.ROOM_2, TCGUtils.getDayFromPersistentWebElement(course), timeOptions));

@@ -17,6 +17,7 @@ import java.util.concurrent.ExecutionException;
 import javax.imageio.ImageIO;
 import javax.swing.KeyStroke;
 
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.TakesScreenshot;
@@ -37,6 +38,8 @@ public abstract class MiscUtils {
 	private static final Gson gsonInstance = new Gson();
 	private static final SimpleDateFormat yyyyMMdd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	private static final SimpleDateFormat ddMMyyyy = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+	private static final List<Boolean> TRUE_AS_LIST  = Arrays.asList(new Boolean(true));
+	private static final List<Boolean> FALSE_AS_LIST = Arrays.asList(new Boolean(false));
 	
 	// STATIC METHODS
 	public static List<BufferedImage> getImageOfElements(WebDriver driver, List<WebElement> webElements) {
@@ -55,29 +58,10 @@ public abstract class MiscUtils {
 			Point point = webElement.getLocation();
 			int elementWidth = webElement.getSize().getWidth();
 			int elementHeight = webElement.getSize().getHeight();
-			BufferedImage elementScreenshot = fullImg.getSubimage(point.getX(), point.getY(), elementWidth,
-					elementHeight);
+			BufferedImage elementScreenshot = fullImg.getSubimage(point.getX(), point.getY(), elementWidth, elementHeight);
 			result.add(elementScreenshot);
 		}
 		return result;
-	}
-
-	@SuppressWarnings("rawtypes")
-	public static boolean isNullOrEmpty(List input) {
-		return input == null || input.isEmpty();
-	}
-
-	@SuppressWarnings("rawtypes")
-	public static boolean isNotNullOrEmpty(List input) {
-		return !isNullOrEmpty(input);
-	}
-	
-	public static boolean isNullOrEmpty(String input) {
-		return input == null || input.isEmpty();
-	}
-
-	public static boolean isNotNullOrEmpty(String input) {
-		return !isNullOrEmpty(input);
 	}
 
 	public static KeyStroke getCtrlKeyStroke(int key) {
@@ -85,11 +69,11 @@ public abstract class MiscUtils {
 	}
 
 	public static List<Boolean> getTrueAsList() {
-		return Arrays.asList(new Boolean(true));
+		return TRUE_AS_LIST;
 	}
 
 	public static List<Boolean> getFalseAsList() {
-		return Arrays.asList(new Boolean(false));
+		return FALSE_AS_LIST;
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -146,7 +130,7 @@ public abstract class MiscUtils {
 	}
 	
 	public static List<Subscription> getSubscriptionListFromString(String subscriptionList){
-		if(isNullOrEmpty(subscriptionList)){
+		if(StringUtils.isEmpty(subscriptionList)){
 			return new ArrayList<Subscription>();
 		}
 		Type listType = new TypeToken<List<Subscription>>() {}.getType();
@@ -159,7 +143,7 @@ public abstract class MiscUtils {
 	}
 	
 	public static Map<String, String> getMapFromString(String input){
-		if(isNullOrEmpty(input)){
+		if(StringUtils.isEmpty(input)){
 			return new HashMap<String, String>();
 		}
 		Type mapType = new TypeToken<Map<String, String>>() {}.getType();

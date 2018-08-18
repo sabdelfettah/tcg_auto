@@ -8,12 +8,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.collections4.CollectionUtils;
+
 import tcg_auto.lang.Lang;
 import tcg_auto.lang.Messages;
 import tcg_auto.model.MenuData;
 import tcg_auto.model.MenuData.COMPONENT_TYPE;
 import tcg_auto.utils.HCIUtils.Action;
-import tcg_auto.utils.MiscUtils;
 
 public class TrayPopup extends PopupMenu {
 	
@@ -56,7 +57,7 @@ public class TrayPopup extends PopupMenu {
 	}
 	
 	private void addMenu(MenuData menu, List<MenuData> menuItems) {
-		if(MiscUtils.isNullOrEmpty(menuItems)){
+		if(CollectionUtils.isEmpty(menuItems)){
 			MenuItem newMenuItem = menu.getMenuItem();
 			menuList.set(menu.getIndex(), newMenuItem);
 			return;

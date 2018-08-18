@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import org.apache.commons.lang3.StringUtils;
+
 import tcg_auto.hci.HCI;
 import tcg_auto.hci.LogPanel;
 import tcg_auto.hci.SubscriptionListPanel;
@@ -88,7 +90,7 @@ public abstract class Initializator {
 		if(logLooking){
 			LogManager.logInfoRunning(Messages.getString(Lang.LOG_MESSAGE_INFO_INITIALIZATION_LOOKING_FOR_WEB_DRIVER_PATH));
 		}
-		if(MiscUtils.isNullOrEmpty(ConfigManager.getWebDriverPath())){
+		if(StringUtils.isEmpty(ConfigManager.getWebDriverPath())){
 			ConfigManager.getAndSaveWebDrive();
 			initializeWebDriverPath(false);
 		}else{

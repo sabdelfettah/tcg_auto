@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.collections4.CollectionUtils;
 
 import tcg_auto.lang.Lang;
 import tcg_auto.lang.Messages;
@@ -29,7 +30,7 @@ public abstract class ConfigManager {
 		configToWrite.put(CONFIG_SEE_LOGS, String.valueOf(seeLogs));
 		configToWrite.put(CONFIG_WEB_DRIVER_PATH, webDriverPath);
 		List<Subscription> subscritpionList = SubscriptionManager.getSubscriptionList();
-		if(MiscUtils.isNotNullOrEmpty(subscritpionList)){
+		if(CollectionUtils.isNotEmpty(subscritpionList)){
 			configToWrite.put(CONFIG_SUBSCRIPTION_LIST, MiscUtils.getStringFromSubscirptionList(subscritpionList));
 		}
 		String configFormattedToWrite = MiscUtils.getStringFromMap(configToWrite);
